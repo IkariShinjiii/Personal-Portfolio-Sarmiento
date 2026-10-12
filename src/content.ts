@@ -8,7 +8,7 @@ export const person = {
 export const about = [
   { title: "Education", text: "BS Information Technology, 3rd year, at the University of San Agustin, Iloilo (USA)." },
   { title: "Building", text: "My Mind Bridge capstone, a student wellness platform, and the ACUA storefront with PayMongo and GCash checkout." },
-  { title: "Games", text: "I build Roblox games in Luau, like Anime Pet Simulator, and I like turning anime ideas into playable games." },
+  { title: "Games", text: "I build Roblox games in Roblox Studio with Luau, like Anime Pet Simulator, and I like turning anime ideas into playable games." },
 ];
 
 export const mindset = {
@@ -30,7 +30,7 @@ export const craft = {
   status: "Open for internships",
   strips: [
     ["tailwindcss", "typescript", "react", "vite", "supabase", "firebase", "git"],
-    ["github", "vercel", "gsap", "framer", "figma", "roblox", "lua", "nodedotjs", "javascript", "html5", "css"],
+    ["github", "vercel", "gsap", "framer", "figma", "robloxstudio", "cisco", "lua", "nodedotjs", "javascript", "html5", "css"],
   ],
 };
 
@@ -66,7 +66,7 @@ export const projects = [
     category: "Roblox game",
     title: "Anime Pet Simulator",
     summary: "A Pet Simulator-style Roblox game built around anime characters and pets. In development.",
-    tags: ["Roblox", "Luau", "In development"],
+    tags: ["Roblox Studio", "Luau", "In development"],
     href: "",
     tone: "from-rose-700 to-fuchsia-900",
     image: "/projects/anime-pet-simulator.jpg",
@@ -94,6 +94,7 @@ export const skillRowAbove: { name: string; kind: SkillKind }[] = [
   { name: "Tailwind CSS", kind: "frontend" },
   { name: "Vite", kind: "frontend" },
   { name: "GSAP", kind: "tools" },
+  { name: "Framer", kind: "tools" },
   { name: "Framer Motion", kind: "tools" },
   { name: "Storybook", kind: "tools" },
   { name: "Vitest", kind: "tools" },
@@ -115,9 +116,11 @@ export const skillRowBelow: { name: string; kind: SkillKind }[] = [
   { name: "Gemini API", kind: "game" },
   { name: "PayMongo", kind: "game" },
   { name: "GCash", kind: "game" },
-  { name: "Roblox", kind: "game" },
+  { name: "Roblox Studio", kind: "game" },
+  { name: "Lua", kind: "game" },
   { name: "Luau", kind: "game" },
   { name: "SQL", kind: "backend" },
+  { name: "Cisco", kind: "tools" },
   { name: "Networking basics", kind: "tools" },
   { name: "Vercel", kind: "tools" },
   { name: "Git", kind: "tools" },
@@ -134,7 +137,7 @@ export const sphereIcons = [
   { slug: "tailwindcss", name: "Tailwind CSS" },
   { slug: "vite", name: "Vite" },
   { slug: "gsap", name: "GSAP" },
-  { slug: "framer", name: "Framer Motion" },
+  { slug: "framer", name: "Framer" },
   { slug: "storybook", name: "Storybook" },
   { slug: "vitest", name: "Vitest" },
   { slug: "nodedotjs", name: "Node.js" },
@@ -143,7 +146,8 @@ export const sphereIcons = [
   { slug: "vercel", name: "Vercel" },
   { slug: "git", name: "Git" },
   { slug: "github", name: "GitHub" },
-  { slug: "roblox", name: "Roblox" },
+  { slug: "robloxstudio", name: "Roblox Studio" },
+  { slug: "cisco", name: "Cisco" },
   { slug: "lua", name: "Lua / Luau" },
   { slug: "figma", name: "Figma" },
 ];
