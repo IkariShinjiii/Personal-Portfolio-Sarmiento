@@ -15,13 +15,13 @@ const links = [
 function useActiveSection() {
   const [active, setActive] = useState("top");
   useEffect(() => {
-    const ids = ["top", "about", "projects", "skills", "explore", "guestbook", "contact"];
+    const ids = ["top", "about", "projects", "skills", "activity", "explore", "guestbook", "contact"];
     const compute = () => {
       const y = window.scrollY + window.innerHeight * 0.4;
       let current = "top";
       for (const id of ids) {
         const el = document.getElementById(id);
-        if (el && el.offsetTop <= y) current = id === "guestbook" || id === "contact" ? "explore" : id;
+        if (el && el.offsetTop <= y) current = id === "guestbook" || id === "contact" ? "explore" : id === "activity" ? "skills" : id;
       }
       setActive(current);
     };
