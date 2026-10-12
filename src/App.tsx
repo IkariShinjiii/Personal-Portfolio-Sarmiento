@@ -13,6 +13,7 @@ import { Hero } from "@/sections/Hero";
 import { Projects } from "@/sections/Projects";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/lib/use-theme";
+import { watchOffscreen } from "@/lib/pause-offscreen";
 import { gsap, NO_REDUCED_MOTION, ScrollTrigger } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 import { contact, explore, person, skillRowAbove, skillRowBelow, sphereIcons } from "@/content";
@@ -67,6 +68,8 @@ export default function App() {
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);
   }, []);
+
+  useEffect(() => watchOffscreen(), []);
 
   // Late layout changes (fonts, lazy sections, images) move trigger positions; re-measure.
   useEffect(() => {
