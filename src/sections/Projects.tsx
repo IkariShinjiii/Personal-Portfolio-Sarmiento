@@ -31,7 +31,7 @@ export function Projects() {
                     <span className="size-2.5 rounded-full bg-white/50" />
                     <span className="size-2.5 rounded-full bg-white/50" />
                   </div>
-                  <div className="grid h-40 place-items-center text-sm text-white/70">Screenshot coming soon</div>
+                  <div className="grid h-40 place-items-center text-sm text-white/90">Screenshot coming soon</div>
                 </div>
               </div>
               <div className="mt-4 flex flex-wrap items-center gap-2">

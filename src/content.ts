@@ -21,9 +21,9 @@ export const craft = {
 };
 
 export const projects = [
-  { n: "01", category: "Web app", title: "Mind Bridge", summary: "Problem, what I built and the outcome. Coming soon.", tags: ["Tech", "Tags"], href: "https://github.com/IkariShinjiii/Mind-Bridge", tone: "from-emerald-500 to-teal-700" },
-  { n: "02", category: "Website", title: "ACUA website", summary: "Problem, what I built and the outcome. Coming soon.", tags: ["Tech", "Tags"], href: "", tone: "from-indigo-500 to-violet-700" },
-  { n: "03", category: "Game", title: "Clover Legends", summary: "Problem, what I built and the outcome. Coming soon.", tags: ["Tech", "Tags"], href: "", tone: "from-amber-500 to-orange-700" },
+  { n: "01", category: "Web app", title: "Mind Bridge", summary: "Problem, what I built and the outcome. Coming soon.", tags: ["Tech", "Tags"], href: "https://github.com/IkariShinjiii/Mind-Bridge", tone: "from-emerald-700 to-teal-900" },
+  { n: "02", category: "Website", title: "ACUA website", summary: "Problem, what I built and the outcome. Coming soon.", tags: ["Tech", "Tags"], href: "", tone: "from-indigo-600 to-violet-900" },
+  { n: "03", category: "Game", title: "Clover Legends", summary: "Problem, what I built and the outcome. Coming soon.", tags: ["Tech", "Tags"], href: "", tone: "from-amber-700 to-orange-900" },
 ];
 
 export const skills = [

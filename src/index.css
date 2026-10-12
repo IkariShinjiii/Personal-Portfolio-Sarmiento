@@ -49,14 +49,37 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
-/* Dot grid with a soft glow behind the page. */
-body {
-  background-image:
-    radial-gradient(ellipse 60% 40% at 50% 0%, color-mix(in srgb, var(--accent2) 18%, transparent), transparent 70%),
-    radial-gradient(color-mix(in srgb, var(--text) 14%, transparent) 1px, transparent 1px);
-  background-size: auto, 28px 28px;
-  background-attachment: fixed;
+/* Reactive backdrop: see components/Backdrop.tsx. */
+.backdrop {
+  --mx: 50vw;
+  --my: 25vh;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
 }
+.backdrop-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    520px circle at var(--mx) var(--my),
+    color-mix(in srgb, var(--accent2) 20%, transparent),
+    transparent 70%
+  );
+}
+.backdrop-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(color-mix(in srgb, var(--text) 55%, transparent) 1.2px, transparent 1.4px);
+  background-size: 28px 28px;
+}
+.backdrop-dots-faint { opacity: 0.1; }
+.backdrop-dots-lit {
+  opacity: 0.55;
+  -webkit-mask-image: radial-gradient(260px circle at var(--mx) var(--my), #000, transparent);
+  mask-image: radial-gradient(260px circle at var(--mx) var(--my), #000, transparent);
+}
+.backdrop[data-live="false"] .backdrop-dots-lit { opacity: 0.2; transition: opacity 0.4s; }
 
 .text-gradient {
   background-image: linear-gradient(90deg, var(--accent), var(--accent2));

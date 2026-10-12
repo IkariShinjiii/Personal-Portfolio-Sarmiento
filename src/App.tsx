@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Check, Copy, Mail } from "lucide-react";
+import { Backdrop } from "@/components/Backdrop";
 import { Nav } from "@/components/Nav";
 import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
@@ -50,6 +51,7 @@ export default function App() {
       >
         Skip to content
       </a>
+      <Backdrop />
       <Nav theme={theme} onToggleTheme={toggle} />
       <main>
         <Hero />
