@@ -90,7 +90,8 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
 .backdrop[data-live="false"] .backdrop-lit { opacity: 0.2; }
 
 .text-gradient {
-  background-image: linear-gradient(90deg, var(--accent), var(--accent2));
+  background-image: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent));
+  background-size: 200% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -119,4 +120,18 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
 ::view-transition-new(root) { animation-duration: 0.35s; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}
+
+/* Animated text colour: gradient words glide, solid accent text breathes between the two accents.
+   Background-position and colour only; paused while off screen via the .offscreen class (see lib/pause-offscreen). */
+@property --accent-mix { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
+@keyframes gradient-glide { from { background-position: 0% 50%; } to { background-position: 200% 50%; } }
+@keyframes accent-breathe { 0%, 100% { --accent-mix: 0%; } 50% { --accent-mix: 100%; } }
+@media (prefers-reduced-motion: no-preference) {
+  .text-gradient { animation: gradient-glide 9s linear infinite; }
+  .text-accent, .text-accent2 {
+    color: color-mix(in srgb, var(--accent) calc(100% - var(--accent-mix)), var(--accent2) var(--accent-mix));
+    animation: accent-breathe 6s ease-in-out infinite;
+  }
+  .offscreen, .offscreen * { animation-play-state: paused !important; }
 }
