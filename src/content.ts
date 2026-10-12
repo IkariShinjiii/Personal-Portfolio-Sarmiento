@@ -8,7 +8,7 @@ export const person = {
 export const about = [
   { title: "Education", text: "BS Information Technology, 3rd year, at the University of San Agustin, Iloilo (USA)." },
   { title: "Building", text: "My Mind Bridge capstone, a student wellness platform, and the ACUA storefront with PayMongo and GCash checkout." },
-  { title: "Games", text: "I build Roblox games in Luau, including Clover Legends, and I like turning anime ideas into playable games." },
+  { title: "Games", text: "I build Roblox games in Luau, like Anime Pet Simulator, and I like turning anime ideas into playable games." },
 ];
 
 export const mindset = {
@@ -19,7 +19,7 @@ export const mindset = {
   stack: [
     { label: "Mind Bridge", image: "/projects/mind-bridge.jpg", position: "left top" },
     { label: "ACUA", image: "/projects/acua.jpg", position: "center top" },
-    { label: "Clover Legends", image: "", position: "center" },
+    { label: "Anime Pet Simulator", image: "/projects/anime-pet-simulator.jpg", position: "center" },
   ],
 };
 
@@ -64,9 +64,21 @@ export const projects = [
   {
     n: "03",
     category: "Roblox game",
+    title: "Anime Pet Simulator",
+    summary: "A Pet Simulator-style Roblox game built around anime characters and pets. In development.",
+    tags: ["Roblox", "Luau", "In development"],
+    href: "",
+    tone: "from-rose-700 to-fuchsia-900",
+    image: "/projects/anime-pet-simulator.jpg",
+    imageAlt: "Anime Pet Simulator key art: chibi anime characters and cats in front of a red torii gate under cherry blossoms.",
+    imagePosition: "center",
+  },
+  {
+    n: "04",
+    category: "Roblox game",
     title: "Clover Legends",
-    summary: "A Roblox game built with Luau.",
-    tags: ["Roblox", "Luau"],
+    summary: "A Roblox game built with Luau. On hold for now.",
+    tags: ["Roblox", "Luau", "On hold"],
     href: "",
     tone: "from-amber-700 to-orange-900",
     image: "",
