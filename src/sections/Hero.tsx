@@ -1,10 +1,18 @@
+import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { Sparkles } from "lucide-react";
 import { Chip } from "@/components/ui/chip";
 
 const NAME = "Kervin Sarmiento";
 
-export function Hero() {
+type Props = {
+  onAsk: (question: string) => void;
+  askRef: React.RefObject<HTMLInputElement | null>;
+};
+
+export function Hero({ onAsk, askRef }: Props) {
   const reduce = useReducedMotion();
+  const [q, setQ] = useState("");
 
   return (
     <section id="top" className="mx-auto flex min-h-[calc(100svh-4rem)] max-w-[1040px] flex-col justify-center px-5 py-[72px] md:py-24">
@@ -24,7 +32,30 @@ export function Hero() {
       </h1>
       <p className="mt-4 max-w-xl text-lg text-muted">Your role line goes here, with a one-line summary.</p>
 
-      <div className="mt-8 flex flex-wrap gap-2">
+      <form
+        className="mt-8 flex max-w-xl items-center gap-2 rounded-full border border-border bg-surface px-4 py-2 focus-within:border-accent"
+        onSubmit={(e) => {
+          e.preventDefault();
+          onAsk(q.trim());
+          setQ("");
+        }}
+      >
+        <Sparkles size={16} aria-hidden className="text-accent" />
+        <input
+          ref={askRef}
+          value={q}
+          maxLength={500}
+          onChange={(e) => setQ(e.target.value)}
+          aria-label="Ask me anything"
+          placeholder="Ask me anything"
+          className="flex-1 bg-transparent py-1 text-base outline-none placeholder:text-muted"
+        />
+        <button type="submit" className="text-sm font-semibold text-accent">
+          Ask
+        </button>
+      </form>
+
+      <div className="mt-4 flex flex-wrap gap-2">
         {[
           ["#projects", "Work"],
           ["#about", "About"],

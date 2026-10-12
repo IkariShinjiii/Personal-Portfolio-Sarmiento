@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Check, Copy, ExternalLink } from "lucide-react";
 import { Nav } from "@/components/Nav";
 import { Section } from "@/components/Section";
 import { FlipCard } from "@/components/FlipCard";
 import { Reveal } from "@/components/Reveal";
+import { ChatPanel } from "@/components/ChatPanel";
 import { Hero } from "@/sections/Hero";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -34,6 +35,9 @@ function CopyEmail() {
 
 export default function App() {
   const { theme, toggle } = useTheme();
+  const [chatOpen, setChatOpen] = useState(false);
+  const [question, setQuestion] = useState("");
+  const askRef = useRef<HTMLInputElement>(null);
 
   return (
     <>
@@ -45,7 +49,13 @@ export default function App() {
       </a>
       <Nav theme={theme} onToggleTheme={toggle} />
       <main>
-        <Hero />
+        <Hero
+          askRef={askRef}
+          onAsk={(q) => {
+            setQuestion(q);
+            setChatOpen(true);
+          }}
+        />
 
         <Section id="about" label="About" title="About me">
           <div className="grid gap-4 md:grid-cols-3">
@@ -153,6 +163,15 @@ export default function App() {
           </div>
         </Section>
       </main>
+      <ChatPanel
+        open={chatOpen}
+        initialQuestion={question}
+        returnFocus={askRef}
+        onClose={() => {
+          setChatOpen(false);
+          setQuestion("");
+        }}
+      />
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
         &copy; {new Date().getFullYear()} Kervin Sarmiento &middot;{" "}
         <a href={contact.github} className="hover:text-text">
