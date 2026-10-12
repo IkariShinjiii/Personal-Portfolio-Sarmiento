@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { CalendarDays, Menu, Moon, Sun, X } from "lucide-react";
+import { Mail, Menu, Moon, Sun, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { gsap, NO_REDUCED_MOTION, ScrollTrigger } from "@/lib/gsap";
 
@@ -117,8 +117,8 @@ export function Nav({ theme, onToggleTheme }: { theme: "dark" | "light"; onToggl
             href="#contact"
             className="hidden items-center gap-2 rounded-full border border-border bg-surface/80 px-5 py-3 text-sm font-semibold backdrop-blur hover:border-accent sm:flex"
           >
-            <CalendarDays size={16} aria-hidden />
-            Book a call
+            <Mail size={16} aria-hidden />
+            Get in touch
           </a>
           <button
             type="button"

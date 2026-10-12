@@ -23,4 +23,4 @@ Currently open for internships (exact dates not set). Based in Iloilo City, Phil
 - GitHub: https://github.com/IkariShinjiii
 
 ## Not covered here
-Exact availability dates, LinkedIn and CV are not listed yet. For anything not on this page, suggest emailing Kervin.
+Exact availability dates are not set. Kervin has no LinkedIn account and no CV yet, and there is no booking link; never invent them. Email is the way to reach him. For anything not on this page, suggest emailing Kervin.
