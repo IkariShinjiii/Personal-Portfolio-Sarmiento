@@ -10,6 +10,12 @@ const NAME = "Kervin Sarmiento";
 
 export function Hero() {
   const root = useRef<HTMLElement>(null);
+  const wiggleTl = useRef<gsap.core.Timeline | null>(null);
+
+  // Click (or tap) the avatar: a quick squish and wobble.
+  const wiggle = () => {
+    wiggleTl.current?.restart();
+  };
 
   // One timeline drives the whole intro, so the pieces arrive in a deliberate order.
   useGSAP(
@@ -26,8 +32,44 @@ export function Hero() {
           .from(".hero-chip", { opacity: 0, y: 10, duration: 0.3, stagger: 0.04 }, 0.6)
           .from(".hero-cue", { opacity: 0, duration: 0.4 }, 0.8);
         const bob = gsap.to(".hero-cue-arrow", { y: 6, duration: 0.9, repeat: -1, yoyo: true, ease: "sine.inOut" });
-        const stop = pauseOffscreen(root.current, [bob]);
-        return () => stop();
+
+        // Avatar: it floats, its glow breathes, it turns to follow the pointer, and it wobbles when clicked.
+        const float = gsap.to(".avatar-float", { y: -6, duration: 2.6, repeat: -1, yoyo: true, ease: "sine.inOut" });
+        const breathe = gsap.to(".avatar-glow", { opacity: 0.35, scale: 1.12, duration: 2.2, repeat: -1, yoyo: true, ease: "sine.inOut" });
+        wiggleTl.current = gsap
+          .timeline({ paused: true })
+          .to(".avatar-tilt", { scale: 0.9, rotate: -6, duration: 0.12, ease: "power2.out" })
+          .to(".avatar-tilt", { scale: 1.08, rotate: 7, duration: 0.2, ease: "power2.inOut" })
+          .to(".avatar-tilt", { scale: 1, rotate: 0, duration: 0.7, ease: "elastic.out(1, 0.45)" });
+
+        const tiltEl = root.current?.querySelector<HTMLElement>(".avatar-tilt");
+        const rotY = tiltEl ? gsap.quickTo(tiltEl, "rotationY", { duration: 0.7, ease: "power3.out" }) : null;
+        const rotX = tiltEl ? gsap.quickTo(tiltEl, "rotationX", { duration: 0.7, ease: "power3.out" }) : null;
+        const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+        const onMove = (e: PointerEvent) => {
+          if (!tiltEl || !rotX || !rotY) return;
+          const r = tiltEl.getBoundingClientRect();
+          const nx = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / 420));
+          const ny = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height / 2)) / 420));
+          rotY(nx * 22);
+          rotX(-ny * 22);
+        };
+        const onLeave = () => {
+          rotX?.(0);
+          rotY?.(0);
+        };
+        if (finePointer) {
+          window.addEventListener("pointermove", onMove, { passive: true });
+          document.documentElement.addEventListener("pointerleave", onLeave);
+        }
+
+        const stop = pauseOffscreen(root.current, [bob, float, breathe]);
+        return () => {
+          stop();
+          wiggleTl.current?.kill();
+          window.removeEventListener("pointermove", onMove);
+          document.documentElement.removeEventListener("pointerleave", onLeave);
+        };
       });
       return () => mm.revert();
     },
@@ -40,13 +82,21 @@ export function Hero() {
       id="top"
       className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-[1040px] flex-col items-center px-5 pb-10 pt-10 text-center md:pt-14"
     >
-      <img
-        src="/profile.jpg"
-        alt="Portrait of Kervin Sarmiento"
-        width={96}
-        height={96}
-        className="hero-avatar size-24 rounded-full border border-border object-cover"
-      />
+      <div className="hero-avatar relative size-24 [perspective:520px]">
+        <span aria-hidden className="avatar-glow absolute -inset-3 rounded-full bg-accent2/30 blur-xl" />
+        <div className="avatar-float relative size-full">
+          <img
+            src="/avatar.png"
+            alt="Kervin's avatar"
+            width={96}
+            height={96}
+            fetchPriority="high"
+            draggable={false}
+            onClick={wiggle}
+            className="avatar-tilt size-full cursor-pointer select-none rounded-full border border-border object-cover [transform-style:preserve-3d]"
+          />
+        </div>
+      </div>
 
       <h1 aria-label={`Hi, I'm ${NAME}`} className="mt-6 text-[clamp(32px,6vw,56px)] font-bold leading-[1.1] tracking-tight [perspective:600px]">
         <span aria-hidden className="hero-hi mr-[0.28em] inline-block">
