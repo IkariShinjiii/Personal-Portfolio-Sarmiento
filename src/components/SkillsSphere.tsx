@@ -39,14 +39,20 @@ export function SkillsSphere({ items }: { items: Item[] }) {
     let size = 0;
     let angleY = 0.6;
     let angleX = -0.28;
-    let vy = reduce ? 0 : 0.0035;
+    let targetY = angleY;
+    let targetX = angleX;
+    const IDLE = reduce ? 0 : 0.21; // rad/s auto-spin
+    let vy = IDLE; // rad/s, used for inertia after release
     let vx = 0;
     let dragging = false;
     let lastX = 0;
     let lastY = 0;
+    let lastT = 0;
     let hover = -1;
+    const amt = pts.map(() => 0); // eased hover amount per logo, 0..1
     let raf = 0;
     let visible = true;
+    let prev = 0;
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -127,21 +133,22 @@ export function SkillsSphere({ items }: { items: Item[] }) {
       ctx.textBaseline = "top";
       for (const q of proj) {
         const depth = (q.z + 1) / 2; // 0 far, 1 near
-        const isHover = q.i === hover;
+        const h = amt[q.i];
         const px = c + q.x * R * 1.12;
         const py = c + q.y * R * 1.12;
-        const s = size * (0.04 + depth * 0.04) * (isHover ? 1.25 : 1);
+        const s = size * (0.04 + depth * 0.04) * (1 + 0.25 * h);
         // Near-black or near-white brand colours vanish on one theme: fall back to the text colour.
         const fill = contrast(q.p.hex, bg) < 2.2 ? text : q.p.hex;
-        ctx.globalAlpha = Math.min(1, 0.1 + depth ** 1.6 * 0.95 + (isHover ? 0.4 : 0));
+        ctx.globalAlpha = Math.min(1, 0.1 + depth ** 1.6 * 0.95 + 0.4 * h);
         ctx.fillStyle = fill;
         ctx.save();
         ctx.translate(px - s / 2, py - s / 2);
         ctx.scale(s / 24, s / 24);
         ctx.fill(q.p.path);
         ctx.restore();
-        if (depth > 0.82 || isHover) {
-          ctx.globalAlpha = isHover ? 1 : Math.min(1, (depth - 0.82) / 0.12);
+        const near = Math.min(1, Math.max(0, (depth - 0.82) / 0.12));
+        if (near > 0 || h > 0.01) {
+          ctx.globalAlpha = Math.max(near, h);
           ctx.fillStyle = muted;
           ctx.font = `700 ${Math.max(10, Math.round(size * 0.02))}px "JetBrains Mono", ui-monospace, monospace`;
           ctx.fillText(q.p.name.toUpperCase(), px, py + s / 2 + 6);
@@ -150,13 +157,25 @@ export function SkillsSphere({ items }: { items: Item[] }) {
       ctx.globalAlpha = 1;
     };
 
-    const tick = () => {
-      if (!dragging) {
-        angleY += vy;
-        angleX += vx;
-        vx *= 0.94;
-        if (!reduce) vy += (0.0035 - vy) * 0.03;
+    const tick = (now: number) => {
+      const dt = Math.min(0.05, (now - (prev || now)) / 1000); // seconds, clamped for tab switches
+      prev = now;
+      if (dragging) {
+        // Chase the pointer with an ease instead of snapping to it.
+        const k = 1 - Math.exp(-dt * 22);
+        angleY += (targetY - angleY) * k;
+        angleX += (targetX - angleX) * k;
+      } else {
+        angleY += vy * dt;
+        angleX += vx * dt;
+        angleX = Math.max(-1.2, Math.min(1.2, angleX));
+        // Inertia fades out, then settles into the slow idle spin.
+        vx *= Math.exp(-dt * 3.2);
+        vy += (IDLE - vy) * (1 - Math.exp(-dt * 1.6));
       }
+      // Hover emphasis eases in and out.
+      const he = 1 - Math.exp(-dt * 12);
+      for (let i = 0; i < amt.length; i++) amt[i] += ((i === hover ? 1 : 0) - amt[i]) * he;
       draw();
       raf = visible ? requestAnimationFrame(tick) : 0;
     };
@@ -185,29 +204,49 @@ export function SkillsSphere({ items }: { items: Item[] }) {
       dragging = true;
       lastX = e.clientX;
       lastY = e.clientY;
+      lastT = performance.now();
+      targetY = angleY;
+      targetX = angleX;
+      vy = 0;
+      vx = 0;
       canvas.setPointerCapture(e.pointerId);
     };
     const onMove = (e: PointerEvent) => {
       if (dragging) {
+        const now = performance.now();
+        const dt = Math.max(0.001, (now - lastT) / 1000);
         const dx = e.clientX - lastX;
         const dy = e.clientY - lastY;
         lastX = e.clientX;
         lastY = e.clientY;
-        angleY += dx * 0.008;
-        angleX = Math.max(-1.2, Math.min(1.2, angleX + dy * 0.008));
-        vy = dx * 0.008;
-        vx = dy * 0.004;
+        lastT = now;
+        // Dragging right turns the front of the globe right; dragging down turns it down.
+        targetY += dx * 0.009;
+        targetX = Math.max(-1.2, Math.min(1.2, targetX - dy * 0.009));
+        // Smoothed release velocity (rad/s).
+        const m = 0.35;
+        vy += ((dx * 0.009) / dt - vy) * m;
+        vx += ((-dy * 0.009) / dt - vx) * m;
       } else {
         hover = nearest(e);
       }
-      if (reduce) draw();
+      if (reduce) {
+        angleY = targetY;
+        angleX = targetX;
+        draw();
+      }
     };
     const onUp = () => {
       dragging = false;
+      vy = Math.max(-6, Math.min(6, vy));
+      vx = Math.max(-6, Math.min(6, vx));
     };
     const onLeave = () => {
       hover = -1;
-      if (reduce) draw();
+      if (reduce) {
+        amt.fill(0);
+        draw();
+      }
     };
 
     resize();
@@ -221,7 +260,10 @@ export function SkillsSphere({ items }: { items: Item[] }) {
     ro.observe(canvas);
     const io = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
-      if (visible && !reduce && !raf) raf = requestAnimationFrame(tick);
+      if (visible && !reduce && !raf) {
+        prev = 0;
+        raf = requestAnimationFrame(tick);
+      }
     });
     io.observe(canvas);
 
