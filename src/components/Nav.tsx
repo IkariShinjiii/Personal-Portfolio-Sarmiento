@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Menu, Moon, Sun, X } from "lucide-react";
+import { CalendarDays, Menu, Moon, Sun, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -66,9 +66,10 @@ export function Nav({ theme, onToggleTheme }: { theme: "dark" | "light"; onToggl
         <div className="flex items-center gap-2">
           <a
             href="#contact"
-            className="hidden rounded-full border border-border bg-surface/80 px-5 py-3 text-sm font-semibold backdrop-blur hover:border-accent sm:block"
+            className="hidden items-center gap-2 rounded-full border border-border bg-surface/80 px-5 py-3 text-sm font-semibold backdrop-blur hover:border-accent sm:flex"
           >
-            Get in touch
+            <CalendarDays size={16} aria-hidden />
+            Book a call
           </a>
           <button
             type="button"

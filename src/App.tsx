@@ -5,10 +5,10 @@ import { Nav } from "@/components/Nav";
 import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
 import { About } from "@/sections/About";
+import { SkillsSphere } from "@/components/SkillsSphere";
 import { Hero } from "@/sections/Hero";
 import { Projects } from "@/sections/Projects";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { useTheme } from "@/lib/use-theme";
 import { cn } from "@/lib/utils";
 import { contact, explore, person, skills } from "@/content";
@@ -59,18 +59,8 @@ export default function App() {
         <Projects />
 
         <Section id="skills" label="Tech stack" title="My Skills">
-          <ul className="mx-auto grid max-w-[900px] grid-cols-2 gap-4 md:grid-cols-3">
-            {skills.map((s) => (
-              <li key={s.name}>
-                <Reveal>
-                  <Card className="bg-surface/70 p-5 backdrop-blur">
-                    <p className="font-semibold">{s.name}</p>
-                    <p className="mt-1 text-sm text-muted">{s.level}</p>
-                  </Card>
-                </Reveal>
-              </li>
-            ))}
-          </ul>
+          <SkillsSphere items={skills.map((s) => s.name)} />
+          <p className="mt-2 text-center text-sm text-muted">Drag to spin</p>
         </Section>
 
         <Section id="explore" label="More" title="More to explore">
