@@ -34,7 +34,7 @@ export const craft = {
   ],
 };
 
-export const location = { city: "Iloilo City", country: "Philippines", coords: "10.7202° N, 122.5621° E" };
+export const location = { city: "Iloilo City", country: "Philippines", coords: "10.7202° N, 122.5621° E", timezone: "GMT+8" };
 
 export const projects = [
   {
@@ -71,18 +71,6 @@ export const projects = [
     tone: "from-rose-700 to-fuchsia-900",
     image: "/projects/anime-pet-simulator.jpg",
     imageAlt: "Anime Pet Simulator key art: chibi anime characters and cats in front of a red torii gate under cherry blossoms.",
-    imagePosition: "center",
-  },
-  {
-    n: "04",
-    category: "Roblox game",
-    title: "Clover Legends",
-    summary: "A Roblox game built with Luau. On hold for now.",
-    tags: ["Roblox", "Luau", "On hold"],
-    href: "",
-    tone: "from-amber-700 to-orange-900",
-    image: "",
-    imageAlt: "",
     imagePosition: "center",
   },
 ];

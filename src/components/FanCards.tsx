@@ -26,7 +26,7 @@ export function FanCards({ items }: { items: Item[] }) {
         cards.current.forEach((el, i) => {
           if (!el) return;
           const on = i === active;
-          const props = { y: on ? -58 : 0, rotate: on ? (i % 2 ? 2.4 : -2.4) : 0, scale: on ? 1.02 : 1, zIndex: on ? 5 : i === 1 ? 3 : 2 };
+          const props = { y: on ? -26 : 0, rotate: on ? (i % 2 ? 2.4 : -2.4) : 0, scale: on ? 1.02 : 1, zIndex: on ? 5 : i === 1 ? 3 : 2 };
           if (animate) gsap.to(el, { ...props, duration: 0.9, ease: "power3.inOut", overwrite: "auto", force3D: true });
           else gsap.set(el, props);
         });
@@ -54,11 +54,11 @@ export function FanCards({ items }: { items: Item[] }) {
   return (
     <div
       ref={root}
-      className="relative h-[232px] overflow-hidden"
+      className="relative h-[190px] overflow-hidden"
       onPointerEnter={() => (hovering.current = true)}
       onPointerLeave={() => (hovering.current = false)}
     >
-      <p className="pointer-events-none absolute inset-x-0 top-3 z-10 mx-auto w-fit rounded-full border border-accent2/30 bg-bg/60 px-3 py-1 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-accent2">
+      <p className="pointer-events-none absolute inset-x-0 top-2 z-10 mx-auto w-fit rounded-full border border-accent2/30 bg-bg/60 px-3 py-1 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-accent2">
         Hover to read more
       </p>
       {items.map((it, i) => {
@@ -76,7 +76,7 @@ export function FanCards({ items }: { items: Item[] }) {
             onClick={() => setActive(i)}
             style={{ left: `${i * 31}%`, willChange: "transform" }}
             className={cn(
-              "absolute top-[64px] h-[220px] w-[38%] rounded-2xl border p-4 text-left transition-[border-color,box-shadow,background-color,color] duration-500",
+              "absolute top-[58px] flex h-[210px] w-[38%] flex-col justify-start rounded-2xl border p-4 text-left transition-[border-color,box-shadow,background-color,color] duration-500",
               "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
               on
                 ? "border-accent2/70 bg-surface shadow-[0_0_44px_-6px_color-mix(in_srgb,var(--accent2)_55%,transparent)]"

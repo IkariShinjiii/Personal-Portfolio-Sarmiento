@@ -2,10 +2,10 @@ import { useRef } from "react";
 import { MapPin } from "lucide-react";
 import { gsap, NO_REDUCED_MOTION, pauseOffscreen, useGSAP } from "@/lib/gsap";
 
-type Props = { city: string; country: string; coords: string };
+type Props = { city: string; country: string; coords: string; timezone?: string };
 
 /** Dotted "map" card with a pin and a scan line that sweeps across it. */
-export function LocationCard({ city, country, coords }: Props) {
+export function LocationCard({ city, country, coords, timezone }: Props) {
   const root = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -22,7 +22,7 @@ export function LocationCard({ city, country, coords }: Props) {
   );
 
   return (
-    <div ref={root} className="relative h-full min-h-[148px] overflow-hidden rounded-card border border-border bg-surface/70">
+    <div ref={root} className="relative h-full min-h-[180px] overflow-hidden rounded-card border border-border bg-surface/70">
       <div
         aria-hidden
         className="absolute inset-0 opacity-70 [background-image:radial-gradient(color-mix(in_srgb,var(--text)_28%,transparent)_1.2px,transparent_1.4px)] [background-size:12px_12px] [mask-image:radial-gradient(ellipse_at_70%_30%,#000,transparent_75%)]"
@@ -38,6 +38,7 @@ export function LocationCard({ city, country, coords }: Props) {
           {city}, {country}
         </p>
         <p className="mt-1.5 font-mono text-sm text-muted">{coords}</p>
+        {timezone && <p className="font-mono text-sm text-accent2">- {timezone}</p>}
       </div>
     </div>
   );
