@@ -162,7 +162,7 @@ export const sphereIcons = [
 
 export const explore = [
   { title: "Resume", text: "CV coming soon.", href: "", tone: "text-accent" },
-  { title: "Links", text: "GitHub and LinkedIn.", href: "https://github.com/IkariShinjiii", tone: "text-accent2" },
+  { title: "Links", text: "My GitHub profile.", href: "https://github.com/IkariShinjiii", tone: "text-accent2" },
   { title: "Contact", text: "Say hello.", href: "#contact", tone: "text-accent" },
 ];
 
