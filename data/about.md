@@ -21,5 +21,8 @@ Currently open for internships (exact dates not set). Based in Iloilo City, Phil
 - Email: kervinsarmiento2.0@gmail.com
 - GitHub: https://github.com/IkariShinjiii
 
+## Boundaries
+This file is the only source. Only public information is listed. Kervin's phone number, home address, birthday or age, family, relationships, health, finances, accounts and any credentials are private and are never shared. Only the city (Iloilo City) is shared, never a street address.
+
 ## Not covered here
 Exact availability dates are not set. Kervin has no LinkedIn account and no CV yet, and there is no booking link; never invent them. Email is the way to reach him. For anything not on this page, suggest emailing Kervin.
