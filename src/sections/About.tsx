@@ -36,22 +36,29 @@ function HoverPanels() {
 }
 
 const card = "rounded-card border border-border bg-surface/70 p-6 backdrop-blur";
+// Fixed card widths (369px, and 755px for the wide one); extra page width becomes the gap between cards.
+export const COL = "md:w-[min(369px,calc((100%_-_2rem)/3))] md:shrink-0";
+const SPAN = "md:w-[min(755px,calc((100%_-_2rem)/3*2_+_1rem))] md:shrink-0";
 
 export function About() {
   return (
     <Section id="about" label="About" title="About me">
-      <div className="grid gap-4 md:grid-cols-3">
-        <Reveal className={cn(card, "grid place-items-center text-center")}>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 md:flex-row md:justify-between">
+        <Reveal className={cn(card, COL, "grid place-items-center text-center")}>
           <p className="text-3xl font-extrabold uppercase leading-tight tracking-tight">{person.name}</p>
           <p className="mt-2 text-xs uppercase tracking-[0.3em] text-muted">{person.role}</p>
         </Reveal>
 
-        <Reveal className={cn(card, "md:col-span-2")}>
+        <Reveal className={cn(card, SPAN)}>
           <p className="mb-3 text-center text-[11px] uppercase tracking-[0.25em] text-accent2">Hover to read more</p>
           <HoverPanels />
         </Reveal>
+        </div>
 
-        <Reveal className={card}>
+        <div className="flex flex-col gap-4 md:flex-row md:justify-between">
+
+        <Reveal className={cn(card, COL)}>
           <h3 className="text-2xl font-bold">{mindset.heading}</h3>
           <div className="mt-2 h-0.5 w-8 bg-accent2" />
           <p className="mt-4 text-muted">{mindset.text.replace(/\*\*/g, "")}</p>
@@ -62,7 +69,7 @@ export function About() {
           </div>
         </Reveal>
 
-        <Reveal className={cn(card, "grid min-h-64 place-items-center overflow-hidden p-0")}>
+        <Reveal className={cn(card, COL, "grid min-h-64 place-items-center overflow-hidden p-0")}>
           <img
             src="/profile.jpg"
             alt="Portrait of Kervin Sarmiento"
@@ -73,7 +80,7 @@ export function About() {
           />
         </Reveal>
 
-        <Reveal className={cn(card, "flex flex-col overflow-hidden")}>
+        <Reveal className={cn(card, COL, "flex flex-col overflow-hidden")}>
           <h3 className="text-2xl font-bold">{craft.heading}</h3>
           <div className="mt-2 h-0.5 w-8 bg-accent2" />
           <p className="mt-4 text-muted">{craft.text}</p>
@@ -88,6 +95,7 @@ export function About() {
             </ul>
           </div>
         </Reveal>
+        </div>
       </div>
     </Section>
   );

@@ -27,7 +27,7 @@ export function Section({ id, label, title, children }: Props) {
   );
 
   return (
-    <section id={id} className="mx-auto max-w-[1180px] px-5 py-[72px] md:py-24">
+    <section id={id} className="mx-auto max-w-[2400px] px-5 min-[1280px]:px-[clamp(1.25rem,3vw,3.5rem)] py-[72px] md:py-24">
       <div ref={head} className="text-center">
         <Label className="sec-label">{label}</Label>
         <h2 className="sec-title mt-2 text-[clamp(28px,4vw,48px)] font-bold tracking-tight">

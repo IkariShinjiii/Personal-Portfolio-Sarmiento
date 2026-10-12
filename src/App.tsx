@@ -95,9 +95,9 @@ export default function App() {
         </Section>
 
         <Section id="explore" label="More" title="More to explore">
-          <ul className="grid gap-4 md:grid-cols-3">
+          <ul className="flex flex-col gap-4 md:flex-row md:justify-between">
             {explore.map((e) => (
-              <li key={e.title}>
+              <li key={e.title} className="md:w-[min(369px,calc((100%_-_2rem)/3))]">
                 <Reveal>
                   <a
                     href={e.href || undefined}
@@ -136,7 +136,7 @@ export default function App() {
         </Section>
       </main>
 
-      <footer className="mx-auto flex max-w-[1180px] items-center justify-between px-5 py-8 text-sm text-muted">
+      <footer className="mx-auto flex max-w-[2400px] items-center justify-between px-5 min-[1280px]:px-[clamp(1.25rem,3vw,3.5rem)] py-8 text-sm text-muted">
         <p>
           <span className="font-bold text-text">{person.initials}</span> &nbsp;&bull;&nbsp; &copy; {new Date().getFullYear()}{" "}
           {person.name}
