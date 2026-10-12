@@ -8,9 +8,9 @@ import { projects } from "@/content";
 export function Projects() {
   return (
     <Section id="projects" label="Work" title="Featured Projects">
-      <ol className="grid gap-8 md:grid-cols-2">
+      <ol className="flex flex-col gap-8 md:flex-row md:flex-wrap md:justify-between">
         {projects.map((p) => (
-          <li key={p.n}>
+          <li key={p.n} className="md:w-[min(554px,calc((100%_-_2rem)/2))]">
             <Reveal>
               <div className="flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-muted">
                 <span>{p.n}</span>
