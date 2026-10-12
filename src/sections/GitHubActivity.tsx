@@ -112,16 +112,18 @@ export function GitHubActivity() {
   return (
     <Section id="activity" label="GitHub" title="Recent Activity">
       <div ref={holder} className="relative mx-auto max-w-[1420px] rounded-card border border-border bg-surface/70 p-5 md:p-8">
-        <a
-          href={contact.github}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Open my GitHub profile (opens in a new tab)"
-          className="absolute right-5 top-5 grid size-12 place-items-center rounded-full border border-border bg-bg/60 text-muted transition-colors hover:border-accent2 hover:text-text md:right-8 md:top-8"
-        >
-          <GithubMark />
-        </a>
-        <p className="font-mono text-xs uppercase tracking-[0.25em] text-muted">Recent activity</p>
+        <div className="flex items-center justify-between gap-4">
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-muted">Recent activity</p>
+          <a
+            href={contact.github}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open my GitHub profile (opens in a new tab)"
+            className="grid size-11 shrink-0 place-items-center rounded-full border border-border bg-bg/60 text-muted transition-colors hover:border-accent2 hover:text-text"
+          >
+            <GithubMark />
+          </a>
+        </div>
 
         {failed && (
           <p className="py-16 text-center text-muted">
