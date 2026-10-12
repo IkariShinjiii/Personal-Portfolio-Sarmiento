@@ -56,7 +56,7 @@ export function Nav({ theme, onToggleTheme }: { theme: "dark" | "light"; onToggl
 
   return (
     <header className="sticky top-0 z-40 px-4 min-[1280px]:px-[clamp(1rem,3vw,3.5rem)] pt-4">
-      <nav aria-label="Primary" className="mx-auto flex max-w-[2400px] items-center justify-between">
+      <nav aria-label="Primary" className="mx-auto flex max-w-[1760px] items-center justify-between">
         <button
           type="button"
           onClick={onToggleTheme}
@@ -116,7 +116,7 @@ export function Nav({ theme, onToggleTheme }: { theme: "dark" | "light"; onToggl
       {open && (
         <ul
           id="mobile-menu"
-          className="mx-auto mt-2 max-w-[2400px] rounded-card border border-border bg-surface/95 p-2 backdrop-blur md:hidden"
+          className="mx-auto mt-2 max-w-[1760px] rounded-card border border-border bg-surface/95 p-2 backdrop-blur md:hidden"
         >
           {[...links, { id: "contact", label: "Get in touch" }].map((l) => (
             <li key={l.id}>

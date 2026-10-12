@@ -9,9 +9,9 @@ import { cn } from "@/lib/utils";
 import { about, craft, location, mindset, person } from "@/content";
 
 const card = "rounded-card border border-border bg-surface/70 backdrop-blur";
-// Fixed card widths (369px, and 755px for the wide one); extra page width becomes the gap between cards.
-const COL = "md:w-[min(369px,calc((100%_-_2rem)/3))] md:shrink-0";
-const SPAN = "md:w-[min(755px,calc((100%_-_2rem)/3*2_+_1rem))] md:shrink-0";
+// Even thirds with a constant 1rem gap: the cards share the row, with no gaps that grow with the screen.
+const COL = "md:w-[calc((100%_-_2rem)/3)] md:shrink-0";
+const SPAN = "md:w-[calc((100%_-_2rem)/3*2_+_1rem)] md:shrink-0";
 
 function Heading({ children }: { children: string }) {
   return (
@@ -27,7 +27,7 @@ export function About() {
     <Section id="about" label="About" title="About me">
       <div className="flex flex-col gap-4">
         {/* Row 1: name + fan of cards */}
-        <div className="flex flex-col gap-4 md:flex-row md:justify-between">
+        <div className="flex flex-col gap-4 md:flex-row">
           <Reveal className={cn(card, COL, "grid min-h-[200px] place-items-center p-6 text-center")}>
             <div>
               <p className="bg-gradient-to-b from-text to-muted bg-clip-text text-[40px] font-extrabold uppercase leading-[1.05] tracking-tight text-transparent [filter:drop-shadow(0_0_18px_color-mix(in_srgb,var(--text)_25%,transparent))]">
@@ -43,7 +43,7 @@ export function About() {
         </div>
 
         {/* Row 2: mindset | portrait + location | craft */}
-        <div className="flex flex-col gap-4 md:flex-row md:justify-between">
+        <div className="flex flex-col gap-4 md:flex-row">
           <Reveal className={cn(card, COL, "flex flex-col p-6")}>
             <Heading>{mindset.heading}</Heading>
             <p className="mt-4 text-[17px] leading-relaxed text-muted">
