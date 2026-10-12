@@ -45,7 +45,21 @@ export function Guestbook() {
       return;
     }
     void supabase.auth.getSession().then(({ data }) => setSession(data.session));
-    const { data: sub } = supabase.auth.onAuthStateChange((_evt, s) => setSession(s));
+    const { data: sub } = supabase.auth.onAuthStateChange((evt, s) => {
+      setSession(s);
+      // Re-read after sign-in or token refresh so a session restore never leaves a stale list.
+      if (evt === "SIGNED_IN" || evt === "TOKEN_REFRESHED") setTimeout(() => void load(), 0);
+      if (evt === "SIGNED_IN") {
+        try {
+          if (sessionStorage.getItem("gb-return")) {
+            sessionStorage.removeItem("gb-return");
+            setTimeout(() => document.getElementById("guestbook")?.scrollIntoView(), 100);
+          }
+        } catch {
+          /* ignore */
+        }
+      }
+    });
     void load();
     return () => sub.subscription.unsubscribe();
   }, [load]);
@@ -62,9 +76,14 @@ export function Guestbook() {
 
   async function signIn() {
     setError("");
+    try {
+      sessionStorage.setItem("gb-return", "1");
+    } catch {
+      /* storage unavailable: the visitor just lands at the top */
+    }
     const { error: e } = await supabase!.auth.signInWithOAuth({
       provider: "github",
-      options: { redirectTo: `${window.location.origin}/#guestbook` },
+      options: { redirectTo: `${window.location.origin}/` },
     });
     if (e) setError("Could not start GitHub sign-in.");
   }

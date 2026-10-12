@@ -4,7 +4,7 @@ const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined;
 
 /** Null when the env vars are missing, so the guestbook can show a friendly message. */
-export const supabase = url && key ? createClient(url, key) : null;
+export const supabase = url && key ? createClient(url, key, { auth: { flowType: "pkce" } }) : null;
 
 export type GuestEntry = {
   id: string;
