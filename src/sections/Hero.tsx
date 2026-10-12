@@ -12,12 +12,13 @@ export function Hero() {
 
   return (
     <section id="top" className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-[1040px] flex-col items-center px-5 pb-10 pt-10 text-center md:pt-14">
-      <div
-        aria-hidden
-        className="grid size-24 place-items-center rounded-full border border-border bg-gradient-to-br from-accent/30 to-accent2/30 text-3xl font-bold"
-      >
-        KS
-      </div>
+      <img
+        src="/profile.jpg"
+        alt="Portrait of Kervin Sarmiento"
+        width={96}
+        height={96}
+        className="size-24 rounded-full border border-border object-cover"
+      />
 
       <h1 aria-label={`Hi, I'm ${NAME}`} className="mt-6 text-[clamp(32px,6vw,56px)] font-bold leading-[1.1] tracking-tight">
         <span aria-hidden>Hi, I'm </span>

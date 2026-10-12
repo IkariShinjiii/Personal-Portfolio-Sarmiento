@@ -63,13 +63,14 @@ export function About() {
         </Reveal>
 
         <Reveal className={cn(card, "grid min-h-64 place-items-center overflow-hidden p-0")}>
-          <div
-            role="img"
-            aria-label="Profile photo placeholder"
-            className="grid size-full place-items-center bg-gradient-to-br from-accent/20 to-accent2/25 text-6xl font-bold text-muted"
-          >
-            {person.initials}
-          </div>
+          <img
+            src="/profile.jpg"
+            alt="Portrait of Kervin Sarmiento"
+            width={480}
+            height={480}
+            loading="lazy"
+            className="size-full object-cover"
+          />
         </Reveal>
 
         <Reveal className={cn(card, "flex flex-col overflow-hidden")}>

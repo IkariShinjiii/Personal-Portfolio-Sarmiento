@@ -20,7 +20,7 @@ export const mindset = {
 export const craft = {
   heading: "Craft",
   text: "I build web apps and game systems that work for real users.",
-  status: "Looking for internships and collaborations",
+  status: "Open for internships and collaborations",
   stack: ["React", "TypeScript", "Tailwind CSS", "Supabase", "Luau", "Git"],
 };
 
@@ -29,8 +29,8 @@ export const projects = [
     n: "01",
     category: "Capstone",
     title: "Mind Bridge",
-    summary: "A student wellness platform with assessments, counseling requests and scheduling.",
-    tags: ["Wellness", "Scheduling", "Capstone"],
+    summary: "A student wellness platform with assessments, counseling requests and scheduling. Still in active development.",
+    tags: ["Wellness", "Scheduling", "In development"],
     href: "https://mind-bridge-omega.vercel.app",
     tone: "from-emerald-700 to-teal-900",
   },
@@ -38,8 +38,8 @@ export const projects = [
     n: "02",
     category: "Storefront",
     title: "ACUA website",
-    summary: "A storefront with online checkout through PayMongo and GCash, plus a custom commission flow.",
-    tags: ["PayMongo", "GCash", "Commissions"],
+    summary: "A storefront with online checkout through PayMongo and GCash, plus a custom commission flow. Still in active development.",
+    tags: ["PayMongo", "GCash", "In development"],
     href: "https://acua-three.vercel.app",
     tone: "from-indigo-600 to-violet-900",
   },
