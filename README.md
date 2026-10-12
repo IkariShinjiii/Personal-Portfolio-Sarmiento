@@ -7,7 +7,7 @@ A single-page portfolio built with React, TypeScript (Vite), Tailwind CSS and GS
 ## Features
 - Chat hero: `/api/chat` (Vercel function) answers questions from `data/about.md` using Gemini
 - Guestbook: GitHub sign-in through Supabase Auth; one message per visitor, row-level security
-- Cursor-reactive dot-grid background, draggable skills sphere, dark and light themes
+- Cursor-reactive dot-grid background, draggable skills globe with brand logos and two auto-scrolling skill carousels, dark and light themes
 - Respects reduced motion; keyboard accessible
 
 ## Structure

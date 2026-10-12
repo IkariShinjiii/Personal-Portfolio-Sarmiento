@@ -63,13 +63,71 @@ export const projects = [
   },
 ];
 
-export const skills = [
-  { name: "React", level: "" },
-  { name: "TypeScript", level: "" },
-  { name: "Tailwind CSS", level: "" },
-  { name: "Supabase", level: "" },
-  { name: "Luau", level: "" },
-  { name: "Git and GitHub", level: "" },
+// Only technologies that are real for Kervin: stated by him, or used in this site, Mind Bridge or ACUA.
+export type SkillKind = "frontend" | "backend" | "tools" | "game";
+
+export const SKILL_COLORS: Record<SkillKind, string> = {
+  frontend: "#3ddc84",
+  backend: "#f5b942",
+  tools: "#7c9cff",
+  game: "#f27ba8",
+};
+
+export const skillRowAbove: { name: string; kind: SkillKind }[] = [
+  { name: "React", kind: "frontend" },
+  { name: "TypeScript", kind: "frontend" },
+  { name: "JavaScript", kind: "frontend" },
+  { name: "HTML5", kind: "frontend" },
+  { name: "CSS", kind: "frontend" },
+  { name: "Tailwind CSS", kind: "frontend" },
+  { name: "Vite", kind: "frontend" },
+  { name: "GSAP", kind: "tools" },
+  { name: "Framer Motion", kind: "tools" },
+  { name: "Storybook", kind: "tools" },
+  { name: "Vitest", kind: "tools" },
+  { name: "Playwright", kind: "tools" },
+  { name: "Recharts", kind: "tools" },
+  { name: "Zod", kind: "tools" },
+];
+
+export const skillRowBelow: { name: string; kind: SkillKind }[] = [
+  { name: "Node.js", kind: "backend" },
+  { name: "Supabase", kind: "backend" },
+  { name: "PostgreSQL", kind: "backend" },
+  { name: "Firebase", kind: "backend" },
+  { name: "Firestore", kind: "backend" },
+  { name: "Cloud Functions", kind: "backend" },
+  { name: "Nodemailer", kind: "backend" },
+  { name: "Gemini API", kind: "game" },
+  { name: "PayMongo", kind: "game" },
+  { name: "GCash", kind: "game" },
+  { name: "Roblox", kind: "game" },
+  { name: "Luau", kind: "game" },
+  { name: "Vercel", kind: "tools" },
+  { name: "Git", kind: "tools" },
+  { name: "GitHub", kind: "tools" },
+];
+
+/** Logos on the sphere: slug in BRAND_ICONS plus the label shown when it faces the viewer. */
+export const sphereIcons = [
+  { slug: "react", name: "React" },
+  { slug: "typescript", name: "TypeScript" },
+  { slug: "javascript", name: "JavaScript" },
+  { slug: "html5", name: "HTML5" },
+  { slug: "css", name: "CSS" },
+  { slug: "tailwindcss", name: "Tailwind CSS" },
+  { slug: "vite", name: "Vite" },
+  { slug: "gsap", name: "GSAP" },
+  { slug: "framer", name: "Framer Motion" },
+  { slug: "storybook", name: "Storybook" },
+  { slug: "vitest", name: "Vitest" },
+  { slug: "nodedotjs", name: "Node.js" },
+  { slug: "supabase", name: "Supabase" },
+  { slug: "firebase", name: "Firebase" },
+  { slug: "vercel", name: "Vercel" },
+  { slug: "git", name: "Git" },
+  { slug: "github", name: "GitHub" },
+  { slug: "roblox", name: "Roblox" },
 ];
 
 export const explore = [
