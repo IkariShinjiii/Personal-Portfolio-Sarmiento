@@ -6,6 +6,7 @@ import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
 import { About } from "@/sections/About";
 import { SkillsSphere } from "@/components/SkillsSphere";
+import { Guestbook } from "@/sections/Guestbook";
 import { Hero } from "@/sections/Hero";
 import { Projects } from "@/sections/Projects";
 import { Button } from "@/components/ui/button";
@@ -82,6 +83,8 @@ export default function App() {
             ))}
           </ul>
         </Section>
+
+        <Guestbook />
 
         <Section id="contact" label="Contact" title="Get in touch">
           <div className="text-center">
