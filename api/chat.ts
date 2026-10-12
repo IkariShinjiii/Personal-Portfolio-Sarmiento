@@ -6,7 +6,8 @@ const MAX_MESSAGE = 500;
 const MAX_HISTORY = 6;
 const RATE_LIMIT = 10; // messages per minute per visitor
 const WINDOW_MS = 60_000;
-const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+// Tried in order; a missing or retired model name falls through to the next one.
+const MODELS = [...new Set([process.env.GEMINI_MODEL, "gemini-flash-latest", "gemini-2.5-flash"].filter(Boolean) as string[])];
 const EMAIL = "kervinsarmiento2.0@gmail.com";
 
 // In-memory counters reset on cold starts: a basic guard, not a guarantee.
@@ -74,10 +75,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     { role: "user", parts: [{ text: message }] },
   ];
 
+  let lastStatus = 0;
+  let lastReason = "";
   try {
-    const r = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`,
-      {
+    for (const model of MODELS) {
+      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-goog-api-key": key },
         body: JSON.stringify({
@@ -85,14 +87,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           contents,
           generationConfig: { maxOutputTokens: 400, temperature: 0.4 },
         }),
-      },
-    );
-    if (!r.ok) return res.status(502).json({ error: "The assistant is unavailable right now." });
-    const data = (await r.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
-    const reply = data.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("").trim();
-    if (!reply) return res.status(502).json({ error: "The assistant is unavailable right now." });
-    return res.status(200).json({ reply });
+      });
+      if (r.ok) {
+        const data = (await r.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
+        const reply = data.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("").trim();
+        if (reply) return res.status(200).json({ reply });
+        lastStatus = 200;
+        lastReason = "empty reply";
+        continue;
+      }
+      lastStatus = r.status;
+      try {
+        const e = (await r.json()) as { error?: { message?: string; status?: string } };
+        lastReason = `${model}: ${e.error?.status ?? ""} ${e.error?.message ?? ""}`.slice(0, 200);
+      } catch {
+        lastReason = `${model}: HTTP ${r.status}`;
+      }
+      // Bad key or quota will not be fixed by another model; stop early.
+      if (r.status === 401 || r.status === 403 || r.status === 429) break;
+    }
   } catch {
-    return res.status(502).json({ error: "The assistant is unavailable right now." });
+    lastReason = "network error";
   }
+  // Server-side log only; the response never echoes the key or Google's raw message.
+  console.error("gemini failed", lastStatus, lastReason);
+  return res.status(502).json({ error: "The assistant is unavailable right now.", upstream: lastStatus });
 }
