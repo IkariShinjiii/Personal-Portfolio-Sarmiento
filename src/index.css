@@ -135,3 +135,20 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
   }
   .offscreen, .offscreen * { animation-play-state: paused !important; }
 }
+
+/* Hero name: one shared gradient across all letters. Each letter is a separate (animated) element, so it paints the
+   same wide gradient shifted by its own offset (--x) and the whole name glides together through --shift. */
+@property --shift { syntax: "<length>"; inherits: true; initial-value: 0px; }
+.name-letter {
+  background-image: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent));
+  background-size: calc(var(--w, 600px) * 2) 100%;
+  background-repeat: repeat-x;
+  background-position: calc(var(--x, 0px) * -1 - var(--shift)) 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@keyframes name-glide { to { --shift: calc(var(--w, 600px) * 2); } }
+@media (prefers-reduced-motion: no-preference) {
+  .name-grad { animation: name-glide 9s linear infinite; }
+}
