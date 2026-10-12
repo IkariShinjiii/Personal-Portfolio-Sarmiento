@@ -6,7 +6,7 @@ export const person = {
 };
 
 export const about = [
-  { title: "Education", text: "University of San Agustin, Iloilo (USA)." },
+  { title: "Education", text: "BS Information Technology, 3rd year, at the University of San Agustin, Iloilo (USA)." },
   { title: "Building", text: "My Mind Bridge capstone and the ACUA website." },
   { title: "Games", text: "Roblox and Luau, including Clover Legends." },
 ];
@@ -31,7 +31,7 @@ export const projects = [
     title: "Mind Bridge",
     summary: "A student wellness platform with assessments, counseling requests and scheduling.",
     tags: ["Wellness", "Scheduling", "Capstone"],
-    href: "https://github.com/IkariShinjiii/Mind-Bridge",
+    href: "https://mind-bridge-omega.vercel.app",
     tone: "from-emerald-700 to-teal-900",
   },
   {
@@ -40,7 +40,7 @@ export const projects = [
     title: "ACUA website",
     summary: "A storefront with online checkout through PayMongo and GCash, plus a custom commission flow.",
     tags: ["PayMongo", "GCash", "Commissions"],
-    href: "",
+    href: "https://acua-three.vercel.app",
     tone: "from-indigo-600 to-violet-900",
   },
   {
