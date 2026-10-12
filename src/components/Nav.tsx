@@ -11,22 +11,42 @@ const links = [
   { id: "explore", label: "Other" },
 ];
 
-/** Scroll-linked: ScrollTrigger calls this on every scroll tick; it reads the live DOM so lazy sections are fine. */
+/**
+ * Scroll-linked highlight. Section positions are measured once (and again whenever ScrollTrigger
+ * refreshes, e.g. after fonts, images or lazy sections change the layout), so a scroll tick does
+ * no layout reads at all.
+ */
 function useActiveSection() {
   const [active, setActive] = useState("top");
   useEffect(() => {
     const ids = ["top", "about", "projects", "skills", "activity", "explore", "guestbook", "contact"];
+    let tops: [string, number][] = [];
+    const measure = () => {
+      const y = window.scrollY;
+      tops = ids.flatMap((id) => {
+        const el = document.getElementById(id);
+        return el ? [[id, el.getBoundingClientRect().top + y] as [string, number]] : [];
+      });
+    };
     const compute = () => {
       const y = window.scrollY + window.innerHeight * 0.4;
       let current = "top";
-      for (const id of ids) {
-        const el = document.getElementById(id);
-        if (el && el.offsetTop <= y) current = id === "guestbook" || id === "contact" ? "explore" : id === "activity" ? "skills" : id;
+      for (const [id, top] of tops) {
+        if (top <= y) current = id === "guestbook" || id === "contact" ? "explore" : id === "activity" ? "skills" : id;
       }
       setActive(current);
     };
+    measure();
     compute();
-    const st = ScrollTrigger.create({ start: 0, end: "max", onUpdate: compute, onRefresh: compute });
+    const st = ScrollTrigger.create({
+      start: 0,
+      end: "max",
+      onUpdate: compute,
+      onRefresh: () => {
+        measure();
+        compute();
+      },
+    });
     return () => st.kill();
   }, []);
   return active;
@@ -116,7 +136,7 @@ export function Nav({ theme, onToggleTheme }: { theme: "dark" | "light"; onToggl
       {open && (
         <ul
           id="mobile-menu"
-          className="mx-auto mt-2 max-w-[1760px] rounded-card border border-border bg-surface/95 p-2 backdrop-blur md:hidden"
+          className="menu-in mx-auto mt-2 max-w-[1760px] rounded-card border border-border bg-surface/95 p-2 backdrop-blur md:hidden"
         >
           {[...links, { id: "contact", label: "Get in touch" }].map((l) => (
             <li key={l.id}>

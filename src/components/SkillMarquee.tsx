@@ -21,7 +21,7 @@ function Group({ items, hidden }: { items: Item[]; hidden?: boolean }) {
           key={it.name}
           data-pill
           style={{ ["--c" as string]: SKILL_COLORS[it.kind] }}
-          className="group flex items-center gap-2.5 whitespace-nowrap rounded-full border border-border bg-surface/80 px-5 py-3 font-mono text-[15px] text-text backdrop-blur transition-[background-color,color,transform,border-color] duration-300 data-[active=true]:scale-110 data-[active=true]:border-transparent data-[active=true]:bg-[var(--c)] data-[active=true]:text-[#0c0d10]"
+          className="group flex items-center gap-2.5 whitespace-nowrap rounded-full border border-border bg-surface/80 px-5 py-3 font-mono text-[15px] text-text transition-[background-color,color,transform,border-color] duration-300 data-[active=true]:scale-110 data-[active=true]:border-transparent data-[active=true]:bg-[var(--c)] data-[active=true]:text-[#0c0d10]"
         >
           <span aria-hidden className="size-2 rounded-full bg-[var(--c)] transition-colors duration-300 group-data-[active=true]:bg-[#0c0d10]" />
           {it.name}
@@ -60,25 +60,37 @@ export function SkillMarquee({ items, direction = -1, speed = 45, label }: Props
         wrap.addEventListener("pointerenter", slow);
         wrap.addEventListener("pointerleave", resume);
 
-        // Highlight whichever pill sits closest to the centre of the row.
+        // Highlight the pill nearest the centre. Pill centres are measured once; each tick is arithmetic on
+        // the track's current x, so the loop never forces layout. Throttled to about 15 checks a second.
         const pills = Array.from(wrap.querySelectorAll<HTMLElement>("[data-pill]"));
-        let current: HTMLElement | null = null;
-        const tick = () => {
-          const r = wrap.getBoundingClientRect();
-          const mid = r.left + r.width / 2;
-          let best: HTMLElement | null = null;
+        let centres: number[] = [];
+        let width = 0;
+        const measure = () => {
+          width = wrap.clientWidth;
+          centres = pills.map((p) => p.offsetLeft + p.offsetWidth / 2);
+        };
+        measure();
+        const ro = new ResizeObserver(measure);
+        ro.observe(wrap);
+        let current = -1;
+        let lastCheck = 0;
+        const tick = (time: number) => {
+          if (time - lastCheck < 0.066) return;
+          lastCheck = time;
+          const x = gsap.getProperty(el, "x") as number;
+          const mid = width / 2;
+          let best = 0;
           let bestD = Infinity;
-          for (const p of pills) {
-            const b = p.getBoundingClientRect();
-            const d = Math.abs(b.left + b.width / 2 - mid);
+          for (let i = 0; i < centres.length; i++) {
+            const d = Math.abs(centres[i] + x - mid);
             if (d < bestD) {
               bestD = d;
-              best = p;
+              best = i;
             }
           }
           if (best !== current) {
-            current?.removeAttribute("data-active");
-            best?.setAttribute("data-active", "true");
+            if (current >= 0) pills[current].removeAttribute("data-active");
+            pills[best].setAttribute("data-active", "true");
             current = best;
           }
         };
@@ -86,11 +98,12 @@ export function SkillMarquee({ items, direction = -1, speed = 45, label }: Props
 
         return () => {
           gsap.ticker.remove(tick);
+          ro.disconnect();
           wrap.removeEventListener("pointerenter", slow);
           wrap.removeEventListener("pointerleave", resume);
           st.kill();
           tween.kill();
-          current?.removeAttribute("data-active");
+          if (current >= 0) pills[current].removeAttribute("data-active");
         };
       });
       return () => mm.revert();

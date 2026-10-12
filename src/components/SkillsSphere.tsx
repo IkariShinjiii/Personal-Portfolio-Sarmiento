@@ -72,12 +72,26 @@ export function SkillsSphere({ items }: { items: Item[] }) {
       return { x: x1, y: y * cx - z1 * sx, z: y * sx + z1 * cx };
     };
 
-    const draw = () => {
+    // Theme colours are read once and again only when the theme class changes, not on every frame.
+    let text = "";
+    let muted = "";
+    let accent2 = "";
+    let bg = "";
+    const readColours = () => {
       const cs = getComputedStyle(document.documentElement);
-      const text = cs.getPropertyValue("--text").trim();
-      const muted = cs.getPropertyValue("--muted").trim();
-      const accent2 = cs.getPropertyValue("--accent2").trim();
-      const bg = cs.getPropertyValue("--bg").trim();
+      text = cs.getPropertyValue("--text").trim();
+      muted = cs.getPropertyValue("--muted").trim();
+      accent2 = cs.getPropertyValue("--accent2").trim();
+      bg = cs.getPropertyValue("--bg").trim();
+    };
+    readColours();
+    const themeObserver = new MutationObserver(() => {
+      readColours();
+      if (reduce) draw();
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
+    const draw = () => {
       const R = size * 0.34;
       const c = size / 2;
 
@@ -92,18 +106,19 @@ export function SkillsSphere({ items }: { items: Item[] }) {
       ctx.arc(c, c, R, 0, Math.PI * 2);
       ctx.fill();
 
-      // Wireframe: latitude rings and meridians, brighter on the near side.
+      // Wireframe: latitude rings and meridians, brighter on the near side. Segments are bucketed by
+      // depth and stroked in three batches instead of one stroke per segment.
       ctx.lineWidth = 1;
+      ctx.strokeStyle = accent2;
+      const buckets = [new Path2D(), new Path2D(), new Path2D()];
+      const ALPHA = [0.08, 0.17, 0.3];
       const seg = (a: { x: number; y: number; z: number }, b: { x: number; y: number; z: number }) => {
         const depth = (a.z + b.z) / 2;
-        ctx.globalAlpha = 0.07 + 0.2 * ((depth + 1) / 2);
-        ctx.beginPath();
-        ctx.moveTo(c + a.x * R, c + a.y * R);
-        ctx.lineTo(c + b.x * R, c + b.y * R);
-        ctx.stroke();
+        const path = buckets[depth < -0.25 ? 0 : depth < 0.35 ? 1 : 2];
+        path.moveTo(c + a.x * R, c + a.y * R);
+        path.lineTo(c + b.x * R, c + b.y * R);
       };
-      ctx.strokeStyle = accent2;
-      const STEPS = 48;
+      const STEPS = 40;
       for (const lat of [-60, -30, 0, 30, 60]) {
         const la = (lat * Math.PI) / 180;
         const rr = Math.cos(la);
@@ -118,7 +133,7 @@ export function SkillsSphere({ items }: { items: Item[] }) {
       }
       for (let m = 0; m < 8; m++) {
         const lo = (m / 8) * Math.PI;
-        let prev = rot(Math.cos(lo) * Math.cos(-Math.PI / 2), Math.sin(-Math.PI / 2), Math.sin(lo) * Math.cos(-Math.PI / 2));
+        let prev = rot(0, -1, 0);
         for (let i = 1; i <= STEPS; i++) {
           const t = -Math.PI / 2 + (i / STEPS) * Math.PI * 2;
           const next = rot(Math.cos(lo) * Math.cos(t), Math.sin(t), Math.sin(lo) * Math.cos(t));
@@ -126,6 +141,10 @@ export function SkillsSphere({ items }: { items: Item[] }) {
           prev = next;
         }
       }
+      buckets.forEach((path, i) => {
+        ctx.globalAlpha = ALPHA[i];
+        ctx.stroke(path);
+      });
 
       // Logos, far to near.
       const proj = pts.map((p, i) => ({ i, p, ...rot(p.x, p.y, p.z) })).sort((a, b) => a.z - b.z);
@@ -276,6 +295,7 @@ export function SkillsSphere({ items }: { items: Item[] }) {
       if (raf) cancelAnimationFrame(raf);
       ro.disconnect();
       io.disconnect();
+      themeObserver.disconnect();
       canvas.removeEventListener("pointerdown", onDown);
       canvas.removeEventListener("pointermove", onMove);
       canvas.removeEventListener("pointerup", onUp);

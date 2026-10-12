@@ -8,7 +8,7 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import { cn } from "@/lib/utils";
 import { about, craft, location, mindset, person } from "@/content";
 
-const card = "rounded-card border border-border bg-surface/70 backdrop-blur";
+const card = "rounded-card border border-border bg-surface/70";
 // Even thirds with a constant 1rem gap: the cards share the row, with no gaps that grow with the screen.
 const COL = "md:w-[calc((100%_-_2rem)/3)] md:shrink-0";
 const SPAN = "md:w-[calc((100%_-_2rem)/3*2_+_1rem)] md:shrink-0";
