@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Design tokens: light theme is the fallback, dark is the default. */
+:root {
+  --bg: #f6f5f1;
+  --surface: #ffffff;
+  --border: #e2e0d8;
+  --text: #15171c;
+  --muted: #5c6170;
+  --accent: #0f7a57;
+  --accent-contrast: #ffffff;
+  --radius: 14px;
+}
+
+:root.dark {
+  --bg: #0c0d10;
+  --surface: #14161b;
+  --border: #262a33;
+  --text: #e8e9ed;
+  --muted: #9a9fab;
+  --accent: #7cf0c4;
+  --accent-contrast: #0c0d10;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-contrast: var(--accent-contrast);
+  --radius-card: var(--radius);
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --breakpoint-sm: 560px;
+  --breakpoint-md: 860px;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 1.0625rem; line-height: 1.6; overflow-x: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
