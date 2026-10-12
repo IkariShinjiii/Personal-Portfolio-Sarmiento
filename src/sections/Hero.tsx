@@ -2,6 +2,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { ChatCard } from "@/components/ChatCard";
 import { Chip } from "@/components/ui/chip";
+import { person } from "@/content";
 
 const FIRST = "Kervin";
 const NAME = "Kervin Sarmiento";
@@ -33,7 +34,9 @@ export function Hero() {
           </motion.span>
         ))}
       </h1>
-      <p className="mt-3 max-w-xl text-lg text-muted">Your role line goes here, with a one-line summary.</p>
+      <p className="mt-3 max-w-xl text-lg text-muted">
+        <span className="font-semibold text-text">{person.role}.</span> {person.summary}
+      </p>
 
       <ChatCard name={FIRST} />
 
