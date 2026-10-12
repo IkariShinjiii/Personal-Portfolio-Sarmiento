@@ -7,22 +7,34 @@ export const person = {
 
 export const about = [
   { title: "Education", text: "BS Information Technology, 3rd year, at the University of San Agustin, Iloilo (USA)." },
-  { title: "Building", text: "My Mind Bridge capstone and the ACUA website." },
-  { title: "Games", text: "Roblox and Luau, including Clover Legends." },
+  { title: "Building", text: "My Mind Bridge capstone, a student wellness platform, and the ACUA storefront with PayMongo and GCash checkout." },
+  { title: "Games", text: "I build Roblox games in Luau, including Clover Legends, and I like turning anime ideas into playable games." },
 ];
 
 export const mindset = {
   heading: "Mindset",
   text: "I like to understand the problem first, then build something clear and reliable.",
-  tags: ["Problem first", "Clear", "Reliable"],
+  closing: "Still learning: full-stack development, Luau and networking basics.",
+  // Cards in the cycling stack: real project screenshots, plus a Roblox card for the game.
+  stack: [
+    { label: "Mind Bridge", image: "/projects/mind-bridge.jpg", position: "left top" },
+    { label: "ACUA", image: "/projects/acua.jpg", position: "center top" },
+    { label: "Clover Legends", image: "", position: "center" },
+  ],
 };
 
 export const craft = {
   heading: "Craft",
   text: "I build web apps and game systems that work for real users.",
+  closing: "Open for internships and collaborations on Roblox games and student-focused web projects.",
   status: "Open for internships and collaborations",
-  stack: ["React", "TypeScript", "Tailwind CSS", "Supabase", "Luau", "Git"],
+  strips: [
+    ["tailwindcss", "typescript", "react", "vite", "supabase", "firebase", "git"],
+    ["github", "vercel", "gsap", "framer", "figma", "roblox", "lua", "nodedotjs", "javascript", "html5", "css"],
+  ],
 };
+
+export const location = { city: "Iloilo City", country: "Philippines", coords: "10.7202° N, 122.5621° E" };
 
 export const projects = [
   {
