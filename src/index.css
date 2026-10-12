@@ -91,3 +91,10 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
 
 @keyframes marquee { to { transform: translateX(-50%); } }
 .marquee { animation: marquee 22s linear infinite; }
+
+/* Visible keyboard focus on every interactive element. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}

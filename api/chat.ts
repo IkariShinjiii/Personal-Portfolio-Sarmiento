@@ -6,7 +6,8 @@ const MAX_MESSAGE = 500;
 const MAX_HISTORY = 6;
 const RATE_LIMIT = 10; // messages per minute per visitor
 const WINDOW_MS = 60_000;
-const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+// Tried in order; a missing or retired model name falls through to the next one.
+const MODELS = [...new Set([process.env.GEMINI_MODEL, "gemini-flash-latest", "gemini-flash-lite-latest"].filter(Boolean) as string[])];
 const EMAIL = "kervinsarmiento2.0@gmail.com";
 
 // In-memory counters reset on cold starts: a basic guard, not a guarantee.
@@ -74,25 +75,50 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     { role: "user", parts: [{ text: message }] },
   ];
 
+  let lastStatus = 0;
+  let lastReason = "";
   try {
-    const r = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "x-goog-api-key": key },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: system }] },
-          contents,
-          generationConfig: { maxOutputTokens: 400, temperature: 0.4 },
-        }),
-      },
-    );
-    if (!r.ok) return res.status(502).json({ error: "The assistant is unavailable right now." });
-    const data = (await r.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
-    const reply = data.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("").trim();
-    if (!reply) return res.status(502).json({ error: "The assistant is unavailable right now." });
-    return res.status(200).json({ reply });
-  } catch {
-    return res.status(502).json({ error: "The assistant is unavailable right now." });
+    for (const model of MODELS) {
+      for (let attempt = 0; attempt < 2; attempt++) {
+        const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+          body: JSON.stringify({
+            systemInstruction: { parts: [{ text: system }] },
+            contents,
+            generationConfig: { maxOutputTokens: 400, temperature: 0.4 },
+          }),
+        });
+        if (r.ok) {
+          const data = (await r.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
+          const reply = data.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("").trim();
+          if (reply) return res.status(200).json({ reply });
+          // Blocked or empty (for example a refused prompt): answer politely instead of failing.
+          return res.status(200).json({
+            reply: `I can only answer questions about Kervin and his work. For anything else, email ${EMAIL}.`,
+          });
+        }
+        lastStatus = r.status;
+        try {
+          const e = (await r.json()) as { error?: { message?: string; status?: string } };
+          lastReason = `${model}: ${e.error?.status ?? ""} ${e.error?.message ?? ""}`.slice(0, 200);
+        } catch {
+          lastReason = `${model}: HTTP ${r.status}`;
+        }
+        // Bad key or quota will not be fixed by retrying or switching model.
+        if (r.status === 401 || r.status === 403 || r.status === 429) throw new Error("fatal");
+        // Server overload is often brief: retry once on the same model, otherwise try the next model.
+        if (r.status >= 500 && attempt === 0) {
+          await new Promise((resolve) => setTimeout(resolve, 700));
+          continue;
+        }
+        break;
+      }
+    }
+  } catch (err) {
+    if (!(err instanceof Error && err.message === "fatal")) lastReason = "network error";
   }
+  // Server-side log only; the response never echoes the key or Google's raw message.
+  console.error("gemini failed", lastStatus, lastReason);
+  return res.status(502).json({ error: "The assistant is unavailable right now.", upstream: lastStatus });
 }
