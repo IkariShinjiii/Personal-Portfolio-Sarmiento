@@ -8,18 +8,18 @@ import { projects } from "@/content";
 export function Projects() {
   return (
     <Section id="projects" label="Work" title="Featured Projects">
-      <ol className="grid gap-8 md:grid-cols-2 2xl:grid-cols-3">
+      <ol className="mx-auto grid max-w-[1280px] gap-8 md:grid-cols-2 xl:grid-cols-3">
         {projects.map((p) => (
-          <li key={p.n}>
-            <Reveal>
+          <li key={p.n} className="flex">
+            <Reveal className="flex w-full flex-col">
               <div className="flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-muted">
                 <span>{p.n}</span>
                 <span aria-hidden className="h-px w-8 bg-border" />
                 <Label>{p.category}</Label>
               </div>
               <h3 className="mt-2 text-3xl font-bold tracking-tight">{p.title}</h3>
-              <div className={cn("mt-4 rounded-[28px] border border-border bg-gradient-to-br p-6 text-white", p.tone)}>
-                <p className="min-h-12 text-lg font-medium">{p.summary}</p>
+              <div className={cn("mt-4 flex flex-1 flex-col rounded-[28px] border border-border bg-gradient-to-br p-6 text-white", p.tone)}>
+                <p className="mb-6 text-lg font-medium">{p.summary}</p>
                 {p.image ? (
                   <img
                     src={p.image}
@@ -28,13 +28,13 @@ export function Projects() {
                     height={688}
                     loading="lazy"
                     style={{ objectPosition: p.imagePosition }}
-                    className="mt-6 aspect-[2.3/1] w-full rounded-xl border border-white/25 object-cover"
+                    className="mt-auto aspect-[2.3/1] w-full rounded-xl border border-white/25 object-cover"
                   />
                 ) : (
                   <div
                     role="img"
                     aria-label={`${p.title} screenshot placeholder`}
-                    className="mt-6 overflow-hidden rounded-xl border border-white/25 bg-black/30"
+                    className="mt-auto overflow-hidden rounded-xl border border-white/25 bg-black/30"
                   >
                     <div className="flex gap-1.5 px-3 py-2" aria-hidden>
                       <span className="size-2.5 rounded-full bg-white/50" />

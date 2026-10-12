@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Check, Copy, Mail } from "lucide-react";
 import { Backdrop } from "@/components/Backdrop";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import { Nav } from "@/components/Nav";
 import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
@@ -87,6 +88,7 @@ export default function App() {
       >
         Skip to content
       </a>
+      <ScrollProgress />
       <Backdrop />
       <Nav theme={theme} onToggleTheme={toggle} />
       <main>
@@ -108,7 +110,7 @@ export default function App() {
         <GitHubActivity />
 
         <Section id="explore" label="More" title="More to explore">
-          <ul className="grid gap-4 md:grid-cols-3">
+          <ul className="mx-auto grid max-w-[1280px] gap-4 md:grid-cols-3">
             {explore.map((e) => (
               <li key={e.title}>
                 <Reveal>
