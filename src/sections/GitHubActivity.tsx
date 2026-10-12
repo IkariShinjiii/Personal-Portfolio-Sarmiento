@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ExternalLink } from "lucide-react";
 import { Section } from "@/components/Section";
-import { gsap, NO_REDUCED_MOTION, useGSAP } from "@/lib/gsap";
+import { DUR, EASE, gsap, NO_REDUCED_MOTION, useGSAP } from "@/lib/gsap";
 import { contact } from "@/content";
 
 type Day = { date: string; count: number; level: 0 | 1 | 2 | 3 | 4 };
@@ -78,19 +78,20 @@ export function GitHubActivity() {
     return { weeks, cells, months, busiest };
   }, [data]);
 
-  // Squares pop in from left to right.
+  // The grid is revealed with a left-to-right wipe.
   useGSAP(
     () => {
       if (!layout) return;
       const mm = gsap.matchMedia();
       mm.add(NO_REDUCED_MOTION, () => {
-        gsap.from("[data-cell]", {
-          opacity: 0,
-          scale: 0.3,
-          duration: 0.4,
-          ease: "back.out(2)",
-          stagger: { amount: 1.2, from: "start" },
-          scrollTrigger: { trigger: grid.current, start: "top 85%", once: true },
+        // One wipe from left to right: a single tween instead of one per day.
+        gsap.from(grid.current, {
+          clipPath: "inset(0 100% 0 0)",
+          opacity: 0.2,
+          duration: DUR.slow * 1.3,
+          ease: EASE.out,
+          clearProps: "clipPath,opacity",
+          scrollTrigger: { trigger: grid.current, start: "top 88%", once: true },
         });
       });
       return () => mm.revert();
@@ -110,7 +111,7 @@ export function GitHubActivity() {
 
   return (
     <Section id="activity" label="GitHub" title="Recent Activity">
-      <div ref={holder} className="relative mx-auto max-w-[1420px] rounded-card border border-border bg-surface/70 p-5 backdrop-blur md:p-8">
+      <div ref={holder} className="relative mx-auto max-w-[1420px] rounded-card border border-border bg-surface/70 p-5 md:p-8">
         <a
           href={contact.github}
           target="_blank"

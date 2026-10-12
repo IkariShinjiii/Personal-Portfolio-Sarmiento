@@ -49,23 +49,22 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
-/* Reactive backdrop: see components/Backdrop.tsx. */
+/* Reactive backdrop: see components/Backdrop.tsx. Moving layers are small and transform-only. */
 .backdrop {
-  --mx: 50vw;
-  --my: 25vh;
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
+  overflow: hidden;
 }
 .backdrop-glow {
   position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    520px circle at var(--mx) var(--my),
-    color-mix(in srgb, var(--accent2) 20%, transparent),
-    transparent 70%
-  );
+  left: 0;
+  top: 0;
+  width: 1040px;
+  height: 1040px;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent2) 20%, transparent), transparent);
+  will-change: transform;
 }
 .backdrop-dots {
   position: absolute;
@@ -74,12 +73,21 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
   background-size: 28px 28px;
 }
 .backdrop-dots-faint { opacity: 0.1; }
-.backdrop-dots-lit {
+.backdrop-lit {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 560px;
+  height: 560px;
+  background-image: radial-gradient(color-mix(in srgb, var(--text) 55%, transparent) 1.2px, transparent 1.4px);
+  background-size: 28px 28px;
   opacity: 0.55;
-  -webkit-mask-image: radial-gradient(260px circle at var(--mx) var(--my), #000, transparent);
-  mask-image: radial-gradient(260px circle at var(--mx) var(--my), #000, transparent);
+  -webkit-mask-image: radial-gradient(closest-side, #000, transparent);
+  mask-image: radial-gradient(closest-side, #000, transparent);
+  will-change: transform;
+  transition: opacity 0.4s ease;
 }
-.backdrop[data-live="false"] .backdrop-dots-lit { opacity: 0.2; transition: opacity 0.4s; }
+.backdrop[data-live="false"] .backdrop-lit { opacity: 0.2; }
 
 .text-gradient {
   background-image: linear-gradient(90deg, var(--accent), var(--accent2));
@@ -96,4 +104,19 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 6px;
+}
+
+/* Small state transitions: new chat messages and the mobile menu arrive instead of popping in. */
+@keyframes rise-in {
+  from { opacity: 0; transform: translate3d(0, 8px, 0); }
+  to { opacity: 1; transform: none; }
+}
+.bubble-in { animation: rise-in 0.28s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.menu-in { animation: rise-in 0.22s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* Theme switch crossfade (View Transitions API). */
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 0.35s; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
 }

@@ -110,7 +110,7 @@ export function Guestbook() {
       <div className="mx-auto max-w-[680px]">
         <p className="mb-6 text-center text-muted">Share your thoughts, feedback, or just say hi.</p>
 
-        <div className="rounded-card border border-border bg-surface/70 p-5 backdrop-blur">
+        <div className="rounded-card border border-border bg-surface/70 p-5">
           {!session && (
             <div className="text-center">
               <Button onClick={() => void signIn()}>
@@ -202,7 +202,7 @@ export function Guestbook() {
           {loading && <li className="text-center text-sm text-muted">Loading...</li>}
           {!loading && entries.length === 0 && <li className="text-center text-sm text-muted">No messages yet. Be the first.</li>}
           {entries.map((e) => (
-            <li key={e.id} className="flex gap-3 rounded-card border border-border bg-surface/70 p-4 backdrop-blur">
+            <li key={e.id} className="flex gap-3 rounded-card border border-border bg-surface/70 p-4">
               {e.avatar_url ? (
                 <img src={e.avatar_url} alt="" width={36} height={36} loading="lazy" className="size-9 rounded-full" />
               ) : (

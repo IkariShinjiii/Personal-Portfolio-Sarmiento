@@ -17,7 +17,9 @@ export function ChatCard({ name }: { name: string }) {
 
   useEffect(() => {
     const el = logRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
+    if (!el) return;
+    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollTo({ top: el.scrollHeight, behavior: calm ? "auto" : "smooth" });
   }, [messages, loading]);
 
   async function send(raw: string) {
@@ -43,7 +45,7 @@ export function ChatCard({ name }: { name: string }) {
   }
 
   return (
-    <div className="mx-auto mt-8 flex h-[340px] w-full max-w-[760px] flex-col rounded-[28px] border border-border bg-surface/70 p-4 backdrop-blur">
+    <div className="mx-auto mt-8 flex h-[340px] w-full max-w-[760px] flex-col rounded-[28px] border border-border bg-surface/70 p-4">
       <div ref={logRef} className="flex flex-1 flex-col gap-3 overflow-y-auto px-2 py-2" aria-live="polite">
         {messages.length === 0 && (
           <p className="m-auto text-lg text-muted">Ask me anything about {name}...</p>
@@ -52,14 +54,14 @@ export function ChatCard({ name }: { name: string }) {
           <p
             key={i}
             className={cn(
-              "max-w-[85%] whitespace-pre-wrap rounded-2xl px-4 py-2 text-left text-[15px]",
+              "bubble-in max-w-[85%] whitespace-pre-wrap rounded-2xl px-4 py-2 text-left text-[15px]",
               m.role === "user" ? "ml-auto bg-accent text-accent-contrast" : "bg-bg/80",
             )}
           >
             {m.text}
           </p>
         ))}
-        {loading && <p className="text-left text-sm text-muted">Thinking...</p>}
+        {loading && <p className="bubble-in animate-pulse text-left text-sm text-muted">Thinking...</p>}
       </div>
 
       <div className="flex flex-wrap justify-center gap-2 py-3">

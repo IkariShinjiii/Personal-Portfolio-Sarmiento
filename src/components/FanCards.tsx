@@ -76,7 +76,7 @@ export function FanCards({ items }: { items: Item[] }) {
             onClick={() => setActive(i)}
             style={{ left: `${i * 31}%`, willChange: "transform" }}
             className={cn(
-              "absolute top-[64px] h-[220px] w-[38%] rounded-2xl border p-4 text-left backdrop-blur transition-[border-color,box-shadow,background-color,color] duration-500",
+              "absolute top-[64px] h-[220px] w-[38%] rounded-2xl border p-4 text-left transition-[border-color,box-shadow,background-color,color] duration-500",
               "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
               on
                 ? "border-accent2/70 bg-surface shadow-[0_0_44px_-6px_color-mix(in_srgb,var(--accent2)_55%,transparent)]"

@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { ArrowDown } from "lucide-react";
 import { ChatCard } from "@/components/ChatCard";
 import { Chip } from "@/components/ui/chip";
-import { gsap, NO_REDUCED_MOTION, useGSAP } from "@/lib/gsap";
+import { EASE, gsap, NO_REDUCED_MOTION, pauseOffscreen, useGSAP } from "@/lib/gsap";
 import { person } from "@/content";
 
 const FIRST = "Kervin";
@@ -17,15 +17,17 @@ export function Hero() {
       const mm = gsap.matchMedia();
       mm.add(NO_REDUCED_MOTION, () => {
         // Kept short (about 1.2s) so the largest content paints early; pieces overlap on purpose.
-        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-        tl.from(".hero-avatar", { scale: 0.5, opacity: 0, rotate: -10, duration: 0.5, ease: "back.out(1.5)" })
+        const tl = gsap.timeline({ defaults: { ease: EASE.out } });
+        tl.from(".hero-avatar", { scale: 0.6, opacity: 0, duration: 0.7 })
           .from(".hero-hi", { opacity: 0, y: 12, duration: 0.3 }, 0.1)
           .from(".hero-letter", { opacity: 0, y: 18, rotateX: -50, duration: 0.4, stagger: 0.02 }, 0.15)
           .from(".hero-sub", { y: 14, duration: 0.5 }, 0.2)
           .from(".hero-chat", { opacity: 0, y: 24, scale: 0.98, duration: 0.5 }, 0.3)
           .from(".hero-chip", { opacity: 0, y: 10, duration: 0.3, stagger: 0.04 }, 0.6)
           .from(".hero-cue", { opacity: 0, duration: 0.4 }, 0.8);
-        gsap.to(".hero-cue-arrow", { y: 6, duration: 0.9, repeat: -1, yoyo: true, ease: "sine.inOut" });
+        const bob = gsap.to(".hero-cue-arrow", { y: 6, duration: 0.9, repeat: -1, yoyo: true, ease: "sine.inOut" });
+        const stop = pauseOffscreen(root.current, [bob]);
+        return () => stop();
       });
       return () => mm.revert();
     },

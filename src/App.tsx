@@ -112,7 +112,7 @@ export default function App() {
                   <a
                     href={e.href || undefined}
                     aria-disabled={!e.href}
-                    className="block rounded-card border border-border bg-surface/70 p-6 backdrop-blur transition-colors duration-200 hover:border-accent2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                    className="block rounded-card border border-border bg-surface/70 p-6 transition-colors duration-200 hover:border-accent2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   >
                     <p className="text-xl font-semibold">{e.title}</p>
                     <p className="mt-1 text-muted">{e.text}</p>

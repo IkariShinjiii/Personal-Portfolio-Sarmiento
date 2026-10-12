@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Label } from "@/components/ui/label";
-import { gsap, NO_REDUCED_MOTION, useGSAP } from "@/lib/gsap";
+import { DUR, EASE, gsap, NO_REDUCED_MOTION, useGSAP } from "@/lib/gsap";
 
 type Props = { id: string; label: string; title: string; accent?: string; children?: React.ReactNode };
 
@@ -15,11 +15,12 @@ export function Section({ id, label, title, children }: Props) {
       const mm = gsap.matchMedia();
       mm.add(NO_REDUCED_MOTION, () => {
         const tl = gsap.timeline({
-          scrollTrigger: { trigger: head.current, start: "top 85%", once: true },
+          defaults: { ease: EASE.out },
+          scrollTrigger: { trigger: head.current, start: "top 88%", once: true },
         });
-        tl.from(".sec-label", { opacity: 0, y: 14, letterSpacing: "0.5em", duration: 0.6, ease: "power2.out" })
-          .from(".sec-title", { opacity: 0, y: 28, duration: 0.7, ease: "power3.out" }, "-=0.35")
-          .from(".sec-rule", { scaleX: 0, duration: 0.6, ease: "power3.out" }, "-=0.45");
+        tl.from(".sec-label", { opacity: 0, y: 12, duration: DUR.reveal * 0.8 })
+          .from(".sec-title", { opacity: 0, y: 22, duration: DUR.reveal }, 0.08)
+          .from(".sec-rule", { scaleX: 0, duration: DUR.reveal }, 0.2);
       });
       return () => mm.revert();
     },

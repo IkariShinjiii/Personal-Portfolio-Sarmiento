@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { MapPin } from "lucide-react";
-import { gsap, NO_REDUCED_MOTION, useGSAP } from "@/lib/gsap";
+import { gsap, NO_REDUCED_MOTION, pauseOffscreen, useGSAP } from "@/lib/gsap";
 
 type Props = { city: string; country: string; coords: string };
 
@@ -12,8 +12,9 @@ export function LocationCard({ city, country, coords }: Props) {
     () => {
       const mm = gsap.matchMedia();
       mm.add(NO_REDUCED_MOTION, () => {
-        gsap.fromTo(".scan", { x: 0 }, { x: () => root.current?.clientWidth ?? 300, duration: 5.5, ease: "sine.inOut", repeat: -1, yoyo: true, invalidateOnRefresh: true });
-        gsap.to(".pin-ring", { scale: 2.4, opacity: 0, duration: 1.8, ease: "power2.out", repeat: -1, transformOrigin: "50% 50%" });
+        const scan = gsap.fromTo(".scan", { x: 0 }, { x: () => root.current?.clientWidth ?? 300, duration: 5.5, ease: "sine.inOut", repeat: -1, yoyo: true, invalidateOnRefresh: true });
+        const ring = gsap.to(".pin-ring", { scale: 2.4, opacity: 0, duration: 1.8, ease: "power2.out", repeat: -1, transformOrigin: "50% 50%" });
+        return pauseOffscreen(root.current, [scan, ring]);
       });
       return () => mm.revert();
     },
@@ -21,7 +22,7 @@ export function LocationCard({ city, country, coords }: Props) {
   );
 
   return (
-    <div ref={root} className="relative h-full min-h-[148px] overflow-hidden rounded-card border border-border bg-surface/70 backdrop-blur">
+    <div ref={root} className="relative h-full min-h-[148px] overflow-hidden rounded-card border border-border bg-surface/70">
       <div
         aria-hidden
         className="absolute inset-0 opacity-70 [background-image:radial-gradient(color-mix(in_srgb,var(--text)_28%,transparent)_1.2px,transparent_1.4px)] [background-size:12px_12px] [mask-image:radial-gradient(ellipse_at_70%_30%,#000,transparent_75%)]"

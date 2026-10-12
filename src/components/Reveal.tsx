@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { gsap, NO_REDUCED_MOTION, useGSAP } from "@/lib/gsap";
+import { DUR, EASE, gsap, NO_REDUCED_MOTION, useGSAP } from "@/lib/gsap";
 
 type Props = { children: React.ReactNode; className?: string; delay?: number };
 
@@ -13,13 +13,12 @@ export function Reveal({ children, className, delay = 0 }: Props) {
       mm.add(NO_REDUCED_MOTION, () => {
         gsap.from(ref.current, {
           opacity: 0,
-          y: 36,
-          scale: 0.98,
-          duration: 0.8,
+          y: 28,
+          duration: DUR.reveal,
           delay,
-          ease: "power3.out",
+          ease: EASE.out,
           clearProps: "transform,opacity",
-          scrollTrigger: { trigger: ref.current, start: "top 88%", once: true },
+          scrollTrigger: { trigger: ref.current, start: "top 90%", once: true },
         });
       });
       return () => mm.revert();

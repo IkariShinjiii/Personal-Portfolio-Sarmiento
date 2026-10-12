@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { BRAND_ICONS } from "@/lib/brand-icons";
-import { gsap, NO_REDUCED_MOTION, useGSAP } from "@/lib/gsap";
+import { gsap, NO_REDUCED_MOTION, pauseOffscreen, useGSAP } from "@/lib/gsap";
 
 const dark = (hex: string) => parseInt(hex.slice(0, 2), 16) + parseInt(hex.slice(2, 4), 16) + parseInt(hex.slice(4, 6), 16) < 150;
 
@@ -35,7 +35,9 @@ export function TechStrip({ slugs, reverse = false }: { slugs: string[]; reverse
         if (!el) return;
         const half = () => el.scrollWidth / 2;
         const tween = gsap.fromTo(el, { x: () => (reverse ? -half() : 0) }, { x: () => (reverse ? 0 : -half()), duration: () => half() / 32, ease: "none", repeat: -1, invalidateOnRefresh: true });
+        const stop = pauseOffscreen(root.current, [tween]);
         return () => {
+          stop();
           tween.kill();
         };
       });
