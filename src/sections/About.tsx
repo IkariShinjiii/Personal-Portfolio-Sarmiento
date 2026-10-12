@@ -16,8 +16,8 @@ const SPAN = "md:w-[calc((100%_-_2rem)/3*2_+_1rem)] md:shrink-0";
 function Heading({ children }: { children: string }) {
   return (
     <>
-      <h3 className="text-3xl font-extrabold tracking-tight">{children}</h3>
-      <div className="mt-2 h-0.5 w-8 bg-accent2" />
+      <h3 className="text-[28px] font-extrabold leading-none tracking-tight">{children}</h3>
+      <div className="mt-2 h-0.5 w-7 bg-accent2" />
     </>
   );
 }
@@ -25,16 +25,16 @@ function Heading({ children }: { children: string }) {
 export function About() {
   return (
     <Section id="about" label="About" title="About me">
-      <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-4">
+      <div className="mx-auto flex w-full max-w-[992px] flex-col gap-4">
         {/* Row 1: name + fan of cards */}
         <div className="flex flex-col gap-4 md:flex-row">
-          <Reveal className={cn(card, COL, "grid place-items-center p-5 text-center")}>
+          <Reveal className={cn(card, COL, "grid place-items-center p-4 text-center")}>
             <div>
-              <p className="bg-gradient-to-b from-text to-muted bg-clip-text text-[36px] font-extrabold uppercase leading-[1.05] tracking-tight text-transparent [filter:drop-shadow(0_0_18px_color-mix(in_srgb,var(--text)_25%,transparent))]">
+              <p className="bg-gradient-to-b from-text to-muted bg-clip-text text-[30px] font-extrabold uppercase leading-[1.05] tracking-tight text-transparent [filter:drop-shadow(0_0_18px_color-mix(in_srgb,var(--text)_25%,transparent))]">
                 {person.name}
               </p>
-              <div aria-hidden className="mx-auto my-3 h-px w-14 bg-border" />
-              <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted">{person.role}</p>
+              <div aria-hidden className="mx-auto my-2 h-px w-12 bg-border" />
+              <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-muted">{person.role}</p>
             </div>
           </Reveal>
           <Reveal className={cn(card, SPAN, "overflow-hidden")}>
@@ -44,14 +44,14 @@ export function About() {
 
         {/* Row 2: mindset | portrait + location | craft */}
         <div className="flex flex-col gap-4 md:flex-row">
-          <Reveal className={cn(card, COL, "flex flex-col p-6")}>
+          <Reveal className={cn(card, COL, "flex flex-col p-5")}>
             <Heading>{mindset.heading}</Heading>
-            <p className="mt-4 text-[17px] leading-relaxed text-muted">
+            <p className="mt-3 text-[15px] leading-snug text-muted">
               <span className="font-semibold text-text">{mindset.text.split(",")[0]},</span>
               {mindset.text.slice(mindset.text.indexOf(",") + 1)}
             </p>
             <PhotoStack items={mindset.stack} />
-            <p className="mt-auto pt-5 text-[17px] leading-relaxed text-muted">{mindset.closing}</p>
+            <p className="mt-auto pt-3 text-[15px] leading-snug text-muted">{mindset.closing}</p>
           </Reveal>
 
           <div className={cn(COL, "flex flex-col gap-4")}>
@@ -70,20 +70,20 @@ export function About() {
             </Reveal>
           </div>
 
-          <Reveal className={cn(card, COL, "flex flex-col overflow-hidden pt-6")}>
-            <div className="px-6">
+          <Reveal className={cn(card, COL, "flex flex-col overflow-hidden pt-5")}>
+            <div className="px-5">
               <Heading>{craft.heading}</Heading>
-              <p className="mt-4 text-[17px] leading-relaxed text-muted">
+              <p className="mt-3 text-[15px] leading-snug text-muted">
                 <span className="font-semibold text-text">{craft.text}</span>
               </p>
-              <StatusBadge className="mt-4">{craft.status}</StatusBadge>
+              <StatusBadge className="mt-3 text-[13px]">{craft.status}</StatusBadge>
             </div>
-            <div className="mt-6">
+            <div className="mt-4">
               {craft.strips.map((slugs, i) => (
                 <TechStrip key={i} slugs={slugs} reverse={i % 2 === 1} />
               ))}
             </div>
-            <p className="mt-auto px-6 pb-6 pt-5 text-[17px] leading-relaxed text-muted">{craft.closing}</p>
+            <p className="mt-auto px-5 pb-5 pt-3 text-[15px] leading-snug text-muted">{craft.closing}</p>
           </Reveal>
         </div>
       </div>

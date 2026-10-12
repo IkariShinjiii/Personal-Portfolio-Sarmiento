@@ -51,7 +51,7 @@ export function TechStrip({ slugs, reverse = false }: { slugs: string[]; reverse
       ref={root}
       role="group"
       aria-label="Technologies"
-      className="overflow-hidden border-b border-border first:border-t bg-bg/40 py-5 [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]"
+      className="overflow-hidden border-b border-border first:border-t bg-bg/40 py-3.5 [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]"
     >
       <div ref={track} className="flex w-max motion-reduce:w-full motion-reduce:flex-wrap motion-reduce:justify-center motion-reduce:gap-y-2 motion-reduce:px-4">
         <Group slugs={slugs} />

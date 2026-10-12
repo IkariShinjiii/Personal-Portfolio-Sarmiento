@@ -27,7 +27,7 @@ export const craft = {
   heading: "Craft",
   text: "I build web apps and game systems that work for real users.",
   closing: "Open for internships and collaborations on Roblox games and student-focused web projects.",
-  status: "Open for internships and collaborations",
+  status: "Open for internships",
   strips: [
     ["tailwindcss", "typescript", "react", "vite", "supabase", "firebase", "git"],
     ["github", "vercel", "gsap", "framer", "figma", "roblox", "lua", "nodedotjs", "javascript", "html5", "css"],
