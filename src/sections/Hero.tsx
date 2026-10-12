@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { ArrowDown } from "lucide-react";
 import { AvatarVideo } from "@/components/AvatarVideo";
 import { ChatCard } from "@/components/ChatCard";
@@ -10,12 +10,36 @@ const NAME = "Kervin Sarmiento";
 
 export function Hero() {
   const root = useRef<HTMLElement>(null);
+  const nameRef = useRef<HTMLSpanElement>(null);
   const wiggleTl = useRef<gsap.core.Timeline | null>(null);
 
   // Click (or tap) the avatar: a quick squish and wobble.
   const wiggle = () => {
     wiggleTl.current?.restart();
   };
+
+  // Measure each letter's offset within its line (and the widest line) so the gradient flows across the whole name.
+  useLayoutEffect(() => {
+    const wrap = nameRef.current;
+    if (!wrap) return;
+    const measure = () => {
+      const letters = Array.from(wrap.querySelectorAll<HTMLElement>(".name-letter"));
+      const lineStart = new Map<number, number>();
+      for (const l of letters) lineStart.set(l.offsetTop, Math.min(lineStart.get(l.offsetTop) ?? Infinity, l.offsetLeft));
+      let widest = 0;
+      for (const l of letters) {
+        const x = l.offsetLeft - (lineStart.get(l.offsetTop) ?? 0);
+        l.style.setProperty("--x", `${x}px`);
+        widest = Math.max(widest, x + l.offsetWidth);
+      }
+      wrap.style.setProperty("--w", `${Math.max(widest, 1)}px`);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(wrap.parentElement ?? wrap);
+    void document.fonts?.ready.then(measure);
+    return () => ro.disconnect();
+  }, []);
 
   // One timeline drives the whole intro, so the pieces arrive in a deliberate order.
   useGSAP(
@@ -95,11 +119,13 @@ export function Hero() {
         <span aria-hidden className="hero-hi mr-[0.28em] inline-block">
           Hi, I'm
         </span>
-        {NAME.split("").map((ch, i) => (
-          <span key={i} aria-hidden className="hero-letter inline-block whitespace-pre text-gradient">
-            {ch}
-          </span>
-        ))}
+        <span ref={nameRef} className="name-grad">
+          {NAME.split("").map((ch, i) => (
+            <span key={i} aria-hidden className="hero-letter name-letter inline-block whitespace-pre">
+              {ch}
+            </span>
+          ))}
+        </span>
       </h1>
       <p className="hero-sub mt-3 max-w-xl text-lg text-muted">
         <span className="font-semibold text-text">{person.role}.</span> {person.summary}
