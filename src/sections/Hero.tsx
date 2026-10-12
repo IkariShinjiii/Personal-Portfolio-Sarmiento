@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { ArrowDown } from "lucide-react";
+import { AvatarVideo } from "@/components/AvatarVideo";
 import { ChatCard } from "@/components/ChatCard";
 import { Chip } from "@/components/ui/chip";
 import { EASE, gsap, NO_REDUCED_MOTION, pauseOffscreen, useGSAP } from "@/lib/gsap";
@@ -85,13 +86,7 @@ export function Hero() {
       <div className="hero-avatar relative size-24 [perspective:520px]">
         <span aria-hidden className="avatar-glow absolute -inset-3 rounded-full bg-accent2/30 blur-xl" />
         <div className="avatar-float relative size-full">
-          <img
-            src="/avatar.png"
-            alt="Kervin's avatar"
-            width={96}
-            height={96}
-            fetchPriority="high"
-            draggable={false}
+          <AvatarVideo
             onClick={wiggle}
             className="avatar-tilt size-full cursor-pointer select-none rounded-full border border-border object-cover [transform-style:preserve-3d]"
           />
