@@ -88,6 +88,8 @@ export const skillRowAbove: { name: string; kind: SkillKind }[] = [
   { name: "Playwright", kind: "tools" },
   { name: "Recharts", kind: "tools" },
   { name: "Zod", kind: "tools" },
+  { name: "Figma", kind: "game" },
+  { name: "Canva", kind: "game" },
 ];
 
 export const skillRowBelow: { name: string; kind: SkillKind }[] = [
@@ -103,6 +105,8 @@ export const skillRowBelow: { name: string; kind: SkillKind }[] = [
   { name: "GCash", kind: "game" },
   { name: "Roblox", kind: "game" },
   { name: "Luau", kind: "game" },
+  { name: "SQL", kind: "backend" },
+  { name: "Networking basics", kind: "tools" },
   { name: "Vercel", kind: "tools" },
   { name: "Git", kind: "tools" },
   { name: "GitHub", kind: "tools" },
@@ -128,6 +132,8 @@ export const sphereIcons = [
   { slug: "git", name: "Git" },
   { slug: "github", name: "GitHub" },
   { slug: "roblox", name: "Roblox" },
+  { slug: "lua", name: "Lua / Luau" },
+  { slug: "figma", name: "Figma" },
 ];
 
 export const explore = [
