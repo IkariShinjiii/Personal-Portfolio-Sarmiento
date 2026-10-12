@@ -1,64 +1,47 @@
-import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { ArrowDown } from "lucide-react";
+import { ChatCard } from "@/components/ChatCard";
 import { Chip } from "@/components/ui/chip";
 
+const FIRST = "Kervin";
 const NAME = "Kervin Sarmiento";
 
-type Props = {
-  onAsk: (question: string) => void;
-  askRef: React.RefObject<HTMLInputElement | null>;
-};
-
-export function Hero({ onAsk, askRef }: Props) {
+export function Hero() {
   const reduce = useReducedMotion();
-  const [q, setQ] = useState("");
 
   return (
-    <section id="top" className="mx-auto flex min-h-[calc(100svh-4rem)] max-w-[1040px] flex-col justify-center px-5 py-[72px] md:py-24">
-      <h1 aria-label={NAME} className="text-[clamp(40px,7vw,72px)] font-bold leading-[1.05] tracking-tight">
+    <section id="top" className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-[1040px] flex-col items-center px-5 pb-10 pt-10 text-center md:pt-14">
+      <div
+        aria-hidden
+        className="grid size-24 place-items-center rounded-full border border-border bg-gradient-to-br from-accent/30 to-accent2/30 text-3xl font-bold"
+      >
+        KS
+      </div>
+
+      <h1 aria-label={`Hi, I'm ${NAME}`} className="mt-6 text-[clamp(32px,6vw,56px)] font-bold leading-[1.1] tracking-tight">
+        <span aria-hidden>Hi, I'm </span>
         {NAME.split("").map((ch, i) => (
           <motion.span
             key={i}
             aria-hidden
-            className="inline-block whitespace-pre"
+            className="inline-block whitespace-pre text-gradient"
             initial={reduce ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: reduce ? 0 : i * 0.035, duration: 0.3, ease: "easeOut" }}
+            transition={{ delay: reduce ? 0 : 0.2 + i * 0.035, duration: 0.3, ease: "easeOut" }}
           >
             {ch}
           </motion.span>
         ))}
       </h1>
-      <p className="mt-4 max-w-xl text-lg text-muted">Your role line goes here, with a one-line summary.</p>
+      <p className="mt-3 max-w-xl text-lg text-muted">Your role line goes here, with a one-line summary.</p>
 
-      <form
-        className="mt-8 flex max-w-xl items-center gap-2 rounded-full border border-border bg-surface px-4 py-2 focus-within:border-accent"
-        onSubmit={(e) => {
-          e.preventDefault();
-          onAsk(q.trim());
-          setQ("");
-        }}
-      >
-        <Sparkles size={16} aria-hidden className="text-accent" />
-        <input
-          ref={askRef}
-          value={q}
-          maxLength={500}
-          onChange={(e) => setQ(e.target.value)}
-          aria-label="Ask me anything"
-          placeholder="Ask me anything"
-          className="flex-1 bg-transparent py-1 text-base outline-none placeholder:text-muted"
-        />
-        <button type="submit" className="text-sm font-semibold text-accent">
-          Ask
-        </button>
-      </form>
+      <ChatCard name={FIRST} />
 
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="mt-4 flex flex-wrap justify-center gap-2">
         {[
           ["#projects", "Work"],
-          ["#about", "About"],
+          ["#about", "About me"],
+          ["#skills", "Skills"],
           ["#contact", "Contact"],
         ].map(([href, label]) => (
           <a key={href} href={href}>
@@ -66,6 +49,11 @@ export function Hero({ onAsk, askRef }: Props) {
           </a>
         ))}
       </div>
+
+      <a href="#about" className="mt-8 flex flex-col items-center gap-1 text-sm text-muted hover:text-text">
+        Scroll to explore
+        <ArrowDown size={16} aria-hidden />
+      </a>
     </section>
   );
 }

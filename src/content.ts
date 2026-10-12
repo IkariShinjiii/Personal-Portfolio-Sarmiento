@@ -1,20 +1,29 @@
 // Placeholder content. Replace with real copy in Phase 2.
+export const person = { name: "Kervin Sarmiento", role: "Your role", initials: "KS" };
+
 export const about = [
-  { title: "Education", front: "Where I study", back: "Add your school, program and year here." },
-  { title: "Building", front: "What I am working on", back: "Add what you are building right now." },
-  { title: "Games", front: "Outside of code", back: "Add a line about the games you play or make." },
+  { title: "Education", text: "Add your school, program and year here." },
+  { title: "Building", text: "Add what you are building right now." },
+  { title: "Games", text: "Add a line about the games you play or make." },
 ];
 
-export const build = {
-  statement: "Placeholder: one sentence about the kind of work you do, with bold keywords.",
-  chips: ["React", "TypeScript", "Tailwind CSS", "Vite"],
+export const mindset = {
+  heading: "Mindset",
+  text: "Placeholder: a sentence about how you work, with **bold** keywords.",
+  tags: ["Curious", "Detail-minded", "Always learning"],
+};
+
+export const craft = {
+  heading: "Craft",
+  text: "Placeholder: one sentence about the kind of work you do.",
   status: "Status line: open to internships and junior roles",
+  stack: ["React", "TypeScript", "Tailwind CSS", "Vite", "Framer Motion", "Git"],
 };
 
 export const projects = [
-  { n: "01", category: "Web app", title: "Mind Bridge", summary: "Problem, what I built and the outcome. Coming soon.", tags: ["Tech", "Tags"], href: "https://github.com/IkariShinjiii/Mind-Bridge" },
-  { n: "02", category: "Website", title: "ACUA website", summary: "Problem, what I built and the outcome. Coming soon.", tags: ["Tech", "Tags"], href: "" },
-  { n: "03", category: "Game", title: "Clover Legends", summary: "Problem, what I built and the outcome. Coming soon.", tags: ["Tech", "Tags"], href: "" },
+  { n: "01", category: "Web app", title: "Mind Bridge", summary: "Problem, what I built and the outcome. Coming soon.", tags: ["Tech", "Tags"], href: "https://github.com/IkariShinjiii/Mind-Bridge", tone: "from-emerald-500 to-teal-700" },
+  { n: "02", category: "Website", title: "ACUA website", summary: "Problem, what I built and the outcome. Coming soon.", tags: ["Tech", "Tags"], href: "", tone: "from-indigo-500 to-violet-700" },
+  { n: "03", category: "Game", title: "Clover Legends", summary: "Problem, what I built and the outcome. Coming soon.", tags: ["Tech", "Tags"], href: "", tone: "from-amber-500 to-orange-700" },
 ];
 
 export const skills = [
@@ -27,9 +36,9 @@ export const skills = [
 ];
 
 export const explore = [
-  { title: "Resume", text: "CV coming soon.", href: "" },
-  { title: "Links", text: "GitHub and LinkedIn.", href: "https://github.com/IkariShinjiii" },
-  { title: "Contact", text: "Say hello.", href: "#contact" },
+  { title: "Resume", text: "CV coming soon.", href: "", tone: "text-accent" },
+  { title: "Links", text: "GitHub and LinkedIn.", href: "https://github.com/IkariShinjiii", tone: "text-accent2" },
+  { title: "Contact", text: "Say hello.", href: "#contact", tone: "text-accent" },
 ];
 
 export const contact = { email: "kervinsarmiento2.0@gmail.com", github: "https://github.com/IkariShinjiii" };
