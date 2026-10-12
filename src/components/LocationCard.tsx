@@ -22,7 +22,7 @@ export function LocationCard({ city, country, coords, timezone }: Props) {
   );
 
   return (
-    <div ref={root} className="relative h-full min-h-[180px] overflow-hidden rounded-card border border-border bg-surface/70">
+    <div ref={root} className="relative h-full min-h-[143px] overflow-hidden rounded-card border border-border bg-surface/70">
       <div
         aria-hidden
         className="absolute inset-0 opacity-70 [background-image:radial-gradient(color-mix(in_srgb,var(--text)_28%,transparent)_1.2px,transparent_1.4px)] [background-size:12px_12px] [mask-image:radial-gradient(ellipse_at_70%_30%,#000,transparent_75%)]"
@@ -32,13 +32,13 @@ export function LocationCard({ city, country, coords, timezone }: Props) {
         <span className="pin-ring absolute size-3 rounded-full bg-accent" />
         <span className="relative size-2 rounded-full bg-accent" />
       </span>
-      <div className="relative flex h-full flex-col justify-end p-5">
-        <MapPin size={16} aria-hidden className="mb-1 text-accent" />
-        <p className="text-2xl font-black uppercase leading-none tracking-tight">
+      <div className="relative flex h-full flex-col justify-end p-4">
+        <MapPin size={14} aria-hidden className="mb-1 text-accent" />
+        <p className="text-[20px] font-extrabold uppercase leading-tight tracking-tight">
           {city}, {country}
         </p>
-        <p className="mt-1.5 font-mono text-sm text-muted">{coords}</p>
-        {timezone && <p className="font-mono text-sm text-accent2">- {timezone}</p>}
+        <p className="mt-1 font-mono text-[12px] text-muted">{coords}</p>
+        {timezone && <p className="font-mono text-[12px] text-accent2">- {timezone}</p>}
       </div>
     </div>
   );
