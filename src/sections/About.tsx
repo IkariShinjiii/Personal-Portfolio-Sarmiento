@@ -25,12 +25,12 @@ function Heading({ children }: { children: string }) {
 export function About() {
   return (
     <Section id="about" label="About" title="About me">
-      <div className="flex flex-col gap-4">
+      <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-4">
         {/* Row 1: name + fan of cards */}
         <div className="flex flex-col gap-4 md:flex-row">
-          <Reveal className={cn(card, COL, "grid min-h-[200px] place-items-center p-6 text-center")}>
+          <Reveal className={cn(card, COL, "grid place-items-center p-5 text-center")}>
             <div>
-              <p className="bg-gradient-to-b from-text to-muted bg-clip-text text-[40px] font-extrabold uppercase leading-[1.05] tracking-tight text-transparent [filter:drop-shadow(0_0_18px_color-mix(in_srgb,var(--text)_25%,transparent))]">
+              <p className="bg-gradient-to-b from-text to-muted bg-clip-text text-[36px] font-extrabold uppercase leading-[1.05] tracking-tight text-transparent [filter:drop-shadow(0_0_18px_color-mix(in_srgb,var(--text)_25%,transparent))]">
                 {person.name}
               </p>
               <div aria-hidden className="mx-auto my-3 h-px w-14 bg-border" />

@@ -8,7 +8,7 @@ import { projects } from "@/content";
 export function Projects() {
   return (
     <Section id="projects" label="Work" title="Featured Projects">
-      <ol className="grid gap-8 md:grid-cols-2">
+      <ol className="grid gap-8 md:grid-cols-2 2xl:grid-cols-3">
         {projects.map((p) => (
           <li key={p.n}>
             <Reveal>
@@ -41,7 +41,7 @@ export function Projects() {
                       <span className="size-2.5 rounded-full bg-white/50" />
                       <span className="size-2.5 rounded-full bg-white/50" />
                     </div>
-                    <div className="grid aspect-[2.3/1] place-items-center text-sm text-white/90">No screenshots yet</div>
+                    <div className="grid aspect-[2.3/1] place-items-center text-sm text-white/90">Screenshot coming soon</div>
                   </div>
                 )}
               </div>

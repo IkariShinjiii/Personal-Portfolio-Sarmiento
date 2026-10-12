@@ -10,7 +10,6 @@ He likes to understand the problem first, then build something clear and reliabl
 - Mind Bridge: his capstone, a student wellness platform with assessments, counseling requests and scheduling. Still in active development. Live site: https://mind-bridge-omega.vercel.app
 - ACUA website: a storefront with online checkout through PayMongo and GCash, plus a custom commission flow. Still in active development. Live site: https://acua-three.vercel.app
 - Anime Pet Simulator: a Pet Simulator-style Roblox game built around anime characters and pets. In development, not playable yet.
-- Clover Legends: a Roblox game built with Luau. Currently on hold; Kervin paused the project because it is heavy to work on.
 
 ## Skills
 React, TypeScript, Tailwind CSS, Supabase, Luau (Roblox), Git and GitHub.
