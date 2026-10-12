@@ -154,8 +154,12 @@ export const sphereIcons = [
 
 export const explore = [
   { title: "Resume", text: "CV coming soon.", href: "", tone: "text-accent" },
-  { title: "Links", text: "My GitHub profile.", href: "https://github.com/IkariShinjiii", tone: "text-accent2" },
+  { title: "Links", text: "My GitHub and Instagram.", href: "https://github.com/IkariShinjiii", tone: "text-accent2" },
   { title: "Contact", text: "Say hello.", href: "#contact", tone: "text-accent" },
 ];
 
-export const contact = { email: "kervinsarmiento2.0@gmail.com", github: "https://github.com/IkariShinjiii" };
+export const contact = {
+  email: "kervinsarmiento2.0@gmail.com",
+  github: "https://github.com/IkariShinjiii",
+  instagram: "https://instagram.com/__oddyseus__",
+};
