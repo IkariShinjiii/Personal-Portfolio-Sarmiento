@@ -94,8 +94,6 @@ export default function App() {
       <main>
         <Hero />
         <About />
-        <Projects />
-
         <Section id="skills" label="Tech stack" title="My Skills">
           <div>
             <SkillMarquee items={skillRowAbove} direction={-1} speed={45} label="Front-end and tooling skills" />
@@ -106,6 +104,8 @@ export default function App() {
             <SkillMarquee items={skillRowBelow} direction={1} speed={38} label="Back-end, platforms and games skills" />
           </div>
         </Section>
+
+        <Projects />
 
         <GitHubActivity />
 

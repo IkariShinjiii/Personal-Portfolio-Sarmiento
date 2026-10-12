@@ -6,8 +6,8 @@ import { gsap, NO_REDUCED_MOTION, ScrollTrigger } from "@/lib/gsap";
 const links = [
   { id: "top", label: "Home" },
   { id: "about", label: "About" },
-  { id: "projects", label: "Projects" },
   { id: "skills", label: "Skills" },
+  { id: "projects", label: "Projects" },
   { id: "explore", label: "Other" },
 ];
 
@@ -19,7 +19,7 @@ const links = [
 function useActiveSection() {
   const [active, setActive] = useState("top");
   useEffect(() => {
-    const ids = ["top", "about", "projects", "skills", "activity", "explore", "guestbook", "contact"];
+    const ids = ["top", "about", "skills", "projects", "activity", "explore", "guestbook", "contact"];
     let tops: [string, number][] = [];
     const measure = () => {
       const y = window.scrollY;
@@ -32,7 +32,7 @@ function useActiveSection() {
       const y = window.scrollY + window.innerHeight * 0.4;
       let current = "top";
       for (const [id, top] of tops) {
-        if (top <= y) current = id === "guestbook" || id === "contact" ? "explore" : id === "activity" ? "skills" : id;
+        if (top <= y) current = id === "guestbook" || id === "contact" ? "explore" : id === "activity" ? "projects" : id;
       }
       setActive(current);
     };
