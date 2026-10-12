@@ -152,3 +152,12 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
 @media (prefers-reduced-motion: no-preference) {
   .name-grad { animation: name-glide 9s linear infinite; }
 }
+
+/* Scroll progress bar replaces the native scrollbar (scrolling itself is unchanged). */
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+.progress-bar {
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--accent2) 60%, transparent);
+  will-change: transform;
+}

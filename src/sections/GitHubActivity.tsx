@@ -111,7 +111,7 @@ export function GitHubActivity() {
 
   return (
     <Section id="activity" label="GitHub" title="Recent Activity">
-      <div ref={holder} className="relative mx-auto max-w-[1420px] rounded-card border border-border bg-surface/70 p-5 md:p-8">
+      <div ref={holder} className="relative mx-auto max-w-[1280px] rounded-card border border-border bg-surface/70 p-5 md:p-8">
         <div className="flex items-center justify-between gap-4">
           <p className="font-mono text-xs uppercase tracking-[0.25em] text-muted">Recent activity</p>
           <a
