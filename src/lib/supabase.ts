@@ -1,10 +1,12 @@
 import { createClient } from "@supabase/supabase-js";
 
-const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
-const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined;
+// The project URL and publishable key are public by design (row-level security protects the data),
+// so they ship as defaults. Env vars override them, e.g. to point at another project.
+const url = (import.meta.env.VITE_SUPABASE_URL as string | undefined) || "https://vqmbfxcfppyssnaninzn.supabase.co";
+const key =
+  (import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined) || "sb_publishable_Ve1j7_ZCuEGH-njKV4yRiQ_jqH_LVvd";
 
-/** Null when the env vars are missing, so the guestbook can show a friendly message. */
-export const supabase = url && key ? createClient(url, key, { auth: { flowType: "pkce" } }) : null;
+export const supabase = createClient(url, key, { auth: { flowType: "pkce" } });
 
 export type GuestEntry = {
   id: string;

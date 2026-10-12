@@ -28,7 +28,6 @@ export function Guestbook() {
   const [editing, setEditing] = useState(false);
 
   const load = useCallback(async () => {
-    if (!supabase) return;
     const { data, error: e } = await supabase
       .from("guestbook_entries")
       .select("*")
@@ -40,10 +39,6 @@ export function Guestbook() {
   }, []);
 
   useEffect(() => {
-    if (!supabase) {
-      setLoading(false);
-      return;
-    }
     void supabase.auth.getSession().then(({ data }) => setSession(data.session));
     const { data: sub } = supabase.auth.onAuthStateChange((evt, s) => {
       setSession(s);
@@ -64,14 +59,6 @@ export function Guestbook() {
     return () => sub.subscription.unsubscribe();
   }, [load]);
 
-  if (!supabase) {
-    return (
-      <Section id="guestbook" label="Community" title="Guestbook">
-        <p className="text-center text-muted">The guestbook is not configured yet.</p>
-      </Section>
-    );
-  }
-
   const mine = session ? entries.find((e) => e.user_id === session.user.id) : undefined;
 
   async function signIn() {
@@ -81,7 +68,7 @@ export function Guestbook() {
     } catch {
       /* storage unavailable: the visitor just lands at the top */
     }
-    const { error: e } = await supabase!.auth.signInWithOAuth({
+    const { error: e } = await supabase.auth.signInWithOAuth({
       provider: "github",
       options: { redirectTo: `${window.location.origin}/` },
     });
@@ -94,8 +81,8 @@ export function Guestbook() {
     setBusy(true);
     setError("");
     const q = mine
-      ? supabase!.from("guestbook_entries").update({ message }).eq("id", mine.id)
-      : supabase!.from("guestbook_entries").insert({ message });
+      ? supabase.from("guestbook_entries").update({ message }).eq("id", mine.id)
+      : supabase.from("guestbook_entries").insert({ message });
     const { error: e } = await q;
     setBusy(false);
     if (e) {
@@ -110,7 +97,7 @@ export function Guestbook() {
   async function remove() {
     if (!mine) return;
     setBusy(true);
-    const { error: e } = await supabase!.from("guestbook_entries").delete().eq("id", mine.id);
+    const { error: e } = await supabase.from("guestbook_entries").delete().eq("id", mine.id);
     setBusy(false);
     if (e) setError("Could not delete your message.");
     else await load();
@@ -139,7 +126,7 @@ export function Guestbook() {
                 Signed in as{" "}
                 <span className="text-text">{session.user.user_metadata?.name ?? session.user.user_metadata?.user_name ?? "you"}</span>
               </span>
-              <button type="button" onClick={() => void supabase!.auth.signOut()} className="hover:text-text">
+              <button type="button" onClick={() => void supabase.auth.signOut()} className="hover:text-text">
                 Sign out
               </button>
             </div>
