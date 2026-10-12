@@ -20,19 +20,30 @@ export function Projects() {
               <h3 className="mt-2 text-3xl font-bold tracking-tight">{p.title}</h3>
               <div className={cn("mt-4 rounded-[28px] border border-border bg-gradient-to-br p-6 text-white", p.tone)}>
                 <p className="min-h-12 text-lg font-medium">{p.summary}</p>
-                {/* Screenshot placeholder: swap for a real image in Phase 2. */}
-                <div
-                  role="img"
-                  aria-label={`${p.title} screenshot placeholder`}
-                  className="mt-6 overflow-hidden rounded-xl border border-white/25 bg-black/30"
-                >
-                  <div className="flex gap-1.5 px-3 py-2" aria-hidden>
-                    <span className="size-2.5 rounded-full bg-white/50" />
-                    <span className="size-2.5 rounded-full bg-white/50" />
-                    <span className="size-2.5 rounded-full bg-white/50" />
+                {p.image ? (
+                  <img
+                    src={p.image}
+                    alt={p.imageAlt}
+                    width={1568}
+                    height={688}
+                    loading="lazy"
+                    style={{ objectPosition: p.imagePosition }}
+                    className="mt-6 aspect-[2.3/1] w-full rounded-xl border border-white/25 object-cover"
+                  />
+                ) : (
+                  <div
+                    role="img"
+                    aria-label={`${p.title} screenshot placeholder`}
+                    className="mt-6 overflow-hidden rounded-xl border border-white/25 bg-black/30"
+                  >
+                    <div className="flex gap-1.5 px-3 py-2" aria-hidden>
+                      <span className="size-2.5 rounded-full bg-white/50" />
+                      <span className="size-2.5 rounded-full bg-white/50" />
+                      <span className="size-2.5 rounded-full bg-white/50" />
+                    </div>
+                    <div className="grid aspect-[2.3/1] place-items-center text-sm text-white/90">Screenshot coming soon</div>
                   </div>
-                  <div className="grid h-40 place-items-center text-sm text-white/90">Screenshot coming soon</div>
-                </div>
+                )}
               </div>
               <div className="mt-4 flex flex-wrap items-center gap-2">
                 {p.tags.map((t) => (

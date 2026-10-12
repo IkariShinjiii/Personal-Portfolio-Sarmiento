@@ -33,6 +33,9 @@ export const projects = [
     tags: ["Wellness", "Scheduling", "In development"],
     href: "https://mind-bridge-omega.vercel.app",
     tone: "from-emerald-700 to-teal-900",
+    image: "/projects/mind-bridge.jpg",
+    imageAlt: "Mind Bridge landing page: Ask for help quietly, reach a counselor sooner, with the four steps from check-in to chat.",
+    imagePosition: "left top",
   },
   {
     n: "02",
@@ -42,6 +45,9 @@ export const projects = [
     tags: ["PayMongo", "GCash", "In development"],
     href: "https://acua-three.vercel.app",
     tone: "from-indigo-600 to-violet-900",
+    image: "/projects/acua.jpg",
+    imageAlt: "ACUA storefront hero over rippling water: From Isla to City, handcrafted accessories.",
+    imagePosition: "center top",
   },
   {
     n: "03",
@@ -51,6 +57,9 @@ export const projects = [
     tags: ["Roblox", "Luau"],
     href: "",
     tone: "from-amber-700 to-orange-900",
+    image: "",
+    imageAlt: "",
+    imagePosition: "center",
   },
 ];
 
