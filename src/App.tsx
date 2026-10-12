@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Check, Copy, Mail } from "lucide-react";
 import { Backdrop } from "@/components/Backdrop";
 import { Nav } from "@/components/Nav";
@@ -11,6 +11,7 @@ import { Hero } from "@/sections/Hero";
 import { Projects } from "@/sections/Projects";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/lib/use-theme";
+import { gsap, NO_REDUCED_MOTION, ScrollTrigger } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 import { contact, explore, person, skills } from "@/content";
 
@@ -43,6 +44,35 @@ function CopyEmail() {
 
 export default function App() {
   const { theme, toggle } = useTheme();
+
+  // Smooth, eased scrolling for in-page links (native jump when reduced motion is requested).
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"]');
+      const id = a?.getAttribute("href")?.slice(1);
+      if (!a || !id || !window.matchMedia(NO_REDUCED_MOTION).matches) return;
+      const target = id === "top" ? 0 : document.getElementById(id);
+      if (target === null) return;
+      e.preventDefault();
+      gsap.to(window, {
+        duration: 0.9,
+        ease: "power3.inOut",
+        scrollTo: { y: target, offsetY: id === "top" ? 0 : 72, autoKill: true },
+        onComplete: () => history.replaceState(null, "", `#${id}`),
+      });
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
+
+  // Late layout changes (fonts, lazy sections, images) move trigger positions; re-measure.
+  useEffect(() => {
+    const refresh = () => ScrollTrigger.refresh();
+    void document.fonts?.ready.then(refresh);
+    window.addEventListener("load", refresh);
+    return () => window.removeEventListener("load", refresh);
+  }, []);
 
   return (
     <>

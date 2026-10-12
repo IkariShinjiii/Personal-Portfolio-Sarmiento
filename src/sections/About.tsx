@@ -27,7 +27,7 @@ function HoverPanels() {
             )}
           >
             <span className="text-xs font-semibold uppercase tracking-[0.18em]">{a.title}</span>
-            <span className={cn("mt-2 block text-sm text-muted", on ? "block" : "hidden md:line-clamp-2")}>{a.text}</span>
+            <span className={cn("mt-2 block text-sm text-muted", on ? "block" : "hidden md:line-clamp-4")}>{a.text}</span>
           </button>
         );
       })}

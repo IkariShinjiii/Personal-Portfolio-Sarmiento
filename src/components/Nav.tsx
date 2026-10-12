@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { CalendarDays, Menu, Moon, Sun, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { gsap, NO_REDUCED_MOTION, ScrollTrigger } from "@/lib/gsap";
 
 const links = [
   { id: "top", label: "Home" },
@@ -10,22 +11,23 @@ const links = [
   { id: "explore", label: "Other" },
 ];
 
+/** Scroll-linked: ScrollTrigger calls this on every scroll tick; it reads the live DOM so lazy sections are fine. */
 function useActiveSection() {
   const [active, setActive] = useState("top");
   useEffect(() => {
-    const ids = [...links.map((l) => l.id), "contact"];
-    const onScroll = () => {
-      const y = window.scrollY + window.innerHeight * 0.35;
+    const ids = ["top", "about", "projects", "skills", "explore", "guestbook", "contact"];
+    const compute = () => {
+      const y = window.scrollY + window.innerHeight * 0.4;
       let current = "top";
       for (const id of ids) {
         const el = document.getElementById(id);
-        if (el && el.offsetTop <= y) current = id === "contact" ? "explore" : id;
+        if (el && el.offsetTop <= y) current = id === "guestbook" || id === "contact" ? "explore" : id;
       }
       setActive(current);
     };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    compute();
+    const st = ScrollTrigger.create({ start: 0, end: "max", onUpdate: compute, onRefresh: compute });
+    return () => st.kill();
   }, []);
   return active;
 }
@@ -33,6 +35,24 @@ function useActiveSection() {
 export function Nav({ theme, onToggleTheme }: { theme: "dark" | "light"; onToggleTheme: () => void }) {
   const [open, setOpen] = useState(false);
   const active = useActiveSection();
+  const listRef = useRef<HTMLUListElement>(null);
+  const pillRef = useRef<HTMLSpanElement>(null);
+
+  // Slide one indicator under the active link instead of swapping backgrounds.
+  useLayoutEffect(() => {
+    const move = (animate: boolean) => {
+      const link = listRef.current?.querySelector<HTMLElement>(`[data-id="${active}"]`);
+      const pill = pillRef.current;
+      if (!link || !pill) return;
+      const props = { x: link.offsetLeft, width: link.offsetWidth, opacity: 1 };
+      if (animate && window.matchMedia(NO_REDUCED_MOTION).matches) gsap.to(pill, { ...props, duration: 0.45, ease: "power3.out" });
+      else gsap.set(pill, props);
+    };
+    move(true);
+    const onResize = () => move(false);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [active]);
 
   return (
     <header className="sticky top-0 z-40 px-4 pt-4">
@@ -46,15 +66,24 @@ export function Nav({ theme, onToggleTheme }: { theme: "dark" | "light"; onToggl
           {theme === "dark" ? <Moon size={18} /> : <Sun size={18} />}
         </button>
 
-        <ul className="hidden items-center gap-1 rounded-full border border-border bg-surface/80 p-1.5 backdrop-blur md:flex">
+        <ul
+          ref={listRef}
+          className="relative hidden items-center gap-1 rounded-full border border-border bg-surface/80 p-1.5 backdrop-blur md:flex"
+        >
+          <span
+            ref={pillRef}
+            aria-hidden
+            className="absolute left-0 top-1.5 bottom-1.5 rounded-full bg-accent2/20 opacity-0"
+          />
           {links.map((l) => (
             <li key={l.id}>
               <a
                 href={`#${l.id}`}
+                data-id={l.id}
                 aria-current={active === l.id ? "true" : undefined}
                 className={cn(
-                  "block rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200",
-                  active === l.id ? "bg-accent2/20 text-text" : "text-muted hover:text-text",
+                  "relative block rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200",
+                  active === l.id ? "text-text" : "text-muted hover:text-text",
                 )}
               >
                 {l.label}
