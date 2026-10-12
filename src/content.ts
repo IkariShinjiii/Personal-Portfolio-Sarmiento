@@ -1,38 +1,66 @@
-// Placeholder content. Replace with real copy in Phase 2.
-export const person = { name: "Kervin Sarmiento", role: "Your role", initials: "KS" };
+export const person = {
+  name: "Kervin Sarmiento",
+  role: "Student developer",
+  summary: "I build web apps and Roblox games, and I'm studying at USA.",
+  initials: "KS",
+};
 
 export const about = [
-  { title: "Education", text: "Add your school, program and year here." },
-  { title: "Building", text: "Add what you are building right now." },
-  { title: "Games", text: "Add a line about the games you play or make." },
+  { title: "Education", text: "University of San Agustin, Iloilo (USA)." },
+  { title: "Building", text: "My Mind Bridge capstone and the ACUA website." },
+  { title: "Games", text: "Roblox and Luau, including Clover Legends." },
 ];
 
 export const mindset = {
   heading: "Mindset",
-  text: "Placeholder: a sentence about how you work, with **bold** keywords.",
-  tags: ["Curious", "Detail-minded", "Always learning"],
+  text: "I like to understand the problem first, then build something clear and reliable.",
+  tags: ["Problem first", "Clear", "Reliable"],
 };
 
 export const craft = {
   heading: "Craft",
-  text: "Placeholder: one sentence about the kind of work you do.",
-  status: "Status line: open to internships and junior roles",
-  stack: ["React", "TypeScript", "Tailwind CSS", "Vite", "Framer Motion", "Git"],
+  text: "I build web apps and game systems that work for real users.",
+  status: "Looking for internships and collaborations",
+  stack: ["React", "TypeScript", "Tailwind CSS", "Supabase", "Luau", "Git"],
 };
 
 export const projects = [
-  { n: "01", category: "Web app", title: "Mind Bridge", summary: "Problem, what I built and the outcome. Coming soon.", tags: ["Tech", "Tags"], href: "https://github.com/IkariShinjiii/Mind-Bridge", tone: "from-emerald-700 to-teal-900" },
-  { n: "02", category: "Website", title: "ACUA website", summary: "Problem, what I built and the outcome. Coming soon.", tags: ["Tech", "Tags"], href: "", tone: "from-indigo-600 to-violet-900" },
-  { n: "03", category: "Game", title: "Clover Legends", summary: "Problem, what I built and the outcome. Coming soon.", tags: ["Tech", "Tags"], href: "", tone: "from-amber-700 to-orange-900" },
+  {
+    n: "01",
+    category: "Capstone",
+    title: "Mind Bridge",
+    summary: "A student wellness platform with assessments, counseling requests and scheduling.",
+    tags: ["Wellness", "Scheduling", "Capstone"],
+    href: "https://github.com/IkariShinjiii/Mind-Bridge",
+    tone: "from-emerald-700 to-teal-900",
+  },
+  {
+    n: "02",
+    category: "Storefront",
+    title: "ACUA website",
+    summary: "A storefront with online checkout through PayMongo and GCash, plus a custom commission flow.",
+    tags: ["PayMongo", "GCash", "Commissions"],
+    href: "",
+    tone: "from-indigo-600 to-violet-900",
+  },
+  {
+    n: "03",
+    category: "Roblox game",
+    title: "Clover Legends",
+    summary: "A Roblox game built with Luau.",
+    tags: ["Roblox", "Luau"],
+    href: "",
+    tone: "from-amber-700 to-orange-900",
+  },
 ];
 
 export const skills = [
-  { name: "React", level: "Level label" },
-  { name: "TypeScript", level: "Level label" },
-  { name: "Tailwind CSS", level: "Level label" },
-  { name: "Git and GitHub", level: "Level label" },
-  { name: "Vite", level: "Level label" },
-  { name: "HTML and CSS", level: "Level label" },
+  { name: "React", level: "" },
+  { name: "TypeScript", level: "" },
+  { name: "Tailwind CSS", level: "" },
+  { name: "Supabase", level: "" },
+  { name: "Luau", level: "" },
+  { name: "Git and GitHub", level: "" },
 ];
 
 export const explore = [

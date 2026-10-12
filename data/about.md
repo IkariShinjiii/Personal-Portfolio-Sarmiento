@@ -1,18 +1,22 @@
 # About Kervin Sarmiento
 
-Placeholder knowledge file. Replace each section with real details; the concierge answers only from this file.
+## Who
+Kervin is a student developer at the University of San Agustin, Iloilo (USA). He builds full-stack web apps and Roblox games. He is looking for internships and collaborations where he can keep learning.
 
-## Bio
-Kervin Sarmiento is a developer and student. (Add two or three sentences.)
+## Approach
+He likes to understand the problem first, then build something clear and reliable. He builds web apps and game systems that work for real users.
 
 ## Projects
-- Mind Bridge: (problem, what was built, outcome)
-- ACUA website: (problem, what was built, outcome)
-- Clover Legends: (problem, what was built, outcome)
+- Mind Bridge: his capstone, a student wellness platform with assessments, counseling requests and scheduling. Code: https://github.com/IkariShinjiii/Mind-Bridge
+- ACUA website: a storefront with online checkout through PayMongo and GCash, plus a custom commission flow.
+- Clover Legends: a Roblox game built with Luau.
 
 ## Skills
-React, TypeScript, Tailwind CSS, Vite, Git and GitHub. (Add levels if wanted.)
+React, TypeScript, Tailwind CSS, Supabase, Luau (Roblox), Git and GitHub.
 
 ## Contact
 - Email: kervinsarmiento2.0@gmail.com
 - GitHub: https://github.com/IkariShinjiii
+
+## Not covered here
+Program, year level, city and availability dates are not listed. For anything not on this page, suggest emailing Kervin.
