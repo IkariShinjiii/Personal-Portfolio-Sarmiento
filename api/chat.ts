@@ -105,8 +105,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         } catch {
           lastReason = `${model}: HTTP ${r.status}`;
         }
-        // Bad key or quota will not be fixed by retrying or switching model.
-        if (r.status === 401 || r.status === 403 || r.status === 429) throw new Error("fatal");
+        // A bad key will not be fixed by retrying or switching model.
+        if (r.status === 401 || r.status === 403) throw new Error("fatal");
+        // Quota is tracked per model, so an exhausted model falls through to the next one.
+        if (r.status === 429) break;
         // Server overload is often brief: retry once on the same model, otherwise try the next model.
         if (r.status >= 500 && attempt === 0) {
           await new Promise((resolve) => setTimeout(resolve, 700));
