@@ -16,6 +16,7 @@ const LEVEL_BG = [
 ];
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const DAY_MS = 86_400_000;
+const COMPACT_WEEKS = 26;
 
 const utc = (iso: string) => new Date(`${iso}T00:00:00Z`);
 const pretty = (iso: string) => utc(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
@@ -34,7 +35,16 @@ export function GitHubActivity() {
   const [data, setData] = useState<Activity | null>(null);
   const [failed, setFailed] = useState(false);
   const [near, setNear] = useState(false);
+  // On phones the full year is too small to read, so show the last six months at a usable size.
+  const [compact, setCompact] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches);
   const [tip, setTip] = useState<{ x: number; y: number; text: string } | null>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const on = () => setCompact(mq.matches);
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
 
   // Fetch only when the section is about to be seen.
   useEffect(() => {
@@ -60,11 +70,15 @@ export function GitHubActivity() {
     if (!data) return null;
     const first = utc(data.days[0].date);
     const start = first.getTime() - first.getUTCDay() * DAY_MS;
-    const weeks = Math.floor((utc(data.days[data.days.length - 1].date).getTime() - start) / (7 * DAY_MS)) + 1;
-    const cells = data.days.map((d) => {
-      const t = utc(d.date).getTime();
-      return { ...d, week: Math.floor((t - start) / (7 * DAY_MS)), dow: utc(d.date).getUTCDay() };
-    });
+    const totalWeeks = Math.floor((utc(data.days[data.days.length - 1].date).getTime() - start) / (7 * DAY_MS)) + 1;
+    const skip = compact ? Math.max(0, totalWeeks - COMPACT_WEEKS) : 0;
+    const weeks = totalWeeks - skip;
+    const cells = data.days
+      .map((d) => {
+        const t = utc(d.date).getTime();
+        return { ...d, week: Math.floor((t - start) / (7 * DAY_MS)) - skip, dow: utc(d.date).getUTCDay() };
+      })
+      .filter((c) => c.week >= 0);
     const months: { week: number; label: string }[] = [];
     let last = -1;
     for (const c of cells) {
@@ -76,7 +90,7 @@ export function GitHubActivity() {
     }
     const busiest = [...data.days].sort((a, b) => b.count - a.count)[0];
     return { weeks, cells, months, busiest };
-  }, [data]);
+  }, [data, compact]);
 
   // The grid is revealed with a left-to-right wipe.
   useGSAP(
@@ -141,18 +155,18 @@ export function GitHubActivity() {
                 ? `${data.total} contributions in the last 12 months. Busiest day: ${layout.busiest.count} contributions on ${pretty(layout.busiest.date)}.`
                 : "Loading GitHub activity."}
             </p>
-            <div className="mt-6 overflow-x-auto pb-2" aria-hidden onPointerLeave={() => setTip(null)}>
-              <div className="min-w-[820px]">
+            <div className="mt-6 pb-2 md:overflow-x-auto" aria-hidden onPointerLeave={() => setTip(null)}>
+              <div className="md:min-w-[820px]">
                 {/* Month labels */}
-                <div className="relative ml-12 h-6 font-mono text-sm text-muted">
+                <div className="relative h-6 font-mono text-xs text-muted md:ml-12 md:text-sm">
                   {layout?.months.map((m) => (
                     <span key={`${m.label}-${m.week}`} className="absolute" style={{ left: `${(m.week / layout.weeks) * 100}%` }}>
                       {m.label}
                     </span>
                   ))}
                 </div>
-                <div className="flex gap-3">
-                  <div className="grid w-9 shrink-0 grid-rows-7 gap-[4px] font-mono text-sm text-muted">
+                <div className="flex gap-2 md:gap-3">
+                  <div className="hidden w-9 shrink-0 md:grid grid-rows-7 gap-[4px] font-mono text-sm text-muted">
                     {["", "Mon", "", "Wed", "", "Fri", ""].map((d, i) => (
                       <span key={i} className="flex items-center">
                         {d}
@@ -161,8 +175,8 @@ export function GitHubActivity() {
                   </div>
                   <div
                     ref={grid}
-                    className="grid flex-1 grid-flow-col grid-rows-7 gap-[4px]"
-                    style={{ gridTemplateColumns: `repeat(${layout?.weeks ?? 53}, minmax(0, 1fr))` }}
+                    className="grid flex-1 grid-flow-col grid-rows-7 gap-[3px] md:gap-[4px]"
+                    style={{ gridTemplateColumns: `repeat(${layout?.weeks ?? (compact ? COMPACT_WEEKS : 53)}, minmax(0, 1fr))` }}
                   >
                     {layout
                       ? layout.cells.map((c) => (
@@ -174,7 +188,7 @@ export function GitHubActivity() {
                             className="aspect-square rounded-[4px] hover:ring-2 hover:ring-text/70"
                           />
                         ))
-                      : Array.from({ length: 53 * 7 }, (_, i) => (
+                      : Array.from({ length: (compact ? COMPACT_WEEKS : 53) * 7 }, (_, i) => (
                           <span key={i} style={{ background: LEVEL_BG[0] }} className="aspect-square animate-pulse rounded-[4px]" />
                         ))}
                   </div>
@@ -183,7 +197,10 @@ export function GitHubActivity() {
             </div>
 
             <div className="mt-5 flex flex-wrap items-center justify-between gap-3 text-sm text-muted">
-              <p>{data ? `${data.total.toLocaleString()} contributions in the last 12 months` : "Loading activity..."}</p>
+              <p>
+                {data ? `${data.total.toLocaleString()} contributions in the last 12 months` : "Loading activity..."}
+                {compact && data && <span className="mt-1 block text-xs">Showing the last 6 months</span>}
+              </p>
               <div aria-hidden className="flex items-center gap-2">
                 Less
                 {LEVEL_BG.map((bg, i) => (
