@@ -16,7 +16,7 @@ const LEVEL_BG = [
 ];
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const DAY_MS = 86_400_000;
-const COMPACT_WEEKS = 26;
+const COMPACT_WEEKS = 18; // about four months
 
 const utc = (iso: string) => new Date(`${iso}T00:00:00Z`);
 const pretty = (iso: string) => utc(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
@@ -35,7 +35,7 @@ export function GitHubActivity() {
   const [data, setData] = useState<Activity | null>(null);
   const [failed, setFailed] = useState(false);
   const [near, setNear] = useState(false);
-  // On phones the full year is too small to read, so show the last six months at a usable size.
+  // On phones the full year is too small to read, so show the last four months at a usable size.
   const [compact, setCompact] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches);
   const [tip, setTip] = useState<{ x: number; y: number; text: string } | null>(null);
 
@@ -199,7 +199,7 @@ export function GitHubActivity() {
             <div className="mt-5 flex flex-wrap items-center justify-between gap-3 text-sm text-muted">
               <p>
                 {data ? `${data.total.toLocaleString()} contributions in the last 12 months` : "Loading activity..."}
-                {compact && data && <span className="mt-1 block text-xs">Showing the last 6 months</span>}
+                {compact && data && <span className="mt-1 block text-xs">Showing the last 4 months</span>}
               </p>
               <div aria-hidden className="flex items-center gap-2">
                 Less
