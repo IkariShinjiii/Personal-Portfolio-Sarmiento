@@ -36,6 +36,9 @@ function InstagramIcon({ size = 20 }: { size?: number }) {
   );
 }
 
+// A mailto: link does nothing on a desktop without a mail app, so open Gmail compose instead.
+const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(contact.email)}`;
+
 function CopyEmail() {
   const [copied, setCopied] = useState(false);
   const copy = async () => {
@@ -147,7 +150,9 @@ export default function App() {
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <Button asChild>
-                <a href={`mailto:${contact.email}`}>Email me</a>
+                <a href={gmailCompose} target="_blank" rel="noreferrer">
+                  Email me
+                </a>
               </Button>
               <CopyEmail />
               <Button asChild variant="outline">
@@ -178,7 +183,7 @@ export default function App() {
           <a href={contact.instagram} target="_blank" rel="noreferrer" aria-label="Instagram (opens in a new tab)" className="hover:text-text">
             <InstagramIcon />
           </a>
-          <a href={`mailto:${contact.email}`} aria-label="Email" className="hover:text-text">
+          <a href={gmailCompose} target="_blank" rel="noreferrer" aria-label="Email (opens in a new tab)" className="hover:text-text">
             <Mail size={20} />
           </a>
         </div>
