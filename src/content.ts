@@ -1,3 +1,5 @@
+import type { GearItem } from "@/components/GearCarousel";
+
 export const person = {
   name: "Kervin Sarmiento",
   role: "Student developer",
@@ -150,6 +152,17 @@ export const sphereIcons = [
   { slug: "cisco", name: "Cisco" },
   { slug: "lua", name: "Lua / Luau" },
   { slug: "figma", name: "Figma" },
+];
+
+/** Hardware and tools I use. The Gear section stays hidden until this list has entries. */
+export const gear: GearItem[] = [
+  { name: "ASUS TUF Gaming F15", category: "Laptop", note: "Where I build and test everything.", image: "/gear/asus-tuf-f15.webp", tag: "Daily driver", accent: "#f59e0b" },
+  { name: "RK65", category: "Keyboard", note: "65% wireless board for coding.", image: "/gear/rk-rk65.webp", accent: "#3b82f6" },
+  { name: "Skyloong SK61", category: "Keyboard", note: "Compact 60% with RGB.", image: "/gear/skyloong-sk61.webp", accent: "#ec4899" },
+  { name: "Logitech G305", category: "Mouse", note: "Reliable wireless mouse.", image: "/gear/logitech-g305.webp", accent: "#10b981" },
+  { name: "Attack Shark X6", category: "Mouse", note: "Ultralight wireless mouse.", image: "/gear/attack-shark-x6.webp", accent: "#14b8a6" },
+  { name: "AOC Gaming 27G42E", category: "Monitor", note: "27 inch 180Hz IPS.", image: "/gear/aoc-27g42e.webp", accent: "#f43f5e" },
+  { name: "AOC 27B30H3", category: "Monitor", note: "27 inch 120Hz IPS.", image: "/gear/aoc-27b30h3.webp", accent: "#8b5cf6" },
 ];
 
 export const explore = [
