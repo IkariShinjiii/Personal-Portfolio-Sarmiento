@@ -157,7 +157,7 @@ export const sphereIcons = [
 /** Hardware and tools I use. The Gear section stays hidden until this list has entries. */
 export const gear: GearItem[] = [
   { name: "ASUS TUF Gaming F15", category: "Laptop", note: "Where I build and test everything.", image: "/gear/asus-tuf-f15.webp", tag: "Daily driver", accent: "#f59e0b" },
-  { name: "RK75", category: "Keyboard", note: "75% wireless board for coding.", image: "/gear/rk-r75.webp", accent: "#3b82f6" },
+  { name: "RK65", category: "Keyboard", note: "65% wireless board for coding.", image: "/gear/rk-rk65.webp", accent: "#3b82f6" },
   { name: "Skyloong SK61", category: "Keyboard", note: "Compact 60% with RGB.", image: "/gear/skyloong-sk61.webp", accent: "#ec4899" },
   { name: "Logitech G305", category: "Mouse", note: "Reliable wireless mouse.", image: "/gear/logitech-g305.webp", accent: "#10b981" },
   { name: "Attack Shark X6", category: "Mouse", note: "Ultralight wireless mouse.", image: "/gear/attack-shark-x6.webp", accent: "#14b8a6" },
