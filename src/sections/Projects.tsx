@@ -1,11 +1,26 @@
+import { useSyncExternalStore } from "react";
 import { ExternalLink } from "lucide-react";
+import { OrbitProjects } from "@/components/OrbitProjects";
 import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { projects } from "@/content";
 
+// The scroll-driven orbit needs room and motion; tablets, phones and reduced-motion visitors get the plain grid.
+const ORBIT_QUERY = "(min-width: 1024px) and (prefers-reduced-motion: no-preference)";
+const subscribe = (cb: () => void) => {
+  const mq = window.matchMedia(ORBIT_QUERY);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+};
+
 export function Projects() {
+  const orbit = useSyncExternalStore(subscribe, () => window.matchMedia(ORBIT_QUERY).matches, () => false);
+  return orbit ? <OrbitProjects items={projects} /> : <ProjectsGrid />;
+}
+
+function ProjectsGrid() {
   return (
     <Section id="projects" label="Work" title="Featured Projects">
       <ol className="mx-auto grid max-w-[1280px] gap-8 md:grid-cols-2 xl:grid-cols-3">
