@@ -1,3 +1,5 @@
+import type { GearItem } from "@/components/GearCarousel";
+
 export const person = {
   name: "Kervin Sarmiento",
   role: "Student developer",
@@ -151,6 +153,9 @@ export const sphereIcons = [
   { slug: "lua", name: "Lua / Luau" },
   { slug: "figma", name: "Figma" },
 ];
+
+/** Hardware and tools I use. The Gear section stays hidden until this list has entries. */
+export const gear: GearItem[] = [];
 
 export const explore = [
   { title: "Resume", text: "CV coming soon.", href: "", tone: "text-accent" },

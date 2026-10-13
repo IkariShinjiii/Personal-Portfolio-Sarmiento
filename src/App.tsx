@@ -8,6 +8,7 @@ import { Reveal } from "@/components/Reveal";
 import { About } from "@/sections/About";
 import { SkillMarquee } from "@/components/SkillMarquee";
 import { SkillsSphere } from "@/components/SkillsSphere";
+import { GearCarousel } from "@/components/GearCarousel";
 import { LazyGuestbook } from "@/components/LazyGuestbook";
 import { GitHubActivity } from "@/sections/GitHubActivity";
 import { Hero } from "@/sections/Hero";
@@ -18,7 +19,7 @@ import { watchOffscreen } from "@/lib/pause-offscreen";
 import { gsap, NO_REDUCED_MOTION, ScrollTrigger } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 import { BRAND_ICONS } from "@/lib/brand-icons";
-import { contact, explore, person, skillRowAbove, skillRowBelow, sphereIcons } from "@/content";
+import { contact, explore, gear, person, skillRowAbove, skillRowBelow, sphereIcons } from "@/content";
 
 function GithubIcon({ size = 20 }: { size?: number }) {
   return (
@@ -117,6 +118,12 @@ export default function App() {
         <Projects />
 
         <GitHubActivity />
+
+        {gear.length > 0 && (
+          <Section id="gear" label="Setup" title="My Gear">
+            <GearCarousel items={gear} />
+          </Section>
+        )}
 
         <Section id="explore" label="More" title="More to explore">
           <ul className="mx-auto grid max-w-[1280px] gap-4 md:grid-cols-3">
