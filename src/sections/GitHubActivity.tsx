@@ -89,7 +89,10 @@ export function GitHubActivity() {
       }
     }
     const busiest = [...data.days].sort((a, b) => b.count - a.count)[0];
-    return { weeks, cells, months, busiest };
+    // If the first months are empty, say so instead of leaving a wall of blank squares unexplained.
+    const firstActive = data.days.find((d) => d.count > 0);
+    const startsLate = !!firstActive && (utc(firstActive.date).getTime() - utc(data.days[0].date).getTime()) / DAY_MS > 60;
+    return { weeks, cells, months, busiest, since: startsLate && firstActive ? firstActive.date : null };
   }, [data, compact]);
 
   // The grid is revealed with a left-to-right wipe.
@@ -200,6 +203,11 @@ export function GitHubActivity() {
               <p>
                 {data ? `${data.total.toLocaleString()} contributions in the last 12 months` : "Loading activity..."}
                 {compact && data && <span className="mt-1 block text-xs">Showing the last 4 months</span>}
+                {layout?.since && (
+                  <span className="mt-1 block text-xs">
+                    Public activity starts {utc(layout.since).toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" })}
+                  </span>
+                )}
               </p>
               <div aria-hidden className="flex items-center gap-2">
                 Less

@@ -10,6 +10,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://personal-portfolio-sarmiento.vercel.app/profile.jpg" />
     <title>Kervin Sarmiento - Portfolio</title>
+    <script src="/theme-init.js"></script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,7 +26,27 @@
     </noscript>
   </head>
   <body>
-    <div id="root"></div>
+    <!--
+      Static copy of the top of the hero, so there is something to read before the JavaScript has run.
+      React replaces it on mount (the Hero skips its intro animation for these parts when data-shell is set).
+      Keep the text and classes in step with src/sections/Hero.tsx and the person object in src/content.ts.
+    -->
+    <div id="root" data-shell>
+      <!-- Same height as the sticky nav that React renders above the hero, so nothing jumps on mount. -->
+      <div class="h-[60px] min-[1280px]:h-[66px]"></div>
+      <section class="mx-auto flex min-h-[calc(100svh-5rem)] max-w-[1040px] flex-col items-center px-5 pb-10 pt-10 text-center md:pt-14">
+        <div class="relative size-24">
+          <img src="/avatar.png" alt="" width="96" height="96" fetchpriority="high" class="size-full rounded-full border border-border object-cover" />
+        </div>
+        <h1 class="mt-6 text-[clamp(32px,6vw,56px)] font-bold leading-[1.1] tracking-tight">
+          <span class="mr-[0.28em] inline-block">Hi, I'm</span>
+          <span class="name-grad"><span class="name-letter inline-block whitespace-nowrap">Kervin</span> <span class="name-letter inline-block whitespace-nowrap">Sarmiento</span></span>
+        </h1>
+        <p class="mt-3 max-w-xl text-lg text-muted">
+          <span class="font-semibold text-text">Student developer.</span> I build web apps and Roblox games, and I'm studying at USA.
+        </p>
+      </section>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
