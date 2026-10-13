@@ -4,14 +4,15 @@ type Props = { className?: string; onClick?: () => void };
 
 /**
  * The hero avatar: a short looping clip of the owner's Memoji. It stays a still image when the visitor
- * prefers reduced motion or has data saver on, and the still is also the poster while the clip loads.
+ * prefers reduced motion, has data saver on, or is on a phone-sized screen, and the still is also the poster while the clip loads.
  * The clip only plays while it is on screen.
  */
 export function AvatarVideo({ className, onClick }: Props) {
   const ref = useRef<HTMLVideoElement>(null);
   const [still] = useState(() => {
     const saver = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
-    return saver || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Phones keep the still: the clip is a ~900 KB download that costs mobile data for a small flourish.
+    return saver || window.matchMedia("(prefers-reduced-motion: reduce), (max-width: 767px)").matches;
   });
 
   // The still avatar is what loads with the page; the clip only starts once everything else has finished.

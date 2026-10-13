@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { Fragment, useLayoutEffect, useRef } from "react";
 import { ArrowDown } from "lucide-react";
 import { AvatarVideo } from "@/components/AvatarVideo";
 import { ChatCard } from "@/components/ChatCard";
@@ -7,6 +7,9 @@ import { person } from "@/content";
 
 const FIRST = "Kervin";
 const NAME = "Kervin Sarmiento";
+
+// index.html ships a static copy of the top of the hero; it is gone once React mounts, so read this once.
+const SHELL_SHOWN = typeof document !== "undefined" && document.getElementById("root")?.hasAttribute("data-shell") === true;
 
 export function Hero() {
   const root = useRef<HTMLElement>(null);
@@ -48,12 +51,15 @@ export function Hero() {
       mm.add(NO_REDUCED_MOTION, () => {
         // Kept short (about 1.2s) so the largest content paints early; pieces overlap on purpose.
         const tl = gsap.timeline({ defaults: { ease: EASE.out } });
-        tl.from(".hero-avatar", { scale: 0.6, opacity: 0, duration: 0.7 })
-          .from(".hero-hi", { opacity: 0, y: 12, duration: 0.3 }, 0.1)
-          .from(".hero-letter", { opacity: 0, y: 18, rotateX: -50, duration: 0.4, stagger: 0.02 }, 0.15)
-          .from(".hero-sub", { y: 14, duration: 0.5 }, 0.2)
-          .from(".hero-chat", { opacity: 0, y: 24, scale: 0.98, duration: 0.5 }, 0.3)
-          .from(".hero-cue", { opacity: 0, duration: 0.4 }, 0.8);
+        // When the static shell was on screen, the avatar, greeting, name and subtitle are already visible:
+        // animating them in again would make them vanish and reappear, so only the rest of the hero arrives.
+        if (!SHELL_SHOWN) {
+          tl.from(".hero-avatar", { scale: 0.6, opacity: 0, duration: 0.7 })
+            .from(".hero-hi", { opacity: 0, y: 12, duration: 0.3 }, 0.1)
+            .from(".hero-letter", { opacity: 0, y: 18, rotateX: -50, duration: 0.4, stagger: 0.02 }, 0.15)
+            .from(".hero-sub", { y: 14, duration: 0.5 }, 0.2);
+        }
+        tl.from(".hero-chat", { opacity: 0, y: 24, scale: 0.98, duration: 0.5 }, 0.3).from(".hero-cue", { opacity: 0, duration: 0.4 }, 0.8);
         const bob = gsap.to(".hero-cue-arrow", { y: 6, duration: 0.9, repeat: -1, yoyo: true, ease: "sine.inOut" });
 
         // Avatar: it floats, its glow breathes, it turns to follow the pointer, and it wobbles when clicked.
@@ -120,10 +126,18 @@ export function Hero() {
           Hi, I'm
         </span>
         <span ref={nameRef} className="name-grad">
-          {NAME.split("").map((ch, i) => (
-            <span key={i} aria-hidden className="hero-letter name-letter inline-block whitespace-pre">
-              {ch}
-            </span>
+          {/* Words stay whole (nowrap) so a narrow screen breaks between words, never inside one. */}
+          {NAME.split(" ").map((word, w) => (
+            <Fragment key={w}>
+              {w > 0 && " "}
+              <span aria-hidden className="inline-block whitespace-nowrap">
+                {word.split("").map((ch, i) => (
+                  <span key={i} className="hero-letter name-letter inline-block">
+                    {ch}
+                  </span>
+                ))}
+              </span>
+            </Fragment>
           ))}
         </span>
       </h1>
