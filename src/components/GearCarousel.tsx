@@ -17,15 +17,15 @@ const CARD_H = 380;
 const GAP = 40;
 const AUTOPLAY_MS = 4000;
 
-function GearCard({ item, className }: { item: GearItem; className?: string }) {
+function GearCard({ item, className, eager }: { item: GearItem; className?: string; eager?: boolean }) {
   return (
     <article
       className={cn("group flex h-full flex-col overflow-hidden rounded-card border border-border bg-surface transition-[transform,box-shadow,border-color] duration-500 hover:-translate-y-2 hover:scale-[1.02]", className)}
       style={{ ["--gear-accent" as string]: item.accent }}
     >
-      <div className="relative min-h-0 flex-1 overflow-hidden">
+      <div className={cn("relative min-h-0 flex-1 overflow-hidden", item.image && "bg-white")}>
         {item.image ? (
-          <img src={item.image} alt={item.name} loading="lazy" className="size-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          <img src={item.image} alt={item.name} loading={eager ? "eager" : "lazy"} className="size-full object-contain p-3 transition-transform duration-700 group-hover:scale-105" />
         ) : (
           <div
             aria-hidden
@@ -136,7 +136,7 @@ export function GearCarousel({ items }: { items: GearItem[] }) {
                   backfaceVisibility: "hidden",
                 }}
               >
-                <GearCard item={item} className="shadow-xl" />
+                <GearCard item={item} className="shadow-xl" eager />
               </div>
             ))}
           </div>
