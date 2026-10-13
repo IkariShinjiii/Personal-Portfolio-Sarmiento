@@ -76,12 +76,12 @@ export function Nav({ theme, onToggleTheme }: { theme: "dark" | "light"; onToggl
 
   return (
     <header className="sticky top-0 z-40 px-4 min-[1280px]:px-[clamp(1rem,3vw,3.5rem)] pt-4">
-      <nav aria-label="Primary" className="mx-auto flex max-w-[1760px] items-center justify-between">
+      <nav aria-label="Primary" className="mx-auto grid max-w-[1760px] grid-cols-[1fr_auto_1fr] items-center">
         <button
           type="button"
           onClick={onToggleTheme}
           aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-          className="grid size-11 place-items-center rounded-full border border-border bg-surface/80 text-text backdrop-blur"
+          className="grid size-11 place-items-center justify-self-start rounded-full border border-border bg-surface/80 text-text backdrop-blur"
         >
           {theme === "dark" ? <Moon size={18} /> : <Sun size={18} />}
         </button>
@@ -112,7 +112,7 @@ export function Nav({ theme, onToggleTheme }: { theme: "dark" | "light"; onToggl
           ))}
         </ul>
 
-        <div className="flex items-center gap-2">
+        <div className="col-start-3 flex items-center gap-2 justify-self-end">
           <a
             href="#contact"
             className="hidden items-center gap-2 rounded-full border border-border bg-surface/80 px-5 py-3 text-sm font-semibold backdrop-blur hover:border-accent sm:flex"
