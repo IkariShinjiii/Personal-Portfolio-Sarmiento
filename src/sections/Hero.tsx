@@ -1,4 +1,4 @@
-import { Fragment, useLayoutEffect, useRef } from "react";
+import { Fragment, useEffect, useLayoutEffect, useRef } from "react";
 import { ArrowDown } from "lucide-react";
 import { AvatarVideo } from "@/components/AvatarVideo";
 import { ChatCard } from "@/components/ChatCard";
@@ -9,7 +9,9 @@ const FIRST = "Kervin";
 const NAME = "Kervin Sarmiento";
 
 // index.html ships a static copy of the top of the hero; it is gone once React mounts, so read this once.
-const SHELL_SHOWN = typeof document !== "undefined" && document.getElementById("root")?.hasAttribute("data-shell") === true;
+// While the intro screen is up it covers the shell, so the full hero intro runs (held until the screen leaves).
+const PRELOADING = typeof document !== "undefined" && document.documentElement.classList.contains("preloading");
+const SHELL_SHOWN = !PRELOADING && typeof document !== "undefined" && document.getElementById("root")?.hasAttribute("data-shell") === true;
 
 export function Hero() {
   const root = useRef<HTMLElement>(null);
@@ -44,6 +46,12 @@ export function Hero() {
     return () => ro.disconnect();
   }, []);
 
+  // Tell the intro screen (public/preloader.js) that the app is on screen and it may leave.
+  useEffect(() => {
+    (window as unknown as { __appReady?: boolean }).__appReady = true;
+    window.dispatchEvent(new Event("app:ready"));
+  }, []);
+
   // One timeline drives the whole intro, so the pieces arrive in a deliberate order.
   useGSAP(
     () => {
@@ -51,6 +59,12 @@ export function Hero() {
       mm.add(NO_REDUCED_MOTION, () => {
         // Kept short (about 1.2s) so the largest content paints early; pieces overlap on purpose.
         const tl = gsap.timeline({ defaults: { ease: EASE.out } });
+        // Hold the entrance until the intro screen starts sliding away, then play it as the page is revealed.
+        const onPreloaderLeave = () => tl.play(0);
+        if (PRELOADING && !(window as unknown as { __preloaderLeaving?: boolean }).__preloaderLeaving) {
+          tl.pause();
+          window.addEventListener("preloader:leave", onPreloaderLeave, { once: true });
+        }
         // When the static shell was on screen, the avatar, greeting, name and subtitle are already visible:
         // animating them in again would make them vanish and reappear, so only the rest of the hero arrives.
         if (!SHELL_SHOWN) {
@@ -94,6 +108,7 @@ export function Hero() {
 
         const stop = pauseOffscreen(root.current, [bob, float, breathe]);
         return () => {
+          window.removeEventListener("preloader:leave", onPreloaderLeave);
           stop();
           wiggleTl.current?.kill();
           window.removeEventListener("pointermove", onMove);
