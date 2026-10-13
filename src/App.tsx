@@ -135,6 +135,8 @@ export default function App() {
                 <Reveal>
                   <a
                     href={e.href || undefined}
+                    target={e.newTab ? "_blank" : undefined}
+                    rel={e.newTab ? "noreferrer" : undefined}
                     aria-disabled={!e.href}
                     className="block rounded-card border border-border bg-surface/70 p-6 transition-colors duration-200 hover:border-accent2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   >
