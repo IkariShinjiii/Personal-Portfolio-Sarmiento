@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { Check, Copy, Mail } from "lucide-react";
 import { Backdrop } from "@/components/Backdrop";
 import { ScrollProgress } from "@/components/ScrollProgress";
@@ -6,20 +6,22 @@ import { Nav } from "@/components/Nav";
 import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
 import { About } from "@/sections/About";
-import { SkillMarquee } from "@/components/SkillMarquee";
-import { SkillsSphere } from "@/components/SkillsSphere";
-import { GearCarousel } from "@/components/GearCarousel";
+import { Deferred } from "@/components/Deferred";
 import { LazyGuestbook } from "@/components/LazyGuestbook";
-import { GitHubActivity } from "@/sections/GitHubActivity";
 import { Hero } from "@/sections/Hero";
-import { Projects } from "@/sections/Projects";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/lib/use-theme";
 import { watchOffscreen } from "@/lib/pause-offscreen";
 import { gsap, NO_REDUCED_MOTION, ScrollTrigger } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 import { BRAND_ICONS } from "@/lib/brand-icons";
-import { contact, explore, gear, person, skillRowAbove, skillRowBelow, sphereIcons } from "@/content";
+import { contact, explore, gear, person } from "@/content";
+
+// Below-the-fold sections load on demand (see Deferred), keeping startup work small.
+const Skills = lazy(() => import("@/sections/Skills").then((m) => ({ default: m.Skills })));
+const Projects = lazy(() => import("@/sections/Projects").then((m) => ({ default: m.Projects })));
+const GitHubActivity = lazy(() => import("@/sections/GitHubActivity").then((m) => ({ default: m.GitHubActivity })));
+const Gear = lazy(() => import("@/sections/Gear").then((m) => ({ default: m.Gear })));
 
 function GithubIcon({ size = 20 }: { size?: number }) {
   return (
@@ -107,25 +109,22 @@ export default function App() {
       <main>
         <Hero />
         <About />
-        <Section id="skills" label="Tech stack" title="My Skills">
-          <div>
-            <SkillMarquee items={skillRowAbove} direction={-1} speed={45} label="Front-end and tooling skills" />
-            <div className="my-6">
-              <SkillsSphere items={sphereIcons} />
-              <p className="mt-2 text-center text-sm text-muted">Drag to spin</p>
-            </div>
-            <SkillMarquee items={skillRowBelow} direction={1} speed={38} label="Back-end, platforms and games skills" />
-          </div>
-        </Section>
+        <Deferred id="skills" minHeight={900}>
+          <Skills />
+        </Deferred>
 
-        <Projects />
+        <Deferred id="projects" minHeight={900}>
+          <Projects />
+        </Deferred>
 
-        <GitHubActivity />
+        <Deferred id="activity" minHeight={520}>
+          <GitHubActivity />
+        </Deferred>
 
         {gear.length > 0 && (
-          <Section id="gear" label="Setup" title="My Gear">
-            <GearCarousel items={gear} />
-          </Section>
+          <Deferred id="gear" minHeight={640}>
+            <Gear />
+          </Deferred>
         )}
 
         <Section id="explore" label="More" title="More to explore">
