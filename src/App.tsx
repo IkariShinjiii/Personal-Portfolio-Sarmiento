@@ -87,6 +87,23 @@ export default function App() {
 
   useEffect(() => watchOffscreen(), []);
 
+  // The page renders on the client, so the browser's own jump to /#section finds nothing. Do it once the
+  // sections have mounted, and stop the moment the visitor scrolls on their own.
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (!id || id === "top") return;
+    let live = true;
+    const stop = () => (live = false);
+    const go = () => live && document.getElementById(id)?.scrollIntoView();
+    const timers = [200, 900, 1800].map((ms) => window.setTimeout(go, ms));
+    for (const ev of ["wheel", "touchstart", "keydown"]) window.addEventListener(ev, stop, { once: true, passive: true });
+    return () => {
+      stop();
+      timers.forEach(clearTimeout);
+      for (const ev of ["wheel", "touchstart", "keydown"]) window.removeEventListener(ev, stop);
+    };
+  }, []);
+
   // Late layout changes (fonts, lazy sections, images) move trigger positions; re-measure.
   useEffect(() => {
     const refresh = () => ScrollTrigger.refresh();
