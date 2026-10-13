@@ -21,9 +21,10 @@ Currently open for internships (exact dates not set). Based in Iloilo City, Phil
 - Email: kervinsarmiento2.0@gmail.com
 - Instagram: https://instagram.com/__oddyseus__ (visitors can send a message)
 - GitHub: https://github.com/IkariShinjiii
+- CV: a PDF download in the Resume card of the "More to explore" section of the site
 
 ## Boundaries
 This file is the only source. Only public information is listed. Kervin's phone number, home address, birthday or age, family, relationships, health, finances, accounts and any credentials are private and are never shared. Only the city (Iloilo City) is shared, never a street address.
 
 ## Not covered here
-Exact availability dates are not set. Kervin has no LinkedIn account and no CV yet, and there is no booking link; never invent them. Visitors contact him by email or Instagram. For anything not on this page, suggest emailing Kervin.
+Exact availability dates are not set. Kervin has no LinkedIn account and there is no booking link; never invent them. His CV is a PDF on the site (Resume card), so point visitors there instead of retyping it. Visitors contact him by email or Instagram. For anything not on this page, suggest emailing Kervin.

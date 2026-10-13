@@ -165,8 +165,8 @@ export const gear: GearItem[] = [
   { name: "AOC 27B30H3", category: "Monitor", note: "27 inch 120Hz IPS.", image: "/gear/aoc-27b30h3.webp", accent: "#8b5cf6" },
 ];
 
-export const explore = [
-  { title: "Resume", text: "CV coming soon.", href: "", tone: "text-accent" },
+export const explore: { title: string; text: string; href: string; tone: string; newTab?: boolean }[] = [
+  { title: "Resume", text: "Download my CV (PDF).", href: "/Kervin_Sarmiento_Resume.pdf", newTab: true, tone: "text-accent" },
   { title: "Links", text: "My GitHub and Instagram.", href: "https://github.com/IkariShinjiii", tone: "text-accent2" },
   { title: "Contact", text: "Say hello.", href: "#contact", tone: "text-accent" },
 ];
