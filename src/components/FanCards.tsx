@@ -54,12 +54,12 @@ export function FanCards({ items }: { items: Item[] }) {
   return (
     <div
       ref={root}
-      className="relative h-[144px] overflow-hidden"
+      className="relative h-[290px] overflow-hidden sm:h-[190px] md:h-[144px]"
       onPointerEnter={() => (hovering.current = true)}
       onPointerLeave={() => (hovering.current = false)}
     >
       <p className="pointer-events-none absolute inset-x-0 top-2 z-10 mx-auto w-fit rounded-full border border-accent2/30 bg-bg/60 px-3 py-1 text-center font-mono text-[9px] uppercase tracking-[0.25em] text-accent2">
-        Hover to read more
+        Hover or tap to read more
       </p>
       {items.map((it, i) => {
         const on = i === active;
@@ -76,7 +76,7 @@ export function FanCards({ items }: { items: Item[] }) {
             onClick={() => setActive(i)}
             style={{ left: `${i * 31}%`, willChange: "transform" }}
             className={cn(
-              "absolute top-[46px] flex h-[160px] w-[38%] flex-col justify-start rounded-xl border p-3 text-left transition-[border-color,box-shadow,background-color,color] duration-500",
+              "absolute top-[46px] flex h-[230px] w-[38%] sm:h-[180px] md:h-[160px] flex-col justify-start rounded-xl border p-3 text-left transition-[border-color,box-shadow,background-color,color] duration-500",
               "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
               on
                 ? "border-accent2/70 bg-surface shadow-[0_0_44px_-6px_color-mix(in_srgb,var(--accent2)_55%,transparent)]"
