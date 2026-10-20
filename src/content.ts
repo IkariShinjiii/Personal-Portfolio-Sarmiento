@@ -3,7 +3,7 @@ import type { GearItem } from "@/components/GearCarousel";
 export const person = {
   name: "Kervin Sarmiento",
   role: "Student developer",
-  summary: "I build web apps and Roblox games, and I'm studying at USA.",
+  summary: "I build web apps and desktop apps, and I'm studying at USA.",
   initials: "KS",
 };
 
