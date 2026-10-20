@@ -39,6 +39,24 @@ export const craft = {
 
 export const location = { city: "Iloilo City", country: "Philippines", coords: "10.7202° N, 122.5621° E", timezone: "GMT+8" };
 
+export const services = [
+  {
+    title: "Websites & landing pages",
+    text: "Fast, mobile-friendly sites for shops, small businesses and events, like the QR menu I built for a Jaro coffee shop.",
+    tags: ["React", "Next.js", "Tailwind"],
+  },
+  {
+    title: "Web apps",
+    text: "Sign-in, databases, booking and online payments through PayMongo and GCash, like Mind Bridge and ACUA.",
+    tags: ["TypeScript", "Supabase", "PayMongo"],
+  },
+  {
+    title: "Desktop apps",
+    text: "Windows apps with a clean interface, built with Electron and React, like Gabay.",
+    tags: ["Electron", "React", "Windows"],
+  },
+];
+
 export const projects = [
   {
     n: "01",

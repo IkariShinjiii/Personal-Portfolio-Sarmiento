@@ -9,6 +9,7 @@ import { About } from "@/sections/About";
 import { Deferred } from "@/components/Deferred";
 import { LazyGuestbook } from "@/components/LazyGuestbook";
 import { Hero } from "@/sections/Hero";
+import { Services } from "@/sections/Services";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/lib/use-theme";
 import { watchOffscreen } from "@/lib/pause-offscreen";
@@ -143,6 +144,8 @@ export default function App() {
             <Gear />
           </Deferred>
         )}
+
+        <Services hireHref={`${gmailCompose}&su=${encodeURIComponent("Project inquiry")}`} />
 
         <Section id="explore" label="More" title="More to explore">
           <ul className="mx-auto grid max-w-[1280px] gap-4 md:grid-cols-3">

@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useLayoutEffect, useRef } from "react";
 import { ArrowDown } from "lucide-react";
 import { AvatarVideo } from "@/components/AvatarVideo";
+import { Button } from "@/components/ui/button";
 import { ChatCard } from "@/components/ChatCard";
 import { EASE, gsap, NO_REDUCED_MOTION, pauseOffscreen, useGSAP } from "@/lib/gsap";
 import { person } from "@/content";
@@ -71,7 +72,8 @@ export function Hero() {
           tl.from(".hero-avatar", { scale: 0.6, opacity: 0, duration: 0.7 })
             .from(".hero-hi", { opacity: 0, y: 12, duration: 0.3 }, 0.1)
             .from(".hero-letter", { opacity: 0, y: 18, rotateX: -50, duration: 0.4, stagger: 0.02 }, 0.15)
-            .from(".hero-sub", { y: 14, duration: 0.5 }, 0.2);
+            .from(".hero-sub", { y: 14, duration: 0.5 }, 0.2)
+            .from(".hero-cta", { opacity: 0, y: 12, duration: 0.4 }, 0.3);
         }
         tl.from(".hero-chat", { opacity: 0, y: 24, scale: 0.98, duration: 0.5 }, 0.3).from(".hero-cue", { opacity: 0, duration: 0.4 }, 0.8);
         const bob = gsap.to(".hero-cue-arrow", { y: 6, duration: 0.9, repeat: -1, yoyo: true, ease: "sine.inOut" });
@@ -159,6 +161,14 @@ export function Hero() {
       <p className="hero-sub mt-3 max-w-xl text-lg text-muted">
         <span className="font-semibold text-text">{person.role}.</span> {person.summary}
       </p>
+      <div className="hero-cta mt-6 flex flex-wrap justify-center gap-3">
+        <Button asChild>
+          <a href="#contact">Hire me</a>
+        </Button>
+        <Button asChild variant="outline">
+          <a href="#projects">See my work</a>
+        </Button>
+      </div>
 
       <div className="hero-chat w-full">
         <ChatCard name={FIRST} />
