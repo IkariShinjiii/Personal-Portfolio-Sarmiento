@@ -9,7 +9,7 @@ export const person = {
 
 export const about = [
   { title: "Education", text: "BS Information Technology, 3rd year, at the University of San Agustin, Iloilo (USA)." },
-  { title: "Building", text: "My Mind Bridge capstone, the ACUA storefront with PayMongo and GCash checkout, Gabay (a notch for the Windows taskbar) and a QR menu site for a Jaro coffee shop, Ñuwave." },
+  { title: "Building", text: "Mind Bridge, my capstone. ACUA, a storefront with GCash checkout. Gabay, a Windows notch app. Ñuwave, a QR menu for a coffee shop." },
   { title: "Games", text: "I build Roblox games in Roblox Studio with Luau, like Anime Pet Simulator, and I like turning anime ideas into playable games." },
 ];
 
@@ -29,8 +29,8 @@ export const mindset = {
 export const craft = {
   heading: "Craft",
   text: "I build web apps and desktop apps that work for real users.",
-  closing: "Open for internships and collaborations on desktop apps and student-focused web projects.",
-  status: "Open for internships",
+  closing: "Open for freelance projects and internships: web apps, desktop apps and student-focused sites.",
+  status: "Open for freelance work",
   strips: [
     ["tailwindcss", "typescript", "react", "vite", "supabase", "firebase", "git"],
     ["github", "vercel", "gsap", "framer", "figma", "robloxstudio", "cisco", "lua", "nodedotjs", "javascript", "html5", "css"],
