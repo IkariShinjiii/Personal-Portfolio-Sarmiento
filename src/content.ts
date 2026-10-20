@@ -27,8 +27,8 @@ export const mindset = {
 
 export const craft = {
   heading: "Craft",
-  text: "I build web apps and game systems that work for real users.",
-  closing: "Open for internships and collaborations on Roblox games and student-focused web projects.",
+  text: "I build web apps and desktop apps that work for real users.",
+  closing: "Open for internships and collaborations on desktop apps and student-focused web projects.",
   status: "Open for internships",
   strips: [
     ["tailwindcss", "typescript", "react", "vite", "supabase", "firebase", "git"],

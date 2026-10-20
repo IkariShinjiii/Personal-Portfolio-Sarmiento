@@ -1,10 +1,10 @@
 # About Kervin Sarmiento
 
 ## Who
-Kervin is a student developer based in Iloilo City, Philippines. He is a BS Information Technology student, 3rd year, at the University of San Agustin, Iloilo (USA). He builds full-stack web apps and Roblox games. He is currently open for internships and collaborations where he can keep learning.
+Kervin is a student developer based in Iloilo City, Philippines. He is a BS Information Technology student, 3rd year, at the University of San Agustin, Iloilo (USA). He builds full-stack web apps and desktop apps. He is currently open for internships and collaborations where he can keep learning.
 
 ## Approach
-He likes to understand the problem first, then build something clear and reliable. He builds web apps and game systems that work for real users.
+He likes to understand the problem first, then build something clear and reliable. He builds web apps and desktop apps that work for real users.
 
 ## Projects
 - Mind Bridge: his capstone, a student wellness platform with assessments, counseling requests and scheduling. Still in active development. Live site: https://mind-bridge-omega.vercel.app
