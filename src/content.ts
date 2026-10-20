@@ -75,6 +75,18 @@ export const projects = [
     imageAlt: "Anime Pet Simulator key art: chibi anime characters and cats in front of a red torii gate under cherry blossoms.",
     imagePosition: "center",
   },
+  {
+    n: "04",
+    category: "Desktop app",
+    title: "Gabay",
+    summary: "A Windows app that folds the taskbar into an iPhone-style notch at the top of the screen, with quick settings, now playing, timers and weather one hover away.",
+    tags: ["Electron", "React", "Windows"],
+    href: "https://ikarishinjiii.github.io/gabay/",
+    tone: "from-teal-700 to-slate-900",
+    image: "/projects/gabay.jpg",
+    imageAlt: "Gabay title screen: Your Windows taskbar, folded into a notch, with the notch showing time, weather and battery at the top.",
+    imagePosition: "center",
+  },
 ];
 
 // Only technologies that are real for Kervin: stated by him, or used in this site, Mind Bridge or ACUA.

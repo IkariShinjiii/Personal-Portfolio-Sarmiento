@@ -28,6 +28,8 @@ const OFFSET_Y = -40;
 const ASPECT = 1.6;
 const GRID_GAP = 16;
 const GRID_MAX_W = 1160;
+const CAPTION_H = 88; // room under each card for its caption
+const GRID_FILL = 0.84; // the settled grid, captions included, uses at most this much of the viewport height
 const GRID_Y = 0.52; // vertical centre of the settled grid, as a fraction of the viewport
 const DEPTH_SCALE = 0.82;
 const DEPTH_OPACITY = 0.2;
@@ -73,10 +75,12 @@ export function OrbitProjects({ items }: { items: OrbitItem[] }) {
     const render = (progress: number) => {
       const cols = Math.min(3, n);
       const rows = Math.ceil(n / cols);
-      const gridW = Math.min(GRID_MAX_W, Math.max(vw - 96, 200));
-      const cardW = Math.max(90, (gridW - GRID_GAP * (cols - 1)) / cols);
+      const maxW = Math.min(GRID_MAX_W, Math.max(vw - 96, 200));
+      const maxH = (vh * GRID_FILL - rows * CAPTION_H - (rows - 1) * GRID_GAP) / rows;
+      const cardW = Math.max(90, Math.min((maxW - GRID_GAP * (cols - 1)) / cols, maxH * ASPECT));
       const cardH = cardW / ASPECT;
-      const gridH = rows * cardH + (rows - 1) * GRID_GAP;
+      const gridW = cols * cardW + (cols - 1) * GRID_GAP;
+      const gridH = rows * (cardH + CAPTION_H) + (rows - 1) * GRID_GAP;
       const arcW = Math.min(ARC_CARD_W, vw * 0.28);
       const arcH = arcW / ASPECT;
       const curveW = Math.min(CURVE_W, vw * 0.44);
@@ -127,8 +131,9 @@ export function OrbitProjects({ items }: { items: OrbitItem[] }) {
 
         const col = i % cols;
         const row = Math.floor(i / cols);
-        const gridLeft = -gridW / 2 + col * (cardW + GRID_GAP);
-        const gridTop = vh * GRID_Y - vh / 2 - gridH / 2 + row * (cardH + GRID_GAP);
+        const inRow = Math.min(cols, n - row * cols);
+        const gridLeft = -gridW / 2 + col * (cardW + GRID_GAP) + ((cols - inRow) * (cardW + GRID_GAP)) / 2; // a short last row sits centred
+        const gridTop = vh * GRID_Y - vh / 2 - gridH / 2 + row * (cardH + CAPTION_H + GRID_GAP);
 
         const w = lerp(arcW, cardW, flat);
         const h = lerp(arcH, cardH, flat);
