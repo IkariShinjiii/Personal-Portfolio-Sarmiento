@@ -6,12 +6,11 @@ type Item = { label: string; image: string; position: string };
 
 const INTERVAL = 2800;
 
-/** Three cards in a row: the middle one sharp with its label, the sides blurred behind it. Cycles on its own. */
+/** Three cards in a row: the middle one sharp with its label, the sides blurred behind it. Cycles only while its card is hovered. */
 export function PhotoStack({ items }: { items: Item[] }) {
   const root = useRef<HTMLDivElement>(null);
   const cards = useRef<(HTMLDivElement | null)[]>([]);
   const [active, setActive] = useState(0);
-  const onScreen = useRef(false);
   const n = items.length;
 
   useGSAP(
@@ -43,11 +42,22 @@ export function PhotoStack({ items }: { items: Item[] }) {
   useEffect(() => {
     const el = root.current;
     if (!el || !window.matchMedia(NO_REDUCED_MOTION).matches) return;
-    const io = new IntersectionObserver(([e]) => (onScreen.current = e.isIntersecting), { threshold: 0.3 });
-    io.observe(el);
-    const id = window.setInterval(() => onScreen.current && setActive((a) => (a + 1) % n), INTERVAL);
+    const host = el.closest(".anim-host") ?? el;
+    const next = () => setActive((a) => (a + 1) % n);
+    let id = 0;
+    const enter = () => {
+      next();
+      window.clearInterval(id);
+      id = window.setInterval(next, INTERVAL);
+    };
+    const leave = () => {
+      window.clearInterval(id);
+    };
+    host.addEventListener("pointerenter", enter);
+    host.addEventListener("pointerleave", leave);
     return () => {
-      io.disconnect();
+      host.removeEventListener("pointerenter", enter);
+      host.removeEventListener("pointerleave", leave);
       window.clearInterval(id);
     };
   }, [n]);

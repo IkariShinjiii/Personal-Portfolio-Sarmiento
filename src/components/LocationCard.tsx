@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import { MapPin } from "lucide-react";
-import { gsap, NO_REDUCED_MOTION, pauseOffscreen, useGSAP } from "@/lib/gsap";
+import { gsap, NO_REDUCED_MOTION, playOnHover, useGSAP } from "@/lib/gsap";
 
 type Props = { city: string; country: string; coords: string; timezone?: string };
 
-/** Dotted "map" card with a pin and a scan line that sweeps across it. */
+/** Dotted "map" card with a pin and a scan line that sweeps across it while hovered. */
 export function LocationCard({ city, country, coords, timezone }: Props) {
   const root = useRef<HTMLDivElement>(null);
 
@@ -14,7 +14,7 @@ export function LocationCard({ city, country, coords, timezone }: Props) {
       mm.add(NO_REDUCED_MOTION, () => {
         const scan = gsap.fromTo(".scan", { x: 0 }, { x: () => root.current?.clientWidth ?? 300, duration: 5.5, ease: "sine.inOut", repeat: -1, yoyo: true, invalidateOnRefresh: true });
         const ring = gsap.to(".pin-ring", { scale: 2.4, opacity: 0, duration: 1.8, ease: "power2.out", repeat: -1, transformOrigin: "50% 50%" });
-        return pauseOffscreen(root.current, [scan, ring]);
+        return playOnHover(root.current, [scan, ring]);
       });
       return () => mm.revert();
     },
