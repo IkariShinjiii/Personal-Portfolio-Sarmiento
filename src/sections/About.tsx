@@ -44,7 +44,7 @@ export function About() {
 
         {/* Row 2: mindset | portrait + location | craft */}
         <div className="flex flex-col gap-4 md:flex-row">
-          <Reveal className={cn(card, COL, "flex flex-col p-5")}>
+          <Reveal className={cn(card, COL, "anim-host flex flex-col p-5")}>
             <Heading>{mindset.heading}</Heading>
             <p className="mt-3 text-[15px] leading-snug text-muted">
               <span className="font-semibold text-text">{mindset.text.split(",")[0]},</span>
@@ -65,12 +65,12 @@ export function About() {
                 className="size-full object-cover"
               />
             </Reveal>
-            <Reveal className="flex-1">
+            <Reveal className="anim-host flex-1">
               <LocationCard {...location} />
             </Reveal>
           </div>
 
-          <Reveal className={cn(card, COL, "flex flex-col overflow-hidden pt-5")}>
+          <Reveal className={cn(card, COL, "anim-host flex flex-col overflow-hidden pt-5")}>
             <div className="px-5">
               <Heading>{craft.heading}</Heading>
               <p className="mt-3 text-[15px] leading-snug text-muted">

@@ -31,4 +31,22 @@ export function pauseOffscreen(trigger: Element | null, anims: gsap.core.Animati
   return () => st.kill();
 }
 
+/**
+ * Keep these animations paused and run them only while the pointer is over their card
+ * (the nearest .anim-host ancestor, else the element itself).
+ */
+export function playOnHover(el: Element | null, anims: gsap.core.Animation[]) {
+  if (!el) return () => {};
+  const host = el.closest(".anim-host") ?? el;
+  const enter = () => anims.forEach((a) => a.play());
+  const leave = () => anims.forEach((a) => a.pause());
+  anims.forEach((a) => a.pause());
+  host.addEventListener("pointerenter", enter);
+  host.addEventListener("pointerleave", leave);
+  return () => {
+    host.removeEventListener("pointerenter", enter);
+    host.removeEventListener("pointerleave", leave);
+  };
+}
+
 export { gsap, ScrollTrigger, useGSAP };

@@ -168,10 +168,10 @@ export default function App() {
 
         <LazyGuestbook />
 
-        <Section id="contact" label="Contact" title="Get in touch">
+        <Section id="contact" label="Contact" title="Let's work together">
           <div className="text-center">
             <p className="mx-auto max-w-xl text-muted">
-              The best way to reach me is email, <span className="text-text">{contact.email}</span>, or send me a message on Instagram.
+              Need a website or app, or have a project in mind? I take on freelance work. The best way to reach me is email, <span className="text-text">{contact.email}</span>, or send me a message on Instagram.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <Button asChild>

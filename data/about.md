@@ -11,12 +11,13 @@ He likes to understand the problem first, then build something clear and reliabl
 - ACUA website: a storefront with online checkout through PayMongo and GCash, plus a custom commission flow. Still in active development. Live site: https://acua-three.vercel.app
 - Anime Pet Simulator: a Pet Simulator-style Roblox game built around anime characters and pets. In development, not playable yet.
 - Gabay: a Windows app (Electron, React, TypeScript) that folds the taskbar into an iPhone-style notch with quick settings, now playing, timers and weather. Free download: https://ikarishinjiii.github.io/gabay/
+- Ñuwave Specialty Coffee: a table-QR menu and website for a specialty coffee shop in Jaro, Iloilo City (Next.js, React, TypeScript, Tailwind). Live site: https://nuwave-blond.vercel.app
 
 ## Skills
 React, TypeScript, JavaScript, HTML and CSS, Tailwind CSS, Vite, GSAP, Framer, Supabase, Firebase, Vercel, Git and GitHub, Figma and Canva for design, Cisco and networking basics, and Lua/Luau in Roblox Studio, where he makes his Roblox games.
 
 ## Availability
-Currently open for internships (exact dates not set). Based in Iloilo City, Philippines.
+Currently open for freelance work (he takes on client projects: websites, web apps and desktop apps) and for internships (exact dates not set). Clients should contact him by email or Instagram. Based in Iloilo City, Philippines.
 
 ## Contact
 - Email: kervinsarmiento2.0@gmail.com

@@ -9,7 +9,7 @@ export const person = {
 
 export const about = [
   { title: "Education", text: "BS Information Technology, 3rd year, at the University of San Agustin, Iloilo (USA)." },
-  { title: "Building", text: "My Mind Bridge capstone, a student wellness platform, and the ACUA storefront with PayMongo and GCash checkout." },
+  { title: "Building", text: "Mind Bridge, my capstone. ACUA, a storefront with GCash checkout. Gabay, a Windows notch app. Ñuwave, a QR menu for a coffee shop." },
   { title: "Games", text: "I build Roblox games in Roblox Studio with Luau, like Anime Pet Simulator, and I like turning anime ideas into playable games." },
 ];
 
@@ -17,19 +17,20 @@ export const mindset = {
   heading: "Mindset",
   text: "I like to understand the problem first, then build something clear and reliable.",
   closing: "Still learning: full-stack development, Luau and networking basics.",
-  // Cards in the cycling stack: real project screenshots, plus a Roblox card for the game.
+  // Cards in the hover-cycled stack: real project screenshots.
   stack: [
     { label: "Mind Bridge", image: "/projects/mind-bridge.jpg", position: "left top" },
     { label: "ACUA", image: "/projects/acua.jpg", position: "center top" },
     { label: "Anime Pet Simulator", image: "/projects/anime-pet-simulator.jpg", position: "center" },
+    { label: "Gabay", image: "/projects/gabay.jpg", position: "center" },
   ],
 };
 
 export const craft = {
   heading: "Craft",
   text: "I build web apps and desktop apps that work for real users.",
-  closing: "Open for internships and collaborations on desktop apps and student-focused web projects.",
-  status: "Open for internships",
+  closing: "Open for freelance projects and internships: web apps, desktop apps and student-focused sites.",
+  status: "Open for freelance work",
   strips: [
     ["tailwindcss", "typescript", "react", "vite", "supabase", "firebase", "git"],
     ["github", "vercel", "gsap", "framer", "figma", "robloxstudio", "cisco", "lua", "nodedotjs", "javascript", "html5", "css"],
