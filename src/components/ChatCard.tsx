@@ -78,7 +78,7 @@ export function ChatCard({ name }: { name: string }) {
       </div>
 
       <form
-        className="flex items-center gap-2 rounded-full border border-border bg-bg/70 py-1.5 pl-5 pr-1.5 focus-within:border-accent"
+        className="flex items-center gap-2 rounded-full border border-border bg-bg/70 py-1.5 pl-5 pr-1.5 focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/25"
         onSubmit={(e) => {
           e.preventDefault();
           void send(input);
@@ -90,7 +90,7 @@ export function ChatCard({ name }: { name: string }) {
           onChange={(e) => setInput(e.target.value)}
           aria-label={`Ask anything about ${name}`}
           placeholder={`Ask anything about ${name}...`}
-          className="flex-1 bg-transparent py-2 text-base outline-none placeholder:text-muted"
+          className="flex-1 bg-transparent rounded-none py-2 text-base outline-none! placeholder:text-muted"
         />
         {input.length > 400 && <span className="text-xs text-muted">{input.length}/{MAX}</span>}
         <button
