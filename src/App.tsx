@@ -1,6 +1,7 @@
 import { lazy, useEffect, useState } from "react";
 import { Check, Copy, Mail } from "lucide-react";
 import { Backdrop } from "@/components/Backdrop";
+import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { Nav } from "@/components/Nav";
 import { Section } from "@/components/Section";
@@ -123,6 +124,7 @@ export default function App() {
       </a>
       <ScrollProgress />
       <Backdrop />
+      <AuroraBackdrop />
       <Nav theme={theme} onToggleTheme={toggle} />
       <main>
         <Hero />
