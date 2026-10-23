@@ -10,13 +10,13 @@ export const person = {
 export const about = [
   { title: "Education", text: "BS Information Technology, 3rd year, at the University of San Agustin, Iloilo (USA)." },
   { title: "Building", text: "Mind Bridge, my capstone. ACUA, a storefront with GCash checkout. Gabay, a Windows notch app. Ñuwave, a QR menu for a coffee shop." },
-  { title: "Games", text: "I build Roblox games in Roblox Studio with Luau, like Anime Pet Simulator, and I like turning anime ideas into playable games." },
+  { title: "Side hobby", text: "For fun I make Roblox games in Roblox Studio, like Anime Pet Simulator. It is a hobby outside my client and school work." },
 ];
 
 export const mindset = {
   heading: "Mindset",
   text: "I like to understand the problem first, then build something clear and reliable.",
-  closing: "Still learning: full-stack development, Luau and networking basics.",
+  closing: "Still learning: full-stack development and networking basics.",
   // Cards in the hover-cycled stack: real project screenshots.
   stack: [
     { label: "Mind Bridge", image: "/projects/mind-bridge.jpg", position: "left top" },
@@ -84,9 +84,9 @@ export const projects = [
   },
   {
     n: "03",
-    category: "Roblox game",
+    category: "Side hobby",
     title: "Anime Pet Simulator",
-    summary: "A Pet Simulator-style Roblox game built around anime characters and pets. In development.",
+    summary: "A hobby project: a Pet Simulator-style Roblox game built around anime characters and pets. In development.",
     tags: ["Roblox Studio", "Luau", "In development"],
     href: "",
     tone: "from-rose-700 to-fuchsia-900",
