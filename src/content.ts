@@ -13,6 +13,34 @@ export const about = [
   { title: "Games", text: "I build Roblox games in Roblox Studio with Luau, like Anime Pet Simulator, and I like turning anime ideas into playable games." },
 ];
 
+// Newest first. Logos are optional: leave `logo` empty to show the school's initials.
+export const education = [
+  {
+    title: "Bachelor of Science in Information Technology (BSIT)",
+    logo: "",
+    school: "University of San Agustin · 3rd-Year Undergraduate Student",
+    years: "2023 - Present",
+    place: "Iloilo City, Philippines",
+    focus: "Web Systems Development, Full-Stack Architecture, Database Systems, Object-Oriented Programming",
+  },
+  {
+    title: "Senior High School, STEM Track",
+    logo: "",
+    school: "Iloilo National High School",
+    years: "2016 - 2018",
+    place: "Iloilo City, Philippines",
+    focus: "Science, Technology, Mathematics, Engineering",
+  },
+  {
+    title: "High School",
+    logo: "",
+    school: "Iloilo National High School - School of the Future",
+    years: "2012 - 2016",
+    place: "Iloilo City, Philippines",
+    focus: "",
+  },
+];
+
 export const mindset = {
   heading: "Mindset",
   text: "I like to understand the problem first, then build something clear and reliable.",

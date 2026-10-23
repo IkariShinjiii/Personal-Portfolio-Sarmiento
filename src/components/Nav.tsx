@@ -19,7 +19,7 @@ const links = [
 function useActiveSection() {
   const [active, setActive] = useState("top");
   useEffect(() => {
-    const ids = ["top", "about", "skills", "projects", "activity", "gear", "services", "explore", "guestbook", "contact"];
+    const ids = ["top", "about", "education", "skills", "projects", "activity", "gear", "services", "explore", "guestbook", "contact"];
     let tops: [string, number][] = [];
     const measure = () => {
       const y = window.scrollY;
@@ -32,7 +32,7 @@ function useActiveSection() {
       const y = window.scrollY + window.innerHeight * 0.4;
       let current = "top";
       for (const [id, top] of tops) {
-        if (top <= y) current = id === "guestbook" || id === "contact" ? "explore" : id === "activity" || id === "gear" ? "projects" : id === "services" ? "explore" : id;
+        if (top <= y) current = id === "guestbook" || id === "contact" ? "explore" : id === "activity" || id === "gear" ? "projects" : id === "services" ? "explore" : id === "education" ? "about" : id;
       }
       setActive(current);
     };
