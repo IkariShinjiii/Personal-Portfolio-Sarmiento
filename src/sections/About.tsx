@@ -50,8 +50,11 @@ export function About() {
               <span className="font-semibold text-text">{mindset.text.split(",")[0]},</span>
               {mindset.text.slice(mindset.text.indexOf(",") + 1)}
             </p>
-            <PhotoStack items={mindset.stack} />
-            <p className="mt-auto pt-3 text-[15px] leading-snug text-muted">{mindset.closing}</p>
+            {/* The stack sits in the free space between the text blocks, so the card has no dead gap at one end. */}
+            <div className="flex flex-1 items-center py-4">
+              <PhotoStack items={mindset.stack} />
+            </div>
+            <p className="text-[15px] leading-snug text-muted">{mindset.closing}</p>
           </Reveal>
 
           <div className={cn(COL, "flex flex-col gap-4")}>
@@ -78,12 +81,12 @@ export function About() {
               </p>
               <StatusBadge className="mt-3 text-[13px]">{craft.status}</StatusBadge>
             </div>
-            <div className="mt-4">
+            <div className="flex flex-1 flex-col justify-center py-4">
               {craft.strips.map((slugs, i) => (
                 <TechStrip key={i} slugs={slugs} reverse={i % 2 === 1} />
               ))}
             </div>
-            <p className="mt-auto px-5 pb-5 pt-3 text-[15px] leading-snug text-muted">{craft.closing}</p>
+            <p className="px-5 pb-5 text-[15px] leading-snug text-muted">{craft.closing}</p>
           </Reveal>
         </div>
       </div>
