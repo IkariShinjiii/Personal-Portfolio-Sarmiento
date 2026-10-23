@@ -49,6 +49,36 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
+/* Hero aurora: see components/AuroraBackdrop.tsx. It fades with scroll; the mask softens its lower edge. */
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+}
+/* A soft pool of page colour behind the hero text keeps it readable where a ribbon passes underneath. */
+.aurora::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 46% 38% at 50% 34%, color-mix(in srgb, var(--bg) 82%, transparent), transparent 100%);
+}
+@media (max-width: 767px) {
+  .aurora::after {
+    background: radial-gradient(ellipse 100% 34% at 50% 38%, color-mix(in srgb, var(--bg) 82%, transparent), transparent 100%);
+  }
+}
+.aurora-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.aurora-canvas[data-ready="true"] { opacity: 1; }
+
 /* Reactive backdrop: see components/Backdrop.tsx. Moving layers are small and transform-only. */
 .backdrop {
   position: fixed;
