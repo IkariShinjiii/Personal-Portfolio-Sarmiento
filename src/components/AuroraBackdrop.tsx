@@ -10,6 +10,8 @@ import { FIELD_SRC, FINISH_SRC, VERT_SRC } from "@/lib/aurora-shaders";
 
 const FADE_AT = 0.85; // fraction of the viewport height scrolled before the aurora has fully gone
 const MAX_DPR = 1.5;
+const START_DELAY = 1500; // ms after the load event
+const TOUCH_FRAME_MS = 33; // phones draw at about 30fps
 
 type Rgb = [number, number, number];
 
@@ -52,7 +54,7 @@ export function AuroraBackdrop() {
   const wrap = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
 
-  useEffect(() => {
+  const init = (): (() => void) | undefined => {
     const root = wrap.current;
     const cv = canvas.current;
     if (!root || !cv) return;
@@ -219,6 +221,7 @@ export function AuroraBackdrop() {
         last = -1;
         return;
       }
+      if (coarse && last >= 0 && now - last < TOUCH_FRAME_MS - 2) return;
       const dt = last < 0 ? 0 : Math.min(0.05, (now - last) / 1000);
       last = now;
       // Reduced motion: only redraw when something changed (scroll, resize, theme).
@@ -263,6 +266,25 @@ export function AuroraBackdrop() {
       gl.deleteProgram(field);
       gl.deleteProgram(finish);
     };
+  };
+
+  // Start only after the page has loaded and gone quiet, so the shader never competes with first paint.
+  useEffect(() => {
+    let stop: (() => void) | undefined;
+    let timer = 0;
+    const begin = () => {
+      timer = window.setTimeout(() => {
+        stop = init();
+      }, START_DELAY);
+    };
+    if (document.readyState === "complete") begin();
+    else window.addEventListener("load", begin, { once: true });
+    return () => {
+      window.removeEventListener("load", begin);
+      window.clearTimeout(timer);
+      stop?.();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
