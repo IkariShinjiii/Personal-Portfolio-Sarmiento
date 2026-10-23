@@ -8,7 +8,7 @@ function Mark({ logo, school }: { logo: string; school: string }) {
   const initials = school
     .split(/\s+/)
     .filter((w) => /^[A-Z]/.test(w))
-    .slice(0, 2)
+    .slice(0, 3)
     .map((w) => w[0])
     .join("");
   return (
@@ -29,12 +29,15 @@ export function Education() {
                 <Mark logo={e.logo} school={e.school} />
                 <div className="min-w-0 flex-1">
                   <h3 className="text-lg font-bold leading-snug md:text-xl">{e.title}</h3>
-                  <p className="mt-1 text-right font-mono text-[11px] uppercase tracking-wider text-muted md:text-xs">{e.years}</p>
+                  {e.years && <p className="mt-1 text-right font-mono text-[11px] uppercase tracking-wider text-muted md:text-xs">{e.years}</p>}
                 </div>
               </div>
               <div className="mt-3 flex flex-col gap-x-6 gap-y-1 border-t border-border py-3 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-[15px]">{e.school}</p>
-                <p className="font-mono text-xs text-muted">{e.place}</p>
+                <p className="text-[15px]">
+                  {e.school}
+                  {e.detail && ` · ${e.detail}`}
+                </p>
+                {e.place && <p className="font-mono text-xs text-muted">{e.place}</p>}
               </div>
               {e.focus && (
                 <div className="border-t border-border py-3">
