@@ -65,7 +65,7 @@ export function PhotoStack({ items }: { items: Item[] }) {
   const roblox = BRAND_ICONS.roblox;
 
   return (
-    <div ref={root} className="relative mx-auto mt-4 h-[196px] w-full max-w-[290px]" role="group" aria-label="Projects I am working on">
+    <div ref={root} className="relative mx-auto h-[196px] w-full max-w-[290px]" role="group" aria-label="Projects I am working on">
       {items.map((it, i) => (
         <div
           key={it.label}

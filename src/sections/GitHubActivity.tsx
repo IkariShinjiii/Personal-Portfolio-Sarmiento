@@ -29,6 +29,37 @@ function GithubMark({ size = 20 }: { size?: number }) {
   );
 }
 
+/** Totals for the stat tiles. A streak is a run of days with at least one contribution; an empty today does not break it yet. */
+function summarize(days: Day[]) {
+  let longest = 0;
+  let run = 0;
+  for (const d of days) {
+    run = d.count > 0 ? run + 1 : 0;
+    if (run > longest) longest = run;
+  }
+  let i = days.length - 1;
+  if (i >= 0 && days[i].count === 0) i--;
+  let current = 0;
+  while (i >= 0 && days[i].count > 0) {
+    current++;
+    i--;
+  }
+  const peak = days.reduce((a, d) => (d.count > a.count ? d : a), days[0]);
+  return { current, longest, peak };
+}
+
+function Stat({ label, value, unit, dim }: { label: string; value: string; unit: string; dim?: boolean }) {
+  return (
+    <div className="rounded-xl border border-border bg-bg/50 px-4 py-3.5">
+      <p className="font-mono text-[11px] uppercase tracking-wider text-muted">{label}</p>
+      <p className={dim ? "mt-1.5 text-muted" : "mt-1.5"}>
+        <span className="text-2xl font-extrabold tabular-nums leading-none">{value}</span>
+        <span className="ml-1.5 font-mono text-xs text-muted">{unit}</span>
+      </p>
+    </div>
+  );
+}
+
 export function GitHubActivity() {
   const holder = useRef<HTMLDivElement>(null);
   const grid = useRef<HTMLDivElement>(null);
@@ -95,6 +126,8 @@ export function GitHubActivity() {
     return { weeks, cells, months, busiest, since: startsLate && firstActive ? firstActive.date : null };
   }, [data, compact]);
 
+  const stats = useMemo(() => (data ? summarize(data.days) : null), [data]);
+
   // The grid is revealed with a left-to-right wipe.
   useGSAP(
     () => {
@@ -158,6 +191,12 @@ export function GitHubActivity() {
                 ? `${data.total} contributions in the last 12 months. Busiest day: ${layout.busiest.count} contributions on ${pretty(layout.busiest.date)}.`
                 : "Loading GitHub activity."}
             </p>
+            <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+              <Stat label="Total_commits" value={data ? data.total.toLocaleString() : "-"} unit="/ yr" />
+              <Stat label="Current_streak" value={stats ? String(stats.current) : "-"} unit={stats?.current === 1 ? "day" : "days"} dim={stats?.current === 0} />
+              <Stat label="Longest_streak" value={stats ? String(stats.longest) : "-"} unit={stats?.longest === 1 ? "day" : "days"} />
+              <Stat label="Peak_day" value={stats ? String(stats.peak.count) : "-"} unit={stats?.peak.count === 1 ? "commit" : "commits"} />
+            </div>
             <div className="mt-6 pb-2 md:overflow-x-auto" aria-hidden onPointerLeave={() => setTip(null)}>
               <div className="md:min-w-[820px]">
                 {/* Month labels */}
