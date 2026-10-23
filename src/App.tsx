@@ -7,6 +7,7 @@ import { Nav } from "@/components/Nav";
 import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
 import { About } from "@/sections/About";
+import { Education } from "@/sections/Education";
 import { Deferred } from "@/components/Deferred";
 import { LazyGuestbook } from "@/components/LazyGuestbook";
 import { Hero } from "@/sections/Hero";
@@ -129,6 +130,7 @@ export default function App() {
       <main>
         <Hero />
         <About />
+        <Education />
         <Deferred id="skills" minHeight={900}>
           <Skills />
         </Deferred>

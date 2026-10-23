@@ -13,6 +13,37 @@ export const about = [
   { title: "Side hobby", text: "For fun I make Roblox games in Roblox Studio, like Anime Pet Simulator. It is a hobby outside my client and school work." },
 ];
 
+// Newest first. Logos are optional: leave `logo` empty to show the school's initials.
+export const education = [
+  {
+    title: "Bachelor of Science in Information Technology (BSIT)",
+    logo: "",
+    school: "University of San Agustin",
+    detail: "3rd-Year Undergraduate Student",
+    years: "2024 - Present",
+    place: "Iloilo City, Philippines",
+    focus: "Web Systems Development, Full-Stack Architecture, Database Systems, Object-Oriented Programming",
+  },
+  {
+    title: "Senior High School, STEM Track",
+    logo: "",
+    school: "University of San Agustin",
+    detail: "",
+    years: "2022 - 2024",
+    place: "Iloilo City, Philippines",
+    focus: "STEM",
+  },
+  {
+    title: "Junior High School",
+    logo: "",
+    school: "Georgia International Academy",
+    detail: "",
+    years: "2018 - 2022",
+    place: "Iloilo City, Philippines",
+    focus: "",
+  },
+];
+
 export const mindset = {
   heading: "Mindset",
   text: "I like to understand the problem first, then build something clear and reliable.",
