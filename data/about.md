@@ -7,14 +7,15 @@ Kervin is a student developer based in Iloilo City, Philippines. He is a BS Info
 He likes to understand the problem first, then build something clear and reliable. He builds web apps and desktop apps that work for real users.
 
 ## Projects
-- Mind Bridge: his capstone, a student wellness platform with assessments, counseling requests and scheduling. Still in active development. Live site: https://mind-bridge-omega.vercel.app
-- ACUA website: a storefront with online checkout through PayMongo and GCash, plus a custom commission flow. Still in active development. Live site: https://acua-three.vercel.app
+- Mind Bridge: his capstone, a student wellness platform for the University of San Agustin, built with React and Firebase. Students take a private check-in, get guidance, book counselors and chat confidentially; counselors and admins have their own tools. Still in active development. Live site: https://mind-bridge-omega.vercel.app
+- ACUA website: a storefront for a handmade accessories brand, built with React and Supabase. It has GCash and bank-transfer checkout, a custom commission and quote flow, an admin dashboard, newsletters and an AI concierge. Still in active development. Live site: https://acua-three.vercel.app
+- Gabay: a free, open-source Windows app (Electron, React, TypeScript) that folds the taskbar into an iPhone-style notch with a dock, launcher, clipboard, notes, timers, weather and quick settings. Version 1.4 with automatic updates. Download: https://gabay-site-plum.vercel.app
+- Kape Lokal: a local cafe finder for Iloilo City (Next.js, Supabase with PostGIS, MapLibre). It shows independent cafes on a map with filters for specialty coffee and matcha, in English and Filipino. In development. Live site: https://kape-lokal.vercel.app
 - Anime Pet Simulator: a side hobby, not client or professional work. A Pet Simulator-style Roblox game built around anime characters and pets. In development, not playable yet.
-- Gabay: a Windows app (Electron, React, TypeScript) that folds the taskbar into an iPhone-style notch with quick settings, now playing, timers and weather. Free download: https://ikarishinjiii.github.io/gabay/
 - Ñuwave Specialty Coffee: a table-QR menu and website for a specialty coffee shop in Jaro, Iloilo City (Next.js, React, TypeScript, Tailwind). Live site: https://nuwave-blond.vercel.app
 
 ## Skills
-React, TypeScript, JavaScript, HTML and CSS, Tailwind CSS, Vite, GSAP, Framer, Supabase, Firebase, Vercel, Git and GitHub, Figma and Canva for design, Cisco and networking basics, and Lua/Luau in Roblox Studio, which he uses only as a side hobby for making Roblox games.
+React, Next.js, TypeScript, JavaScript, HTML and CSS, Tailwind CSS, Vite, Electron, GSAP, Framer, Supabase and PostgreSQL (with PostGIS), Firebase, MapLibre, Vercel, Git, GitHub and GitHub Actions, testing with Vitest and Playwright, accessible interfaces, Figma and Canva for design, Cisco and networking basics, and Lua/Luau in Roblox Studio, which he uses only as a side hobby for making Roblox games.
 
 ## Availability
 Currently open for freelance work (he takes on client projects: websites, web apps and desktop apps) and for internships (exact dates not set). Clients should contact him by email or Instagram. Based in Iloilo City, Philippines.
