@@ -51,10 +51,10 @@ function summarize(days: Day[]) {
 function Stat({ label, value, unit, dim }: { label: string; value: string; unit: string; dim?: boolean }) {
   return (
     <div className="rounded-xl border border-border bg-bg/50 px-4 py-3.5">
-      <p className="font-mono text-[11px] uppercase tracking-wider text-muted">{label}</p>
-      <p className={dim ? "mt-1.5 text-muted" : "mt-1.5"}>
+      <p className="font-mono text-[10px] uppercase tracking-wider text-muted min-[380px]:text-[11px]">{label}</p>
+      <p className={dim ? "mt-1.5 flex flex-wrap items-baseline gap-x-1.5 text-muted" : "mt-1.5 flex flex-wrap items-baseline gap-x-1.5"}>
         <span className="text-2xl font-extrabold tabular-nums leading-none">{value}</span>
-        <span className="ml-1.5 font-mono text-xs text-muted">{unit}</span>
+        <span className="font-mono text-xs text-muted">{unit}</span>
       </p>
     </div>
   );
@@ -192,10 +192,10 @@ export function GitHubActivity() {
                 : "Loading GitHub activity."}
             </p>
             <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
-              <Stat label="Total_commits" value={data ? data.total.toLocaleString() : "-"} unit="/ yr" />
+              <Stat label="Contributions" value={data ? data.total.toLocaleString() : "-"} unit="/ yr" />
               <Stat label="Current_streak" value={stats ? String(stats.current) : "-"} unit={stats?.current === 1 ? "day" : "days"} dim={stats?.current === 0} />
               <Stat label="Longest_streak" value={stats ? String(stats.longest) : "-"} unit={stats?.longest === 1 ? "day" : "days"} />
-              <Stat label="Peak_day" value={stats ? String(stats.peak.count) : "-"} unit={stats?.peak.count === 1 ? "commit" : "commits"} />
+              <Stat label="Peak_day" value={stats ? String(stats.peak.count) : "-"} unit={stats?.peak.count === 1 ? "contribution" : "contributions"} />
             </div>
             <div className="mt-6 pb-2 md:overflow-x-auto" aria-hidden onPointerLeave={() => setTip(null)}>
               <div className="md:min-w-[820px]">
