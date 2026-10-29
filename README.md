@@ -2,7 +2,7 @@
 
 Live: https://personal-portfolio-sarmiento.vercel.app
 
-A single-page portfolio for a student developer open to freelance work, built with React 19, TypeScript (Vite), Tailwind CSS v4 and GSAP, with an AI concierge and a GitHub-signed guestbook.
+A single-page portfolio for a full-stack web developer open to freelance work, built with React 19, TypeScript (Vite), Tailwind CSS v4 and GSAP, with an AI concierge and a GitHub-signed guestbook.
 
 ## Features
 - Chat hero: `/api/chat` (Vercel function) answers questions from `data/about.md` using Gemini

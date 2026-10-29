@@ -1,7 +1,7 @@
 # About Kervin Sarmiento
 
 ## Who
-Kervin is a student developer based in Iloilo City, Philippines. He is a BS Information Technology student, 3rd year, at the University of San Agustin, Iloilo (USA). He builds full-stack web apps and desktop apps. He is currently open for internships and collaborations where he can keep learning.
+Kervin is a full-stack web developer based in Iloilo City, Philippines. He builds web apps and also develops desktop apps like Gabay. He is a BS Information Technology student, 3rd year, at the University of San Agustin, Iloilo (USA). He is currently open for internships and collaborations where he can keep learning.
 
 ## Approach
 He likes to understand the problem first, then build something clear and reliable. He builds web apps and desktop apps that work for real users.
