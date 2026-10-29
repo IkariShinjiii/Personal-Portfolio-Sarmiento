@@ -108,7 +108,7 @@ export const projects = [
     summary: "A storefront for handmade accessories with GCash and bank-transfer checkout, a custom commission flow, an admin dashboard, newsletters and an AI concierge. Still in active development.",
     tags: ["Supabase", "GCash", "In development"],
     href: "https://acua-three.vercel.app",
-    tone: "from-indigo-600 to-violet-900",
+    tone: "from-yellow-800 to-stone-950",
     image: "/projects/acua.jpg",
     imageAlt: "ACUA storefront hero over rippling water: From Isla to City, handcrafted accessories.",
     imagePosition: "center top",
