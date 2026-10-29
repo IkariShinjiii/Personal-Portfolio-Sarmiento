@@ -7,7 +7,7 @@
 
   var MIN = 3000; // shortest time the screen stays up
   var MAX = 7000; // never trap the visitor if the app is slow or fails
-  var TEXTS = ["Student developer", "I build web apps and desktop apps"];
+  var TEXTS = ["Full-stack web developer", "I build web apps and desktop apps"];
   var start = performance.now();
   var left = false;
   var line = 0;
