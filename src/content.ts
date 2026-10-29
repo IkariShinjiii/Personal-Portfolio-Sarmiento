@@ -9,7 +9,7 @@ export const person = {
 
 export const about = [
   { title: "Education", text: "BS Information Technology, 3rd year, at the University of San Agustin, Iloilo (USA)." },
-  { title: "Building", text: "Mind Bridge, my capstone. ACUA, a storefront with GCash checkout. Gabay, a Windows notch app. Ñuwave, a QR menu for a coffee shop." },
+  { title: "Building", text: "Mind Bridge, my capstone. ACUA, a storefront with GCash checkout. Gabay, a free Windows notch app, now open source. Kape Lokal, a cafe map of Iloilo. Ñuwave, a QR menu for a coffee shop." },
   { title: "Side hobby", text: "For fun I make Roblox games in Roblox Studio, like Anime Pet Simulator. It is a hobby outside my client and school work." },
 ];
 
@@ -78,8 +78,8 @@ export const services = [
   },
   {
     title: "Web apps",
-    text: "Sign-in, databases, booking and online payments through PayMongo and GCash, like Mind Bridge and ACUA.",
-    tags: ["TypeScript", "Supabase", "PayMongo"],
+    text: "Sign-in, databases, booking, maps and GCash payments, like Mind Bridge, ACUA and Kape Lokal.",
+    tags: ["TypeScript", "Supabase", "Firebase"],
   },
   {
     title: "Desktop apps",
@@ -93,20 +93,20 @@ export const projects = [
     n: "01",
     category: "Capstone",
     title: "Mind Bridge",
-    summary: "A student wellness platform with assessments, counseling requests and scheduling. Still in active development.",
-    tags: ["Wellness", "Scheduling", "In development"],
+    summary: "A student wellness platform for USA: private check-ins, counselor booking and confidential chat, with a breathing reset and a printable result summary. Still in active development.",
+    tags: ["Firebase", "Role-based access", "In development"],
     href: "https://mind-bridge-omega.vercel.app",
-    tone: "from-emerald-700 to-teal-900",
+    tone: "from-red-800 to-rose-950",
     image: "/projects/mind-bridge.jpg",
-    imageAlt: "Mind Bridge landing page: Ask for help quietly, reach a counselor sooner, with the four steps from check-in to chat.",
+    imageAlt: "Mind Bridge landing page in the University of San Agustin crimson: Ask for help quietly, reach a counselor sooner, with the four steps from check-in to chat.",
     imagePosition: "left top",
   },
   {
     n: "02",
     category: "Storefront",
     title: "ACUA website",
-    summary: "A storefront with online checkout through PayMongo and GCash, plus a custom commission flow. Still in active development.",
-    tags: ["PayMongo", "GCash", "In development"],
+    summary: "A storefront for handmade accessories with GCash and bank-transfer checkout, a custom commission flow, an admin dashboard, newsletters and an AI concierge. Still in active development.",
+    tags: ["Supabase", "GCash", "In development"],
     href: "https://acua-three.vercel.app",
     tone: "from-indigo-600 to-violet-900",
     image: "/projects/acua.jpg",
@@ -115,6 +115,30 @@ export const projects = [
   },
   {
     n: "03",
+    category: "Desktop app",
+    title: "Gabay",
+    summary: "A free, open-source Windows app that folds the taskbar into an iPhone-style notch, with a dock, launcher, clipboard, notes, timers and weather one hover away. Now at version 1.4 with automatic updates.",
+    tags: ["Electron", "TypeScript", "Open source"],
+    href: "https://gabay-site-plum.vercel.app",
+    tone: "from-teal-700 to-slate-900",
+    image: "/projects/gabay.jpg",
+    imageAlt: "Gabay title screen: Your Windows taskbar, folded into a notch, with the notch showing time, weather and battery at the top.",
+    imagePosition: "center",
+  },
+  {
+    n: "04",
+    category: "Web app",
+    title: "Kape Lokal",
+    summary: "A local cafe finder for Iloilo City: a dark map of independent cafes, filters for specialty coffee and matcha, menus, and Directions in Google Maps. In English and Filipino.",
+    tags: ["Next.js", "MapLibre", "In development"],
+    href: "https://kape-lokal.vercel.app",
+    tone: "from-orange-700 to-stone-900",
+    image: "/projects/kape-lokal.jpg",
+    imageAlt: "Kape Lokal map of Iloilo City on a dark basemap, with cafe pins and filters for Specialty, Matcha, Has menu and Include chains.",
+    imagePosition: "center",
+  },
+  {
+    n: "05",
     category: "Side hobby",
     title: "Anime Pet Simulator",
     summary: "A hobby project: a Pet Simulator-style Roblox game built around anime characters and pets. In development.",
@@ -125,21 +149,9 @@ export const projects = [
     imageAlt: "Anime Pet Simulator key art: chibi anime characters and cats in front of a red torii gate under cherry blossoms.",
     imagePosition: "center",
   },
-  {
-    n: "04",
-    category: "Desktop app",
-    title: "Gabay",
-    summary: "A Windows app that folds the taskbar into an iPhone-style notch at the top of the screen, with quick settings, now playing, timers and weather one hover away.",
-    tags: ["Electron", "React", "Windows"],
-    href: "https://ikarishinjiii.github.io/gabay/",
-    tone: "from-teal-700 to-slate-900",
-    image: "/projects/gabay.jpg",
-    imageAlt: "Gabay title screen: Your Windows taskbar, folded into a notch, with the notch showing time, weather and battery at the top.",
-    imagePosition: "center",
-  },
 ];
 
-// Only technologies that are real for Kervin: stated by him, or used in this site, Mind Bridge or ACUA.
+// Only technologies that are real for Kervin: stated by him, or used in this site, Mind Bridge, ACUA, Gabay or Kape Lokal.
 export type SkillKind = "frontend" | "backend" | "tools" | "game";
 
 export const SKILL_COLORS: Record<SkillKind, string> = {
@@ -157,6 +169,8 @@ export const skillRowAbove: { name: string; kind: SkillKind }[] = [
   { name: "CSS", kind: "frontend" },
   { name: "Tailwind CSS", kind: "frontend" },
   { name: "Vite", kind: "frontend" },
+  { name: "Next.js", kind: "frontend" },
+  { name: "Electron", kind: "frontend" },
   { name: "GSAP", kind: "tools" },
   { name: "Framer", kind: "tools" },
   { name: "Framer Motion", kind: "tools" },
@@ -164,6 +178,7 @@ export const skillRowAbove: { name: string; kind: SkillKind }[] = [
   { name: "Vitest", kind: "tools" },
   { name: "Playwright", kind: "tools" },
   { name: "Recharts", kind: "tools" },
+  { name: "MapLibre", kind: "tools" },
   { name: "Zod", kind: "tools" },
   { name: "Figma", kind: "game" },
   { name: "Canva", kind: "game" },
@@ -173,12 +188,12 @@ export const skillRowBelow: { name: string; kind: SkillKind }[] = [
   { name: "Node.js", kind: "backend" },
   { name: "Supabase", kind: "backend" },
   { name: "PostgreSQL", kind: "backend" },
+  { name: "PostGIS", kind: "backend" },
   { name: "Firebase", kind: "backend" },
   { name: "Firestore", kind: "backend" },
   { name: "Cloud Functions", kind: "backend" },
   { name: "Nodemailer", kind: "backend" },
   { name: "Gemini API", kind: "game" },
-  { name: "PayMongo", kind: "game" },
   { name: "GCash", kind: "game" },
   { name: "Roblox Studio", kind: "game" },
   { name: "Lua", kind: "game" },
@@ -186,8 +201,10 @@ export const skillRowBelow: { name: string; kind: SkillKind }[] = [
   { name: "SQL", kind: "backend" },
   { name: "Cisco", kind: "tools" },
   { name: "Networking basics", kind: "tools" },
+  { name: "Accessibility", kind: "tools" },
   { name: "Vercel", kind: "tools" },
   { name: "Git", kind: "tools" },
+  { name: "GitHub Actions", kind: "tools" },
   { name: "GitHub", kind: "tools" },
 ];
 
