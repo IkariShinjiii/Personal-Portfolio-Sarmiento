@@ -1,0 +1,24 @@
+# Kervin Sarmiento
+
+> Student developer and freelancer in Iloilo City, Philippines. BS Information Technology, 3rd year, University of San Agustin. He builds web apps and desktop apps and is open for freelance work and internships.
+
+Contact is by email or Instagram. There is no LinkedIn account and no booking link.
+
+## Site
+
+- [Portfolio](https://personal-portfolio-sarmiento.vercel.app/): about, education, skills, projects, GitHub activity, services and contact
+- [Resume (PDF)](https://personal-portfolio-sarmiento.vercel.app/Kervin_Sarmiento_Resume.pdf): his CV
+
+## Projects
+
+- [Mind Bridge](https://mind-bridge-omega.vercel.app): his capstone, a student wellness platform for the University of San Agustin (React, Firebase)
+- [ACUA](https://acua-three.vercel.app): a storefront for handmade accessories with GCash and bank-transfer checkout and a custom commission flow (React, Supabase)
+- [Gabay](https://gabay-site-plum.vercel.app): a free, open-source Windows app that folds the taskbar into an iPhone-style notch (Electron, React, TypeScript)
+- [Kape Lokal](https://kape-lokal.vercel.app): a local cafe finder for Iloilo City (Next.js, Supabase, MapLibre)
+- [Nuwave Specialty Coffee](https://nuwave-blond.vercel.app): a table-QR menu and website for a coffee shop in Jaro, Iloilo City
+
+## Links
+
+- [GitHub](https://github.com/IkariShinjiii)
+- [Instagram](https://instagram.com/__oddyseus__)
+- Email: kervinsarmiento2.0@gmail.com

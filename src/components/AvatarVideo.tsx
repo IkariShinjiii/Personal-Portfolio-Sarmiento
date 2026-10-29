@@ -53,8 +53,7 @@ export function AvatarVideo({ className, onClick }: Props) {
   return (
     <video
       ref={ref}
-      role="img"
-      aria-label="Kervin's animated avatar"
+      aria-hidden="true"
       poster="/avatar.png"
       width={96}
       height={96}
