@@ -8,6 +8,8 @@ A single-page portfolio for a Full Stacked Developer open to freelance work, bui
 - Chat hero: `/api/chat` (Vercel function) answers questions from `data/about.md` using Gemini
 - Hero background: a WebGL2 aurora shader (`src/components/AuroraBackdrop.tsx`, shaders in `src/lib/aurora-shaders.ts`) that fades out as you scroll into the dot grid. It starts after the page has loaded, runs at about 30fps on touch devices, draws one still frame with reduced motion, and re-reads the theme colors on dark/light toggle
 - About, Education and Work with me (freelance services) sections, all copy in `src/content.ts`
+- Projects: a scroll-driven 3D orbit that settles into a grid on desktop (a plain grid on tablets, phones and reduced motion); the project list lives in `src/content.ts`
+- Nav: the Other pill opens a menu on hover or focus (Work with me, Resume, Guestbook, Contact, GitHub, Instagram)
 - Recent activity: GitHub contribution heatmap plus total, current streak, longest streak and peak-day tiles, from `api/activity.ts` (public data, no token, cached an hour)
 - Guestbook: GitHub sign-in through Supabase Auth; one message per visitor, row-level security
 - Cursor-reactive dot-grid background, draggable skills globe with brand logos and two auto-scrolling skill carousels, dark and light themes

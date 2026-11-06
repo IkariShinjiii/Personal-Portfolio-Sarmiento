@@ -9,8 +9,8 @@ export const person = {
 
 export const about = [
   { title: "Education", text: "BS Information Technology, 3rd year, at the University of San Agustin, Iloilo (USA)." },
-  { title: "Building", text: "Mind Bridge, my capstone. ACUA, a storefront with GCash checkout. Gabay, a free Windows notch app, now open source. Kape Lokal, a cafe map of Iloilo. Ñuwave, a QR menu for a coffee shop." },
-  { title: "Side hobby", text: "For fun I make Roblox games in Roblox Studio, like Anime Pet Simulator. It is a hobby outside my client and school work." },
+  { title: "Building", text: "Mind Bridge, my capstone. ACUA, a storefront with GCash checkout. Gabay, a free Windows notch app, now open source. Kape Lokal, a cafe map of Iloilo. Ñuwave, a QR menu for a coffee shop. UTM Esports, a team website I am building with Cascade Development Group." },
+  { title: "Side hobby", text: "For fun I make Roblox games in Roblox Studio, like Anime Pet Simulator, which is live on Roblox. It is a hobby outside my client and school work." },
 ];
 
 // Newest first. Logos are optional: leave `logo` empty to show the school's initials.
@@ -139,10 +139,22 @@ export const projects = [
   },
   {
     n: "05",
+    category: "Team project",
+    title: "UTM Esports website",
+    summary: "The website for the UTM Esports team: tryouts, a Discord invite, results, teams, events and highlights. My first project with Cascade Development Group (CDG), where I handle deployment, analytics and quality. Still in development.",
+    tags: ["Next.js", "GSAP", "In development"],
+    href: "https://utm-esports.vercel.app",
+    tone: "from-red-600 to-stone-950",
+    image: "/projects/utm-esports.jpg",
+    imageAlt: "UTM Esports home page: United we are stronger, in white on red beside the black UTM dragon, with Join the squad and Discord buttons.",
+    imagePosition: "center",
+  },
+  {
+    n: "06",
     category: "Side hobby",
     title: "Anime Pet Simulator",
-    summary: "A hobby project: a Pet Simulator-style Roblox game built around anime characters and pets. In development.",
-    tags: ["Roblox Studio", "Luau", "In development"],
+    summary: "A hobby project: a Pet Simulator-style Roblox game built around anime characters and pets. Live on Roblox.",
+    tags: ["Roblox Studio", "Luau", "Live on Roblox"],
     href: "",
     tone: "from-rose-700 to-fuchsia-900",
     image: "/projects/anime-pet-simulator.jpg",
