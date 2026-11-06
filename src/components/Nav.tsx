@@ -1,7 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Mail, Menu, Moon, Sun, X } from "lucide-react";
+import { Briefcase, ChevronDown, ExternalLink, FileText, Mail, Menu, MessageSquare, Moon, Sun, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { gsap, NO_REDUCED_MOTION, ScrollTrigger } from "@/lib/gsap";
+import { contact } from "@/content";
 
 const links = [
   { id: "top", label: "Home" },
@@ -9,6 +10,16 @@ const links = [
   { id: "skills", label: "Skills" },
   { id: "projects", label: "Projects" },
   { id: "explore", label: "Other" },
+];
+
+// What the "Other" menu opens: the parts of the page that sit after Projects.
+const otherMenu = [
+  { label: "Work with me", hint: "Websites, web apps, desktop apps", href: "#services", icon: Briefcase },
+  { label: "Resume", hint: "Download my CV (PDF)", href: "/Kervin_Sarmiento_Resume.pdf", icon: FileText, external: true },
+  { label: "Guestbook", hint: "Leave your mark", href: "#guestbook", icon: MessageSquare },
+  { label: "Contact", hint: "Say hello", href: "#contact", icon: Mail },
+  { label: "GitHub", hint: "IkariShinjiii", href: contact.github, icon: ExternalLink, external: true },
+  { label: "Instagram", hint: "@__oddyseus__", href: contact.instagram, icon: ExternalLink, external: true },
 ];
 
 /**
@@ -54,6 +65,7 @@ function useActiveSection() {
 
 export function Nav({ theme, onToggleTheme }: { theme: "dark" | "light"; onToggleTheme: () => void }) {
   const [open, setOpen] = useState(false);
+  const [other, setOther] = useState(false);
   const active = useActiveSection();
   const listRef = useRef<HTMLUListElement>(null);
   const pillRef = useRef<HTMLSpanElement>(null);
@@ -96,18 +108,60 @@ export function Nav({ theme, onToggleTheme }: { theme: "dark" | "light"; onToggl
             className="absolute left-0 top-1.5 bottom-1.5 rounded-full bg-accent2/20 opacity-0"
           />
           {links.map((l) => (
-            <li key={l.id}>
+            <li
+              key={l.id}
+              onMouseEnter={l.id === "explore" ? () => setOther(true) : undefined}
+              onMouseLeave={l.id === "explore" ? () => setOther(false) : undefined}
+              onFocus={l.id === "explore" ? () => setOther(true) : undefined}
+              onBlur={l.id === "explore" ? (e) => !e.currentTarget.contains(e.relatedTarget) && setOther(false) : undefined}
+              onKeyDown={l.id === "explore" ? (e) => e.key === "Escape" && setOther(false) : undefined}
+            >
               <a
                 href={`#${l.id}`}
                 data-id={l.id}
                 aria-current={active === l.id ? "true" : undefined}
+                aria-haspopup={l.id === "explore" ? "true" : undefined}
+                aria-expanded={l.id === "explore" ? other : undefined}
                 className={cn(
-                  "relative block rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200",
+                  "relative flex items-center gap-1 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200",
                   active === l.id ? "text-text" : "text-muted hover:text-text",
                 )}
               >
                 {l.label}
+                {l.id === "explore" && (
+                  <ChevronDown size={14} aria-hidden className={cn("transition-transform duration-200", other && "rotate-180")} />
+                )}
               </a>
+              {l.id === "explore" && (
+                <div
+                  className={cn(
+                    "absolute right-0 top-full z-50 w-72 pt-3 transition duration-150",
+                    other ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0",
+                  )}
+                >
+                  <ul className="rounded-card border border-border bg-surface p-2 shadow-2xl">
+                    {otherMenu.map((m) => (
+                      <li key={m.label}>
+                        <a
+                          href={m.href}
+                          onClick={() => setOther(false)}
+                          {...(m.external ? { target: "_blank", rel: "noreferrer" } : {})}
+                          className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-text hover:bg-accent2/15 focus-visible:bg-accent2/15"
+                        >
+                          <m.icon size={16} aria-hidden className="shrink-0 text-accent" />
+                          <span className="min-w-0">
+                            <span className="block text-sm font-semibold">
+                              {m.label}
+                              {m.external && <span className="sr-only"> (opens in a new tab)</span>}
+                            </span>
+                            <span className="block truncate text-xs text-muted">{m.hint}</span>
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </li>
           ))}
         </ul>
@@ -138,11 +192,28 @@ export function Nav({ theme, onToggleTheme }: { theme: "dark" | "light"; onToggl
           id="mobile-menu"
           className="menu-in mx-auto mt-2 max-w-[1760px] rounded-card border border-border bg-surface/95 p-2 backdrop-blur md:hidden"
         >
-          {[...links, { id: "contact", label: "Get in touch" }].map((l) => (
+          {links.map((l) => (
             <li key={l.id}>
               <a href={`#${l.id}`} onClick={() => setOpen(false)} className="block rounded-xl px-4 py-3 text-muted hover:text-text">
                 {l.label}
               </a>
+              {l.id === "explore" && (
+                <ul className="mb-1 ml-4 border-l border-border pl-2">
+                  {otherMenu.map((m) => (
+                    <li key={m.label}>
+                      <a
+                        href={m.href}
+                        onClick={() => setOpen(false)}
+                        {...(m.external ? { target: "_blank", rel: "noreferrer" } : {})}
+                        className="block rounded-xl px-3 py-2 text-sm text-muted hover:text-text"
+                      >
+                        {m.label}
+                        {m.external && <span className="sr-only"> (opens in a new tab)</span>}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))}
         </ul>
