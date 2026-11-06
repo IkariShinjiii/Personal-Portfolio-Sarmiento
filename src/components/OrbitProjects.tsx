@@ -66,10 +66,15 @@ export function OrbitProjects({ items }: { items: OrbitItem[] }) {
 
     let vw = 0;
     let vh = 0;
+    const tagsW: number[] = []; // each caption's tags on one line; a caption narrower than that shrinks to fit
     const measure = () => {
       const b = stage.getBoundingClientRect();
       vw = Math.max(Math.round(b.width), 1);
       vh = Math.max(Math.round(b.height), 1);
+      captionRefs.current.forEach((c, i) => {
+        const row = c?.querySelector<HTMLElement>("[data-tags]");
+        if (row) tagsW[i] = row.offsetWidth;
+      });
     };
 
     const render = (progress: number) => {
@@ -79,6 +84,7 @@ export function OrbitProjects({ items }: { items: OrbitItem[] }) {
       const maxH = (vh * GRID_FILL - rows * CAPTION_H - (rows - 1) * GRID_GAP) / rows;
       const cardW = Math.max(90, Math.min((maxW - GRID_GAP * (cols - 1)) / cols, maxH * ASPECT));
       const cardH = cardW / ASPECT;
+      const fit = Math.min(1, cardW / (Math.max(0, ...tagsW) || cardW)); // one scale for every caption, so the rows stay level
       const gridW = cols * cardW + (cols - 1) * GRID_GAP;
       const gridH = rows * (cardH + CAPTION_H) + (rows - 1) * GRID_GAP;
       const arcW = Math.min(ARC_CARD_W, vw * 0.28);
@@ -155,6 +161,11 @@ export function OrbitProjects({ items }: { items: OrbitItem[] }) {
 
         if (caption) {
           const show = smoother(0.93, 1, progress);
+          const inner = caption.firstElementChild as HTMLElement | null;
+          if (inner) {
+            inner.style.width = `${cardW / fit}px`;
+            inner.style.transform = fit < 1 ? `scale(${fit})` : "";
+          }
           caption.style.width = `${cardW}px`;
           caption.style.opacity = String(show);
           caption.style.visibility = show < 0.02 ? "hidden" : "visible";
@@ -194,6 +205,10 @@ export function OrbitProjects({ items }: { items: OrbitItem[] }) {
 
     measure();
     render(0);
+    let gone = false;
+    document.fonts?.ready.then(() => {
+      if (!gone) onResize();
+    });
 
     const io = new IntersectionObserver(
       ([entry]) => {
@@ -210,6 +225,7 @@ export function OrbitProjects({ items }: { items: OrbitItem[] }) {
     io.observe(root);
     window.addEventListener("resize", onResize);
     return () => {
+      gone = true;
       io.disconnect();
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", onResize);
@@ -292,27 +308,31 @@ export function OrbitProjects({ items }: { items: OrbitItem[] }) {
               className="absolute left-1/2 top-1/2 opacity-0"
               style={{ visibility: "hidden" }}
             >
-              <p className="text-xs uppercase tracking-[0.2em] text-muted">
-                {p.n} &middot; {p.category}
-              </p>
-              <h3 className="mt-1 text-lg font-bold tracking-tight">{p.title}</h3>
-              <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                {p.tags.map((t) => (
-                  <span key={t} className="rounded-full border border-border px-2.5 py-0.5 text-xs text-muted">
-                    {t}
-                  </span>
-                ))}
-                {p.href && (
-                  <a
-                    href={p.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="pointer-events-auto ml-auto inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline"
-                  >
-                    View <ExternalLink size={14} aria-hidden />
-                    <span className="sr-only">{p.title} (opens in a new tab)</span>
-                  </a>
-                )}
+              <div className="origin-top-left">
+                <p className="text-xs uppercase tracking-[0.2em] text-muted">
+                  {p.n} &middot; {p.category}
+                </p>
+                <div className="mt-1 flex items-baseline justify-between gap-3">
+                  <h3 className="text-lg font-bold tracking-tight">{p.title}</h3>
+                  {p.href && (
+                    <a
+                      href={p.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="pointer-events-auto inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-accent hover:underline"
+                    >
+                      View <ExternalLink size={14} aria-hidden />
+                      <span className="sr-only">{p.title} (opens in a new tab)</span>
+                    </a>
+                  )}
+                </div>
+                <div data-tags className="mt-2 flex w-max items-center gap-1.5">
+                  {p.tags.map((t) => (
+                    <span key={t} className="whitespace-nowrap rounded-full border border-border px-2.5 py-0.5 text-xs text-muted">
+                      {t}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
