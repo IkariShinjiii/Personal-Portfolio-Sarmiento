@@ -11,7 +11,8 @@ He likes to understand the problem first, then build something clear and reliabl
 - ACUA website: a storefront for a handmade accessories brand, built with React and Supabase. It has GCash and bank-transfer checkout, a custom commission and quote flow, an admin dashboard, newsletters and an AI concierge. Still in active development. Live site: https://acua-three.vercel.app
 - Gabay: a free, open-source Windows app (Electron, React, TypeScript) that folds the taskbar into an iPhone-style notch with a dock, launcher, clipboard, notes, timers, weather and quick settings. Version 1.4 with automatic updates. Download: https://gabay-site-plum.vercel.app
 - Kape Lokal: a local cafe finder for Iloilo City (Next.js, Supabase with PostGIS, MapLibre). It shows independent cafes on a map with filters for specialty coffee and matcha, in English and Filipino. In development. Live site: https://kape-lokal.vercel.app
-- Anime Pet Simulator: a side hobby, not client or professional work. A Pet Simulator-style Roblox game built around anime characters and pets. In development, not playable yet.
+- UTM Esports website: the website for the UTM Esports team (Next.js, React, TypeScript, Tailwind, GSAP), with tryouts, a Discord invite, results, teams, events and highlights. It is Kervin's first project with Cascade Development Group (CDG), a software development group in Iloilo City that he recently joined; he handles deployment, analytics and quality. Still in development. Live preview: https://utm-esports.vercel.app
+- Anime Pet Simulator: a side hobby, not client or professional work. A Pet Simulator-style Roblox game built around anime characters and pets. It is live on Roblox.
 - Ñuwave Specialty Coffee: a table-QR menu and website for a specialty coffee shop in Jaro, Iloilo City (Next.js, React, TypeScript, Tailwind). Live site: https://nuwave-blond.vercel.app
 
 ## Skills
