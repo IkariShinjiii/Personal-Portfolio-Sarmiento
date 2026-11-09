@@ -15,7 +15,7 @@ Contact is by email or Instagram. There is no LinkedIn account and no booking li
 - [ACUA](https://acua-three.vercel.app): a storefront for handmade accessories with GCash and bank-transfer checkout and a custom commission flow (React, Supabase)
 - [Gabay](https://gabay-site-plum.vercel.app): a free, open-source Windows app that folds the taskbar into an iPhone-style notch (Electron, React, TypeScript)
 - [Kape Lokal](https://kape-lokal.vercel.app): a local cafe finder for Iloilo City (Next.js, Supabase, MapLibre)
-- [UTM Esports](https://utm-esports.vercel.app): the website for the UTM Esports team, in development; his first project with Cascade Development Group (Next.js, React)
+- [UTM Esports](https://utm-esports.vercel.app): the website for the UTM Esports team, in development; his first project with Cascade Development Group, where he is listed on https://cdgsolutions.dev/team (Next.js, React)
 - [Nuwave Specialty Coffee](https://nuwave-blond.vercel.app): a table-QR menu and website for a coffee shop in Jaro, Iloilo City
 
 ## Links
