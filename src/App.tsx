@@ -208,7 +208,10 @@ export default function App() {
           <span className="font-bold text-text">{person.initials}</span> &nbsp;&bull;&nbsp; &copy; {new Date().getFullYear()}{" "}
           {person.name}
         </p>
-        <div className="flex gap-4">
+        <div className="flex items-center gap-4">
+          <a href="https://cdgsolutions.dev/team" target="_blank" rel="noreferrer" className="hover:text-text">
+            Developer at CDG<span className="sr-only"> (opens in a new tab)</span>
+          </a>
           <a href={contact.github} aria-label="GitHub" className="hover:text-text">
             <GithubIcon />
           </a>
