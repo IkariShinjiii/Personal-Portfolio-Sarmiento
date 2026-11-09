@@ -15,15 +15,26 @@ A single-page portfolio for a Full Stacked Developer open to freelance work, bui
 - Cursor-reactive dot-grid background, draggable skills globe with brand logos and two auto-scrolling skill carousels, dark and light themes
 - Respects reduced motion; keyboard accessible
 
+## Featured projects
+Shown in the Projects section (order and copy in `src/content.ts`):
+1. Mind Bridge - capstone
+2. ACUA website - storefront
+3. Gabay - desktop app
+4. Kape Lokal - web app
+5. UTM Esports website - team project with Cascade Development Group (CDG), in development
+6. Anime Pet Simulator - side hobby, live on Roblox (a View link is added once the game URL is set in `content.ts`)
+
+Each card uses a screenshot in `public/projects/`.
+
 ## Structure
-- `src/` - components, sections (`Hero`, `About`, `Education`, `Skills`, `Projects`, `GitHubActivity`, `Gear`, `Services`, `Guestbook`) and `content.ts` (all page copy)
-- `public/` - profile photo, favicon, robots.txt, sitemap
+- `src/` - `components/` (including `Nav`, `OrbitProjects`, `AuroraBackdrop`, `SkillsSphere`), sections (`Hero`, `About`, `Education`, `Skills`, `Projects`, `GitHubActivity`, `Gear`, `Services`, `Guestbook`) and `content.ts` (all page copy)
+- `public/` - profile photo, favicon, project screenshots, resume PDF, intro-screen script (`preloader.js`), `llms.txt`, robots.txt, sitemap
 - `api/chat.ts` - the concierge serverless function
 - `data/about.md` - the knowledge file the concierge reads (keep it in sync with `content.ts`)
 - `supabase/migrations/` - guestbook table and policies
 
 ## Editing content
-Edit `src/content.ts` for page copy and `data/about.md` for what the concierge knows. Push to `main`; Vercel redeploys.
+Edit `src/content.ts` for page copy and `data/about.md` for what the concierge knows. Keep `public/llms.txt`, the static hero shell in `index.html` and the intro text in `public/preloader.js` in sync when the role or summary changes. The resume is `public/Kervin_Sarmiento_Resume.pdf`; replace the file to update it. Push to `main`; Vercel redeploys.
 
 ## Performance and security notes
 - The CSP in `vercel.json` allows scripts only from `'self'`, so the aurora shaders are vendored in the repo instead of loaded from Framer.
