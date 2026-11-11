@@ -45,7 +45,7 @@ export function ChatCard({ name }: { name: string }) {
   }
 
   return (
-    <div className="mx-auto mt-8 flex h-[340px] w-full max-w-[760px] flex-col rounded-[28px] border border-border bg-surface/70 p-4">
+    <div className="mx-auto mt-8 flex h-[340px] w-full max-w-[760px] flex-col rounded-[28px] border border-border bg-surface/35 p-4 dark:bg-surface/70">
       <div ref={logRef} className="flex flex-1 flex-col gap-3 overflow-y-auto px-2 py-2" aria-live="polite">
         {messages.length === 0 && (
           <p className="m-auto text-lg text-muted">Ask me anything about {name}...</p>
@@ -70,7 +70,7 @@ export function ChatCard({ name }: { name: string }) {
             key={q}
             type="button"
             onClick={() => void send(q)}
-            className="rounded-full border border-border bg-bg/60 px-3 py-1 text-sm text-muted hover:border-accent hover:text-accent"
+            className="rounded-full border border-border bg-bg/60 px-3 py-1 text-sm max-md:min-h-11 text-muted hover:border-accent hover:text-accent"
           >
             {q}
           </button>

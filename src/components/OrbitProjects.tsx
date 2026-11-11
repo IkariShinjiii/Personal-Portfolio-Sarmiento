@@ -319,7 +319,7 @@ export function OrbitProjects({ items }: { items: OrbitItem[] }) {
                       href={p.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="pointer-events-auto inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-accent hover:underline"
+                      className="pointer-events-auto inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-accent hover:underline max-md:-my-3 max-md:py-3"
                     >
                       View <ExternalLink size={14} aria-hidden />
                       <span className="sr-only">{p.title} (opens in a new tab)</span>

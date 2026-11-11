@@ -4,14 +4,17 @@
 
 /* Design tokens: light theme is the fallback, dark is the default. */
 :root {
-  --bg: #f6f5f1;
+  --bg: #dce1f5;
   --surface: #ffffff;
-  --border: #e2e0d8;
-  --text: #15171c;
-  --muted: #5c6170;
-  --accent: #0f7a57;
+  --border: #c3c8dc;
+  --text: #0e1018;
+  --muted: #434a60;
+  --accent: #066e4c;
   --accent-contrast: #ffffff;
-  --accent2: #5b4bd6;
+  --accent2: #4533c7;
+  /* Hero aurora ribbons: deeper, more saturated colours so they read on a light page. */
+  --aurora-1: #10b5a2;
+  --aurora-2: #6a4af0;
   --radius: 14px;
 }
 
@@ -24,6 +27,8 @@
   --accent: #7cf0c4;
   --accent-contrast: #0c0d10;
   --accent2: #9d8cff;
+  --aurora-1: #4de6b3;
+  --aurora-2: #9980ff;
 }
 
 @theme inline {
@@ -70,6 +75,15 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
     background: radial-gradient(ellipse 100% 34% at 50% 38%, color-mix(in srgb, var(--bg) 82%, transparent), transparent 100%);
   }
 }
+/* Light theme: the pool behind the hero text is much lighter, so the aurora shows through instead of being washed out. */
+:root:not(.dark) .aurora::after {
+  background: radial-gradient(ellipse 40% 30% at 50% 30%, color-mix(in srgb, var(--bg) 55%, transparent), transparent 100%);
+}
+@media (max-width: 767px) {
+  :root:not(.dark) .aurora::after {
+    background: radial-gradient(ellipse 90% 26% at 50% 34%, color-mix(in srgb, var(--bg) 55%, transparent), transparent 100%);
+  }
+}
 .aurora-canvas {
   display: block;
   width: 100%;
@@ -95,6 +109,10 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
   height: 1040px;
   background: radial-gradient(closest-side, color-mix(in srgb, var(--accent2) 20%, transparent), transparent);
   will-change: transform;
+}
+/* Light theme: a stronger glow, so the page background has colour instead of reading as white. */
+:root:not(.dark) .backdrop-glow {
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent2) 34%, transparent), transparent);
 }
 .backdrop-dots {
   position: absolute;

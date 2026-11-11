@@ -11,7 +11,7 @@ export function NotFound() {
     };
   }, []);
   return (
-    <main className="mx-auto grid min-h-[70svh] max-w-[640px] place-items-center px-5 text-center">
+    <main id="main" className="mx-auto grid min-h-[70svh] max-w-[640px] place-items-center px-5 text-center">
       <div>
         <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted">404</p>
         <h1 className="mt-2 text-4xl font-bold tracking-tight">That page does not exist</h1>

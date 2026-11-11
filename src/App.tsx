@@ -140,17 +140,17 @@ export default function App() {
           <p>
             <span className="font-bold text-text">{person.initials}</span> &nbsp;&bull;&nbsp; &copy; {new Date().getFullYear()} {person.name}
           </p>
-          <div className="flex items-center gap-4">
-            <a href="https://cdgsolutions.dev/team" target="_blank" rel="noreferrer" className="hover:text-text">
+          <div className="flex items-center gap-6">
+            <a href="https://cdgsolutions.dev/team" target="_blank" rel="noreferrer" className="-my-3 py-3 hover:text-text">
               Developer at CDG<span className="sr-only"> (opens in a new tab)</span>
             </a>
-            <a href={contact.github} aria-label="GitHub" className="hover:text-text">
+            <a href={contact.github} aria-label="GitHub" className="-m-3 p-3 hover:text-text">
               <GithubIcon />
             </a>
-            <a href={contact.instagram} target="_blank" rel="noreferrer" aria-label="Instagram (opens in a new tab)" className="hover:text-text">
+            <a href={contact.instagram} target="_blank" rel="noreferrer" aria-label="Instagram (opens in a new tab)" className="-m-3 p-3 hover:text-text">
               <InstagramIcon />
             </a>
-            <a href={gmailCompose} target="_blank" rel="noreferrer" aria-label="Email (opens in a new tab)" className="hover:text-text">
+            <a href={gmailCompose} target="_blank" rel="noreferrer" aria-label="Email (opens in a new tab)" className="-m-3 p-3 hover:text-text">
               <Mail size={20} />
             </a>
           </div>

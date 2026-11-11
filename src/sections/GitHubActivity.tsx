@@ -178,7 +178,7 @@ export function GitHubActivity() {
         {failed && (
           <p className="py-16 text-center text-muted">
             I could not load my GitHub activity right now.{" "}
-            <a href={contact.github} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-accent underline-offset-4 hover:underline">
+            <a href={contact.github} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-accent underline-offset-4 hover:underline max-md:-my-3 max-md:py-3">
               See it on GitHub <ExternalLink size={14} aria-hidden />
             </a>
           </p>
