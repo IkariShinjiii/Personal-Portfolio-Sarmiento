@@ -4,7 +4,7 @@ import { Mail } from "lucide-react";
 import { Backdrop } from "@/components/Backdrop";
 import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { ScrollProgress } from "@/components/ScrollProgress";
-import { MobileBar, RightRail, Sidebar, gmailCompose } from "@/components/Sidebar";
+import { MobileBar, Sidebar, gmailCompose } from "@/components/Sidebar";
 import Home from "@/pages/Home";
 import { NotFound } from "@/pages/NotFound";
 import { useTheme } from "@/lib/use-theme";
@@ -131,9 +131,8 @@ export default function App() {
       <ScrollToTop />
       <Sidebar theme={theme} onToggleTheme={toggle} />
       <MobileBar theme={theme} onToggleTheme={toggle} />
-      <RightRail />
 
-      <div className="md:pl-[272px] 2xl:pr-[232px]">
+      <div className="md:pl-[272px]">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
