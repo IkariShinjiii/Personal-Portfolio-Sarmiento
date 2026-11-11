@@ -114,7 +114,7 @@ const OTHER_ICON: Record<string, LucideIcon> = { services: Briefcase, gear: Keyb
 
 /**
  * One button for everything that is not in the main index. Hover (or click, or Enter) opens a small menu beside
- * the sidebar: the other sections, then Resume, GitHub and Instagram. It is rendered in a portal because the
+ * the sidebar: the sections that are not in the main index. It is rendered in a portal because the
  * sidebar itself is a scroll container with a blurred backdrop, which would clip or re-anchor a floating menu.
  */
 function OtherMenu({ active }: { active: string }) {
@@ -194,16 +194,6 @@ function OtherMenu({ active }: { active: string }) {
                   </li>
                 );
               })}
-              <li role="separator" className="my-1 border-t border-border" />
-              {external.map((e) => (
-                <li key={e.label}>
-                  <a href={e.href} target="_blank" rel="noreferrer" onClick={() => setOpen(false)} className={item}>
-                    <e.icon size={16} aria-hidden className="shrink-0 text-accent" />
-                    {e.label}
-                    <span className="sr-only"> (opens in a new tab)</span>
-                  </a>
-                </li>
-              ))}
             </ul>
           </div>,
           document.body,
@@ -230,7 +220,24 @@ export function Sidebar({ theme, onToggleTheme }: Props) {
           <p className="mt-0.5 text-sm text-muted">{person.role}</p>
         </Link>
 
-        <nav aria-label="Sections" className="mt-7 border-t border-border pt-5">
+        <ul className="mt-6 flex flex-col gap-0.5 border-b border-border pb-5">
+          {external.map((e) => (
+            <li key={e.label}>
+              <a
+                href={e.href}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-3 rounded-md px-2 py-1.5 text-sm font-medium text-muted transition-colors hover:text-text"
+              >
+                <e.icon size={14} aria-hidden className="w-5 shrink-0" />
+                {e.label}
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <nav aria-label="Sections" className="mt-5">
           <ul className="flex flex-col gap-0.5">
             {mainSections.map((s) => (
               <IndexItem key={s.id} s={s} active={active} />
