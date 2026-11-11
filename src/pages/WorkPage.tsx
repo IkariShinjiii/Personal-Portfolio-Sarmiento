@@ -43,7 +43,7 @@ function ShareButton({ w }: { w: Work }) {
   };
   const Icon = copied ? Check : typeof navigator !== "undefined" && "share" in navigator ? Share2 : Link2;
   return (
-    <button type="button" onClick={share} aria-live="polite" className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-4 py-2 text-sm font-semibold hover:border-accent">
+    <button type="button" onClick={share} aria-live="polite" className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-4 py-2 text-sm font-semibold hover:border-accent max-md:min-h-11">
       <Icon size={15} aria-hidden />
       {copied ? "Link copied" : "Share"}
     </button>
@@ -100,8 +100,8 @@ export default function WorkPage() {
   const next = works[(i + 1) % works.length];
 
   return (
-    <main className="mx-auto max-w-[860px] px-5 pb-24 pt-10 md:pt-16">
-      <Link to={{ pathname: "/", hash: "#multimedia" }} className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-muted hover:text-text">
+    <main id="main" className="mx-auto max-w-[860px] px-5 pb-24 pt-10 md:pt-16">
+      <Link to={{ pathname: "/", hash: "#multimedia" }} className="inline-flex min-h-11 items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-muted hover:text-text">
         <ArrowLeft size={14} aria-hidden /> All multimedia work
       </Link>
 
