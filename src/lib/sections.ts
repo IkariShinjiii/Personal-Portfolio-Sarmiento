@@ -34,7 +34,6 @@ export const otherSections: SectionEntry[] = [
   { id: "services", num: "", label: "Work with me" },
   { id: "gear", num: "", label: "Gear", rail: [{ label: "Items", value: String(gear.length) }] },
   { id: "explore", num: "", label: "More" },
-  { id: "guestbook", num: "", label: "Guestbook" },
   { id: "contact", num: "", label: "Contact" },
 ];
 
