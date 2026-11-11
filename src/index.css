@@ -4,7 +4,7 @@
 
 /* Design tokens: light theme is the fallback, dark is the default. */
 :root {
-  --bg: #e7e9f4;
+  --bg: #dce1f5;
   --surface: #ffffff;
   --border: #c3c8dc;
   --text: #0e1018;
@@ -12,6 +12,9 @@
   --accent: #066e4c;
   --accent-contrast: #ffffff;
   --accent2: #4533c7;
+  /* Hero aurora ribbons: deeper, more saturated colours so they read on a light page. */
+  --aurora-1: #10b5a2;
+  --aurora-2: #6a4af0;
   --radius: 14px;
 }
 
@@ -24,6 +27,8 @@
   --accent: #7cf0c4;
   --accent-contrast: #0c0d10;
   --accent2: #9d8cff;
+  --aurora-1: #4de6b3;
+  --aurora-2: #9980ff;
 }
 
 @theme inline {
@@ -95,6 +100,10 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
   height: 1040px;
   background: radial-gradient(closest-side, color-mix(in srgb, var(--accent2) 20%, transparent), transparent);
   will-change: transform;
+}
+/* Light theme: a stronger glow, so the page background has colour instead of reading as white. */
+:root:not(.dark) .backdrop-glow {
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent2) 34%, transparent), transparent);
 }
 .backdrop-dots {
   position: absolute;
