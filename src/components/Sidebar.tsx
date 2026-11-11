@@ -75,7 +75,7 @@ function IloiloClock() {
   }, []);
   const time = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Asia/Manila" }).format(now);
   return (
-    <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted">
+    <p className="text-xs text-muted">
       Iloilo <span className="font-semibold text-text">{time}</span> PHT
     </p>
   );
@@ -96,11 +96,11 @@ function IndexItem({ s, active, onClick }: { s: SectionEntry; active: string; on
         onClick={onClick}
         current={on}
         className={cn(
-          "group flex items-center gap-3 rounded-md px-2 py-1.5 font-mono text-[12px] uppercase tracking-[0.12em] transition-colors duration-200",
+          "group flex items-center gap-3 rounded-md px-2 py-1.5 text-sm font-medium transition-colors duration-200",
           on ? "text-text" : "text-muted hover:text-text",
         )}
       >
-        <span aria-hidden className={cn("w-5 shrink-0 text-[11px]", on ? "text-accent" : "text-muted/70")}>
+        <span aria-hidden className={cn("w-5 shrink-0 text-xs tabular-nums", on ? "text-accent" : "text-muted/70")}>
           {s.num || "·"}
         </span>
         <span className={cn(on && "rounded bg-accent2/20 px-1.5 py-0.5 -mx-1.5")}>{s.label}</span>
@@ -124,7 +124,7 @@ export function Sidebar({ theme, onToggleTheme }: Props) {
       <div>
         <Link to="/" className="block">
           <p className="text-lg font-bold tracking-tight">{person.name}</p>
-          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.16em] text-muted">{person.role}</p>
+          <p className="mt-0.5 text-sm text-muted">{person.role}</p>
         </Link>
 
         <ul className="mt-6 flex flex-col gap-0.5 border-b border-border pb-5">
@@ -134,7 +134,7 @@ export function Sidebar({ theme, onToggleTheme }: Props) {
                 href={e.href}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-3 rounded-md px-2 py-1.5 font-mono text-[12px] uppercase tracking-[0.12em] text-muted transition-colors hover:text-text"
+                className="flex items-center gap-3 rounded-md px-2 py-1.5 text-sm font-medium text-muted transition-colors hover:text-text"
               >
                 <e.icon size={14} aria-hidden className="w-5 shrink-0" />
                 {e.label}
@@ -150,7 +150,7 @@ export function Sidebar({ theme, onToggleTheme }: Props) {
               <IndexItem key={s.id} s={s} active={active} />
             ))}
           </ul>
-          <p className="mb-1 mt-5 px-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted/70">Other</p>
+          <p className="mb-1 mt-5 px-2 text-xs font-semibold text-muted">Other</p>
           <ul className="flex flex-col gap-0.5">
             {otherSections.map((s) => (
               <IndexItem key={s.id} s={s} active={active} />
@@ -232,7 +232,7 @@ export function MobileBar({ theme, onToggleTheme }: Props) {
               <IndexItemMobile key={s.id} s={s} active={active} onClick={() => setOpen(false)} />
             ))}
           </ul>
-          <p className="px-4 pb-1 pt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted/70">Other</p>
+          <p className="px-4 pb-1 pt-3 text-xs font-semibold text-muted">Other</p>
           <ul>
             {otherSections.map((s) => (
               <IndexItemMobile key={s.id} s={s} active={active} onClick={() => setOpen(false)} />
@@ -272,12 +272,12 @@ export function RightRail() {
       <div className="space-y-5">
         {pathname === "/" && current?.rail?.map((r) => (
           <div key={r.label}>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted/70">{r.label}</p>
+            <p className="text-xs font-semibold text-muted">{r.label}</p>
             <p className="mt-1 text-sm font-medium">{r.value}</p>
           </div>
         ))}
       </div>
-      <a href="#top" className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted hover:text-text">
+      <a href="#top" className="text-sm font-medium text-muted hover:text-text">
         &uarr; Back to top
       </a>
     </aside>
