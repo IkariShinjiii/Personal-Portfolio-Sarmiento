@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router";
-import { ExternalLink, FileText, Mail, Menu, Moon, Sun, X } from "lucide-react";
+import { Briefcase, ChevronRight, ExternalLink, FileText, Keyboard, LayoutGrid, Mail, Menu, Moon, Sun, X, type LucideIcon } from "lucide-react";
 import { ScrollTrigger } from "@/lib/gsap";
 import { allSections, mainSections, otherSections, type SectionEntry } from "@/lib/sections";
 import { cn } from "@/lib/utils";
@@ -109,6 +110,108 @@ function IndexItem({ s, active, onClick }: { s: SectionEntry; active: string; on
   );
 }
 
+const OTHER_ICON: Record<string, LucideIcon> = { services: Briefcase, gear: Keyboard, explore: LayoutGrid, contact: Mail };
+
+/**
+ * One button for everything that is not in the main index. Hover (or click, or Enter) opens a small menu beside
+ * the sidebar: the other sections, then Resume, GitHub and Instagram. It is rendered in a portal because the
+ * sidebar itself is a scroll container with a blurred backdrop, which would clip or re-anchor a floating menu.
+ */
+function OtherMenu({ active }: { active: string }) {
+  const [open, setOpen] = useState(false);
+  const [top, setTop] = useState(0);
+  const btn = useRef<HTMLButtonElement>(null);
+  const menu = useRef<HTMLDivElement>(null);
+  const timer = useRef<number | undefined>(undefined);
+  const inOther = otherSections.some((s) => s.id === active);
+
+  const show = () => {
+    window.clearTimeout(timer.current);
+    const r = btn.current?.getBoundingClientRect();
+    if (r) setTop(Math.max(12, Math.min(r.top, window.innerHeight - 380)));
+    setOpen(true);
+  };
+  // A short delay lets the pointer cross the gap between the button and the menu without it closing.
+  const hide = () => {
+    window.clearTimeout(timer.current);
+    timer.current = window.setTimeout(() => setOpen(false), 140);
+  };
+  useEffect(() => () => window.clearTimeout(timer.current), []);
+
+  const item = "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-text hover:bg-accent2/15 focus-visible:bg-accent2/15";
+  return (
+    <div onMouseEnter={show} onMouseLeave={hide}>
+      <button
+        ref={btn}
+        type="button"
+        aria-haspopup="true"
+        aria-expanded={open}
+        aria-controls="other-menu"
+        onClick={(e) => {
+          if (open && e.detail !== 0) return setOpen(false);
+          show();
+          // Opened from the keyboard: move into the menu so it can be used without a mouse.
+          if (e.detail === 0) window.setTimeout(() => menu.current?.querySelector<HTMLElement>("a")?.focus(), 0);
+        }}
+        onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
+        className={cn(
+          "flex w-full items-center gap-3 rounded-md px-2 py-1.5 text-sm font-medium transition-colors duration-200",
+          inOther ? "text-text" : "text-muted hover:text-text",
+        )}
+      >
+        <span aria-hidden className={cn("w-5 shrink-0 text-center text-xs", inOther ? "text-accent" : "text-muted/70")}>
+          ···
+        </span>
+        <span className={cn("flex-1 text-left", inOther && "-mx-1.5 rounded bg-accent2/20 px-1.5 py-0.5")}>Other</span>
+        <ChevronRight size={14} aria-hidden className={cn("transition-transform duration-200", open && "translate-x-0.5")} />
+      </button>
+
+      {open &&
+        createPortal(
+          <div
+            ref={menu}
+            id="other-menu"
+            onMouseEnter={show}
+            onMouseLeave={hide}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") {
+                setOpen(false);
+                btn.current?.focus();
+              }
+            }}
+            style={{ top }}
+            className="menu-in fixed left-[264px] z-50 w-64 pl-3"
+          >
+            <ul className="rounded-card border border-border bg-surface p-2 shadow-2xl">
+              {otherSections.map((s) => {
+                const Icon = OTHER_ICON[s.id] ?? LayoutGrid;
+                return (
+                  <li key={s.id}>
+                    <SectionLink id={s.id} onClick={() => setOpen(false)} current={active === s.id} className={item}>
+                      <Icon size={16} aria-hidden className="shrink-0 text-accent" />
+                      {s.label}
+                    </SectionLink>
+                  </li>
+                );
+              })}
+              <li role="separator" className="my-1 border-t border-border" />
+              {external.map((e) => (
+                <li key={e.label}>
+                  <a href={e.href} target="_blank" rel="noreferrer" onClick={() => setOpen(false)} className={item}>
+                    <e.icon size={16} aria-hidden className="shrink-0 text-accent" />
+                    {e.label}
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>,
+          document.body,
+        )}
+    </div>
+  );
+}
+
 type Props = { theme: "dark" | "light"; onToggleTheme: () => void };
 
 /** Fixed left sidebar (tablet and wider) with the numbered section index. */
@@ -127,35 +230,15 @@ export function Sidebar({ theme, onToggleTheme }: Props) {
           <p className="mt-0.5 text-sm text-muted">{person.role}</p>
         </Link>
 
-        <ul className="mt-6 flex flex-col gap-0.5 border-b border-border pb-5">
-          {external.map((e) => (
-            <li key={e.label}>
-              <a
-                href={e.href}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-3 rounded-md px-2 py-1.5 text-sm font-medium text-muted transition-colors hover:text-text"
-              >
-                <e.icon size={14} aria-hidden className="w-5 shrink-0" />
-                {e.label}
-                <span className="sr-only"> (opens in a new tab)</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <nav aria-label="Sections" className="mt-5">
+        <nav aria-label="Sections" className="mt-7 border-t border-border pt-5">
           <ul className="flex flex-col gap-0.5">
             {mainSections.map((s) => (
               <IndexItem key={s.id} s={s} active={active} />
             ))}
           </ul>
-          <p className="mb-1 mt-5 px-2 text-xs font-semibold text-muted">Other</p>
-          <ul className="flex flex-col gap-0.5">
-            {otherSections.map((s) => (
-              <IndexItem key={s.id} s={s} active={active} />
-            ))}
-          </ul>
+          <div className="mt-0.5">
+            <OtherMenu active={active} />
+          </div>
         </nav>
       </div>
 
