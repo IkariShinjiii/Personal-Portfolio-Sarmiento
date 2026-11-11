@@ -1,5 +1,5 @@
-import { lazy, Suspense, useEffect } from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router";
+import { useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router";
 import { Mail } from "lucide-react";
 import { Backdrop } from "@/components/Backdrop";
 import { AuroraBackdrop } from "@/components/AuroraBackdrop";
@@ -12,9 +12,6 @@ import { watchOffscreen } from "@/lib/pause-offscreen";
 import { gsap, NO_REDUCED_MOTION, ScrollTrigger } from "@/lib/gsap";
 import { BRAND_ICONS } from "@/lib/brand-icons";
 import { contact, person } from "@/content";
-
-// A single work opens on its own page; keep it out of the home page's bundle.
-const WorkPage = lazy(() => import("@/pages/WorkPage"));
 
 function GithubIcon({ size = 20 }: { size?: number }) {
   return (
@@ -136,15 +133,6 @@ export default function App() {
       <div className="md:pl-[272px] 2xl:pr-[232px]">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route
-            path="/multimedia/:slug"
-            element={
-              <Suspense fallback={<div className="min-h-[70svh]" aria-hidden />}>
-                <WorkPage />
-              </Suspense>
-            }
-          />
-          <Route path="/multimedia" element={<Navigate to={{ pathname: "/", hash: "#multimedia" }} replace />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 

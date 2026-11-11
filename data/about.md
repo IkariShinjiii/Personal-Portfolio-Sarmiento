@@ -15,9 +15,6 @@ He likes to understand the problem first, then build something clear and reliabl
 - Anime Pet Simulator: a side hobby, not client or professional work. A Pet Simulator-style Roblox game built around anime characters and pets. It is live on Roblox.
 - Ñuwave Specialty Coffee: a table-QR menu and website for a specialty coffee shop in Jaro, Iloilo City (Next.js, React, TypeScript, Tailwind). Live site: https://nuwave-blond.vercel.app
 
-## Multimedia Systems course
-Kervin takes IT 312 Multimedia Systems in the BSIT program at the University of San Agustin. The course covers how sound, images and video are captured, stored, compressed and delivered: digital audio and video, color models (RGB, YCbCr), lossless coding (run-length, Huffman, LZW, arithmetic), lossy compression (JPEG, MPEG), and multimedia authoring with storyboards. His main takeaway is that every media format trades size against quality and speed, and it changed how he chooses formats and compression for web work. Course work on the site, each with its own page at https://personal-portfolio-sarmiento.vercel.app/multimedia/<name>: Research Infographic (research-infographic), Silent Movie Storyboard (silent-movie-storyboard), Silent Movie Video (silent-movie-video) and Stop Animation (stop-animation). Some of the files are still being added.
-
 ## Skills
 React, Next.js, TypeScript, JavaScript, HTML and CSS, Tailwind CSS, Vite, Electron, GSAP, Framer, Supabase and PostgreSQL (with PostGIS), Firebase, MapLibre, Vercel, Git, GitHub and GitHub Actions, testing with Vitest and Playwright, accessible interfaces, Figma and Canva for design, Cisco and networking basics, and Lua/Luau in Roblox Studio, which he uses only as a side hobby for making Roblox games.
 

@@ -9,14 +9,6 @@ Contact is by email or Instagram. There is no LinkedIn account and no booking li
 - [Portfolio](https://personal-portfolio-sarmiento.vercel.app/): about, education, skills, projects, GitHub activity, services and contact
 - [Resume (PDF)](https://personal-portfolio-sarmiento.vercel.app/Kervin_Sarmiento_Resume.pdf): his CV
 
-## Multimedia Systems (university course work)
-
-- [Multimedia section](https://personal-portfolio-sarmiento.vercel.app/#multimedia): IT 312 at the University of San Agustin, what he learned and his course work
-- [Research Infographic](https://personal-portfolio-sarmiento.vercel.app/multimedia/research-infographic)
-- [Silent Movie Storyboard](https://personal-portfolio-sarmiento.vercel.app/multimedia/silent-movie-storyboard)
-- [Silent Movie Video](https://personal-portfolio-sarmiento.vercel.app/multimedia/silent-movie-video)
-- [Stop Animation](https://personal-portfolio-sarmiento.vercel.app/multimedia/stop-animation)
-
 ## Projects
 
 - [Mind Bridge](https://mind-bridge-omega.vercel.app): his capstone, a student wellness platform for the University of San Agustin (React, Firebase)

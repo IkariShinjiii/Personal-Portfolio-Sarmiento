@@ -1,4 +1,3 @@
-import { course, works } from "@/multimedia";
 import { gear, projects } from "@/content";
 
 export type SectionEntry = {
@@ -17,15 +16,6 @@ export const mainSections: SectionEntry[] = [
   { id: "education", num: "02", label: "Education", rail: [{ label: "School", value: "University of San Agustin" }, { label: "Program", value: "BSIT, 3rd year" }] },
   { id: "skills", num: "03", label: "Skills" },
   { id: "projects", num: "04", label: "Projects", rail: [{ label: "Projects", value: String(projects.length) }] },
-  {
-    id: "multimedia",
-    num: "05",
-    label: "Multimedia",
-    rail: [
-      { label: "Course", value: `${course.code} ${course.name}` },
-      { label: "Works", value: String(works.length) },
-    ],
-  },
   { id: "activity", num: "··", label: "Activity" },
 ];
 

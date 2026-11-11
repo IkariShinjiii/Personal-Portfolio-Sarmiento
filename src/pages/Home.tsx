@@ -17,7 +17,6 @@ import { contact, explore, gear } from "@/content";
 // Below-the-fold sections load on demand (see Deferred), keeping startup work small.
 const Skills = lazy(() => import("@/sections/Skills").then((m) => ({ default: m.Skills })));
 const Projects = lazy(() => import("@/sections/Projects").then((m) => ({ default: m.Projects })));
-const Multimedia = lazy(() => import("@/sections/Multimedia").then((m) => ({ default: m.Multimedia })));
 const GitHubActivity = lazy(() => import("@/sections/GitHubActivity").then((m) => ({ default: m.GitHubActivity })));
 const Gear = lazy(() => import("@/sections/Gear").then((m) => ({ default: m.Gear })));
 
@@ -77,10 +76,6 @@ export default function Home() {
 
       <Deferred id="projects" minHeight={900}>
         <Projects />
-      </Deferred>
-
-      <Deferred id="multimedia" minHeight={1400}>
-        <Multimedia />
       </Deferred>
 
       <Deferred id="activity" minHeight={520}>

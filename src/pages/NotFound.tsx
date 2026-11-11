@@ -15,13 +15,10 @@ export function NotFound() {
       <div>
         <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted">404</p>
         <h1 className="mt-2 text-4xl font-bold tracking-tight">That page does not exist</h1>
-        <p className="mt-3 text-muted">The link may be old, or the work may have moved.</p>
+        <p className="mt-3 text-muted">The link may be old or mistyped.</p>
         <div className="mt-6 flex justify-center gap-3">
           <Button asChild>
             <Link to="/">Go home</Link>
-          </Button>
-          <Button asChild variant="outline">
-            <Link to={{ pathname: "/", hash: "#multimedia" }}>See multimedia work</Link>
           </Button>
         </div>
       </div>
