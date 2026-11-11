@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
-import { Briefcase, ChevronRight, ExternalLink, FileText, Keyboard, LayoutGrid, Mail, Menu, Moon, Sun, X, type LucideIcon } from "lucide-react";
+import { ExternalLink, FileText, Mail, Menu, Moon, Sun, X } from "lucide-react";
 import { ScrollTrigger } from "@/lib/gsap";
 import { allSections, mainSections, otherSections, type SectionEntry } from "@/lib/sections";
 import { cn } from "@/lib/utils";
@@ -97,7 +96,7 @@ function IndexItem({ s, active, onClick }: { s: SectionEntry; active: string; on
         onClick={onClick}
         current={on}
         className={cn(
-          "group flex items-center gap-3 rounded-md px-2 py-1.5 text-sm font-medium transition-colors duration-200",
+          "group flex items-center gap-3 rounded-md px-2 py-1 text-sm font-medium transition-colors duration-200",
           on ? "text-text" : "text-muted hover:text-text",
         )}
       >
@@ -107,98 +106,6 @@ function IndexItem({ s, active, onClick }: { s: SectionEntry; active: string; on
         <span className={cn(on && "rounded bg-accent2/20 px-1.5 py-0.5 -mx-1.5")}>{s.label}</span>
       </SectionLink>
     </li>
-  );
-}
-
-const OTHER_ICON: Record<string, LucideIcon> = { services: Briefcase, gear: Keyboard, explore: LayoutGrid, contact: Mail };
-
-/**
- * One button for everything that is not in the main index. Hover (or click, or Enter) opens a small menu beside
- * the sidebar: the sections that are not in the main index. It is rendered in a portal because the
- * sidebar itself is a scroll container with a blurred backdrop, which would clip or re-anchor a floating menu.
- */
-function OtherMenu({ active }: { active: string }) {
-  const [open, setOpen] = useState(false);
-  const [top, setTop] = useState(0);
-  const btn = useRef<HTMLButtonElement>(null);
-  const menu = useRef<HTMLDivElement>(null);
-  const timer = useRef<number | undefined>(undefined);
-  const inOther = otherSections.some((s) => s.id === active);
-
-  const show = () => {
-    window.clearTimeout(timer.current);
-    const r = btn.current?.getBoundingClientRect();
-    if (r) setTop(Math.max(12, Math.min(r.top, window.innerHeight - 380)));
-    setOpen(true);
-  };
-  // A short delay lets the pointer cross the gap between the button and the menu without it closing.
-  const hide = () => {
-    window.clearTimeout(timer.current);
-    timer.current = window.setTimeout(() => setOpen(false), 140);
-  };
-  useEffect(() => () => window.clearTimeout(timer.current), []);
-
-  const item = "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-text hover:bg-accent2/15 focus-visible:bg-accent2/15";
-  return (
-    <div onMouseEnter={show} onMouseLeave={hide}>
-      <button
-        ref={btn}
-        type="button"
-        aria-haspopup="true"
-        aria-expanded={open}
-        aria-controls="other-menu"
-        onClick={(e) => {
-          if (open && e.detail !== 0) return setOpen(false);
-          show();
-          // Opened from the keyboard: move into the menu so it can be used without a mouse.
-          if (e.detail === 0) window.setTimeout(() => menu.current?.querySelector<HTMLElement>("a")?.focus(), 0);
-        }}
-        onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
-        className={cn(
-          "flex w-full items-center gap-3 rounded-md px-2 py-1.5 text-sm font-medium transition-colors duration-200",
-          inOther ? "text-text" : "text-muted hover:text-text",
-        )}
-      >
-        <span aria-hidden className={cn("w-5 shrink-0 text-center text-xs", inOther ? "text-accent" : "text-muted/70")}>
-          ···
-        </span>
-        <span className={cn("flex-1 text-left", inOther && "-mx-1.5 rounded bg-accent2/20 px-1.5 py-0.5")}>Other</span>
-        <ChevronRight size={14} aria-hidden className={cn("transition-transform duration-200", open && "translate-x-0.5")} />
-      </button>
-
-      {open &&
-        createPortal(
-          <div
-            ref={menu}
-            id="other-menu"
-            onMouseEnter={show}
-            onMouseLeave={hide}
-            onKeyDown={(e) => {
-              if (e.key === "Escape") {
-                setOpen(false);
-                btn.current?.focus();
-              }
-            }}
-            style={{ top }}
-            className="menu-in fixed left-[264px] z-50 w-64 pl-3"
-          >
-            <ul className="rounded-card border border-border bg-surface p-2 shadow-2xl">
-              {otherSections.map((s) => {
-                const Icon = OTHER_ICON[s.id] ?? LayoutGrid;
-                return (
-                  <li key={s.id}>
-                    <SectionLink id={s.id} onClick={() => setOpen(false)} current={active === s.id} className={item}>
-                      <Icon size={16} aria-hidden className="shrink-0 text-accent" />
-                      {s.label}
-                    </SectionLink>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>,
-          document.body,
-        )}
-    </div>
   );
 }
 
@@ -212,7 +119,7 @@ export function Sidebar({ theme, onToggleTheme }: Props) {
   return (
     <aside
       aria-label="Site navigation"
-      className="fixed inset-y-0 left-0 z-40 hidden w-[272px] flex-col justify-between overflow-y-auto panel-scroll border-r border-border bg-bg/70 px-6 py-7 backdrop-blur md:flex"
+      className="fixed inset-y-0 left-0 z-40 hidden w-[272px] flex-col justify-between overflow-y-auto panel-scroll border-r border-border bg-bg/70 px-6 py-7 backdrop-blur md:flex [@media(max-height:760px)]:py-4"
     >
       <div>
         <Link to="/" className="block">
@@ -220,7 +127,7 @@ export function Sidebar({ theme, onToggleTheme }: Props) {
           <p className="mt-0.5 text-sm text-muted">{person.role}</p>
         </Link>
 
-        <ul className="mt-6 flex flex-col gap-0.5 border-b border-border pb-5">
+        <ul className="mt-4 flex flex-col gap-0 border-b border-border pb-3 [@media(max-height:700px)]:mt-2 [@media(max-height:700px)]:pb-2">
           {external.map((e) => (
             <li key={e.label}>
               <a
@@ -237,19 +144,16 @@ export function Sidebar({ theme, onToggleTheme }: Props) {
           ))}
         </ul>
 
-        <nav aria-label="Sections" className="mt-5">
+        <nav aria-label="Sections" className="mt-3">
           <ul className="flex flex-col gap-0.5">
-            {mainSections.map((s) => (
+            {allSections.map((s) => (
               <IndexItem key={s.id} s={s} active={active} />
             ))}
           </ul>
-          <div className="mt-0.5">
-            <OtherMenu active={active} />
-          </div>
         </nav>
       </div>
 
-      <div className="mt-8 space-y-4 border-t border-border pt-5">
+      <div className="mt-3 space-y-3 border-t border-border pt-4 [@media(max-height:700px)]:space-y-2 [@media(max-height:700px)]:pt-3">
         <div className="flex items-center justify-between">
           <IloiloClock />
           <button
@@ -270,7 +174,7 @@ export function Sidebar({ theme, onToggleTheme }: Props) {
           <Mail size={15} aria-hidden />
           Email me<span className="sr-only"> (opens in a new tab)</span>
         </a>
-        <a href="https://cdgsolutions.dev/team" target="_blank" rel="noreferrer" className="block text-center text-xs text-muted hover:text-text">
+        <a href="https://cdgsolutions.dev/team" target="_blank" rel="noreferrer" className="block text-center text-xs text-muted hover:text-text [@media(max-height:740px)]:hidden">
           Building at Cascade Development Group<span className="sr-only"> (opens in a new tab)</span>
         </a>
       </div>
@@ -352,24 +256,3 @@ function IndexItemMobile({ s, active, onClick }: { s: SectionEntry; active: stri
   );
 }
 
-/** Right rail (wide screens): what the section you are reading is about, plus back to top. */
-export function RightRail() {
-  const { pathname } = useLocation();
-  const active = useActiveSection(pathname === "/");
-  const current = allSections.find((s) => s.id === active);
-  return (
-    <aside aria-hidden={!current?.rail} className="fixed inset-y-0 right-0 z-30 hidden w-[232px] flex-col justify-between border-l border-border px-6 py-7 2xl:flex">
-      <div className="space-y-5">
-        {pathname === "/" && current?.rail?.map((r) => (
-          <div key={r.label}>
-            <p className="text-xs font-semibold text-muted">{r.label}</p>
-            <p className="mt-1 text-sm font-medium">{r.value}</p>
-          </div>
-        ))}
-      </div>
-      <a href="#top" className="text-sm font-medium text-muted hover:text-text">
-        &uarr; Back to top
-      </a>
-    </aside>
-  );
-}
