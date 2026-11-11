@@ -38,13 +38,13 @@ function GearCard({ item, className, eager }: { item: GearItem; className?: stri
           </div>
         )}
         {item.tag && (
-          <span className="absolute left-3 top-3 rounded-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-white" style={{ background: `${item.accent}dd` }}>
+          <span className="absolute left-3 top-3 rounded-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-white" style={{ background: `color-mix(in srgb, ${item.accent} 60%, black)` }}>
             {item.tag}
           </span>
         )}
       </div>
       <div className="p-5">
-        <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: item.accent }}>
+        <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: `color-mix(in srgb, ${item.accent} 55%, var(--text))` }}>
           {item.category}
         </p>
         <h3 className="mt-1 text-lg font-semibold leading-tight">{item.name}</h3>
