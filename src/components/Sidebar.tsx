@@ -256,24 +256,3 @@ function IndexItemMobile({ s, active, onClick }: { s: SectionEntry; active: stri
   );
 }
 
-/** Right rail (wide screens): what the section you are reading is about, plus back to top. */
-export function RightRail() {
-  const { pathname } = useLocation();
-  const active = useActiveSection(pathname === "/");
-  const current = allSections.find((s) => s.id === active);
-  return (
-    <aside aria-hidden={!current?.rail} className="fixed inset-y-0 right-0 z-30 hidden w-[232px] flex-col justify-between px-6 py-7 2xl:flex">
-      <div className="space-y-5">
-        {pathname === "/" && current?.rail?.map((r) => (
-          <div key={r.label}>
-            <p className="text-xs font-semibold text-muted">{r.label}</p>
-            <p className="mt-1 text-sm font-medium">{r.value}</p>
-          </div>
-        ))}
-      </div>
-      <a href="#top" className="text-sm font-medium text-muted hover:text-text">
-        &uarr; Back to top
-      </a>
-    </aside>
-  );
-}
