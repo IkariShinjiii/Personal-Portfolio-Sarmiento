@@ -289,8 +289,8 @@ export function MobileBar({ theme, onToggleTheme }: Props) {
 
   return (
     <header className="sticky top-0 z-40 px-4 pt-3 md:hidden">
-      <div className="flex h-11 items-center justify-between rounded-full border border-border bg-surface/80 pl-5 pr-1.5 backdrop-blur">
-        <Link to="/" className="text-sm font-bold tracking-tight">
+      <div className="flex h-12 items-center justify-between rounded-full border border-border bg-surface/80 pl-5 pr-0.5 backdrop-blur">
+        <Link to="/" className="inline-flex min-h-11 items-center text-sm font-bold tracking-tight">
           {person.name}
         </Link>
         <div className="flex items-center gap-1.5">
@@ -298,7 +298,7 @@ export function MobileBar({ theme, onToggleTheme }: Props) {
             type="button"
             onClick={onToggleTheme}
             aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-            className="grid size-9 place-items-center rounded-full text-text"
+            className="grid size-11 place-items-center rounded-full text-text"
           >
             <ThemeIcon size={17} />
           </button>
@@ -308,7 +308,7 @@ export function MobileBar({ theme, onToggleTheme }: Props) {
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
-            className="grid size-9 place-items-center rounded-full text-text"
+            className="grid size-11 place-items-center rounded-full text-text"
           >
             {open ? <X size={18} /> : <Menu size={18} />}
           </button>

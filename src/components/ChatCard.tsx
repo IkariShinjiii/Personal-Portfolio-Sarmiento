@@ -70,7 +70,7 @@ export function ChatCard({ name }: { name: string }) {
             key={q}
             type="button"
             onClick={() => void send(q)}
-            className="rounded-full border border-border bg-bg/60 px-3 py-1 text-sm text-muted hover:border-accent hover:text-accent"
+            className="rounded-full border border-border bg-bg/60 px-3 py-1 text-sm max-md:min-h-11 text-muted hover:border-accent hover:text-accent"
           >
             {q}
           </button>
