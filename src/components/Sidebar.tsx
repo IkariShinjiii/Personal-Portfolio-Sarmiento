@@ -119,7 +119,7 @@ export function Sidebar({ theme, onToggleTheme }: Props) {
   return (
     <aside
       aria-label="Site navigation"
-      className="fixed inset-y-0 left-0 z-40 hidden w-[272px] flex-col justify-between overflow-y-auto border-r border-border bg-bg/70 px-6 py-7 backdrop-blur md:flex"
+      className="fixed inset-y-0 left-0 z-40 hidden w-[272px] flex-col justify-between overflow-y-auto panel-scroll border-r border-border bg-bg/70 px-6 py-7 backdrop-blur md:flex"
     >
       <div>
         <Link to="/" className="block">
@@ -226,7 +226,7 @@ export function MobileBar({ theme, onToggleTheme }: Props) {
       </div>
 
       {open && (
-        <div id="mobile-menu" className="menu-in mt-2 max-h-[calc(100svh-5rem)] overflow-y-auto rounded-card border border-border bg-surface/95 p-2 backdrop-blur">
+        <div id="mobile-menu" className="menu-in mt-2 max-h-[calc(100svh-5rem)] overflow-y-auto panel-scroll rounded-card border border-border bg-surface/95 p-2 backdrop-blur">
           <ul>
             {mainSections.map((s) => (
               <IndexItemMobile key={s.id} s={s} active={active} onClick={() => setOpen(false)} />
