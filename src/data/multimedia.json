@@ -1,0 +1,75 @@
+{
+  "course": {
+    "code": "IT 312",
+    "name": "Multimedia Systems",
+    "school": "University of San Agustin",
+    "program": "BSIT",
+    "intro": "Multimedia Systems is a course in the BSIT program at the University of San Agustin. It covers how sound, images and video are captured, stored, compressed and delivered. Here is what I took from it, and the work I made along the way.",
+    "learned": "Before this course, a video file was just something I uploaded. Now I can follow one from start to finish: the analog signal sampled into numbers, the color model behind every frame, the codec deciding which details to drop, and the network that streams the result. The biggest lesson is that every format is a trade-off between size, quality and speed. Lossless methods keep every bit. Lossy methods like JPEG and MPEG throw away what the eye and ear will not miss. As a web developer, it changed how I handle media: I now choose formats and compression on purpose, not by default.",
+    "concepts": [
+      { "title": "Digital audio and video", "text": "Sampling rate, bit depth, quantization error, and MIDI versus recorded sound." },
+      { "title": "Color models", "text": "RGB for screens, YCbCr for video, and how chroma subsampling saves space." },
+      { "title": "Lossless coding", "text": "Run-length, Huffman, LZW and arithmetic coding." },
+      { "title": "Lossy compression", "text": "The DCT and quantization in JPEG, and I-, P- and B-frames with motion compensation in MPEG." },
+      { "title": "Multimedia authoring", "text": "Storyboards, flowlines and event-driven navigation." }
+    ]
+  },
+  "works": [
+    {
+      "slug": "research-infographic",
+      "title": "Research Infographic",
+      "type": "Infographic",
+      "module": "Module 3 lab",
+      "date": "2026-09",
+      "summary": "A research study turned into a one-page poster for a general audience: problem, solution, method, timeline, budget and impact.",
+      "details": [
+        "The brief: translate academic research into a clear, accessible infographic using large metric callouts, a process flow, a timeline and a simple budget chart.",
+        "The skill it trains is synthesis: cutting a long study down to what a reader needs, then choosing the right visual for each kind of data."
+      ],
+      "tools": ["Canva", "Poster design"],
+      "media": []
+    },
+    {
+      "slug": "silent-movie-storyboard",
+      "title": "Silent Movie Storyboard",
+      "type": "Storyboard",
+      "module": "Module 3 class activity",
+      "date": "2026-09",
+      "summary": "A 6 to 8 panel storyboard for a silent mini-story, told with no dialogue and no captions.",
+      "details": [
+        "The brief: a complete story with a setup, a conflict and a resolution, told only through staging, framing and expression, and handed in as a letter-size PDF.",
+        "Every panel has to read on its own, so camera distance and composition do the work that words normally would."
+      ],
+      "tools": ["Storyboarding"],
+      "media": []
+    },
+    {
+      "slug": "silent-movie-video",
+      "title": "Silent Movie Video",
+      "type": "Video",
+      "module": "Module 3 lab",
+      "date": "2026-09",
+      "summary": "The silent-movie storyboard shot and edited as a short video, with sound effects or music instead of speech.",
+      "details": [
+        "The brief: turn the storyboard into a video with no spoken dialogue, no voiceover and no on-screen text, using a mix of shot sizes and sound design to carry the story.",
+        "It connects the course theory to practice: capture, edit, then export in a format that streams well."
+      ],
+      "tools": ["Video editing"],
+      "media": []
+    },
+    {
+      "slug": "stop-animation",
+      "title": "Stop Animation",
+      "type": "Animation",
+      "module": "Module 6 class activity",
+      "date": "2026-11",
+      "summary": "A stop-motion animation built frame by frame.",
+      "details": [
+        "The brief: a stop-motion piece, where motion is created by photographing small changes between frames and playing them back at speed.",
+        "It is the clearest hands-on look at frame rate in the course: fewer frames per second feels choppy, more feels smooth but costs more work."
+      ],
+      "tools": ["Stop motion"],
+      "media": []
+    }
+  ]
+}

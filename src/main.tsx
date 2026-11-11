@@ -1,12 +1,15 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router";
 import "./index.css";
 import App from "./App";
 
 const mount = () =>
   createRoot(document.getElementById("root")!).render(
     <StrictMode>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </StrictMode>,
   );
 
@@ -34,7 +37,9 @@ function whenFirstPainted(go: () => void) {
   }
   setTimeout(once, 1500);
 }
-whenFirstPainted(mount);
+// Only the home page ships the static hero; any other page (a single work, the 404) mounts straight away.
+if (window.location.pathname === "/") whenFirstPainted(mount);
+else mount();
 
 // The font stylesheet loads without blocking render (media="print"); switch it on once it has arrived.
 // Done here instead of an inline onload so the Content-Security-Policy can forbid inline scripts.
