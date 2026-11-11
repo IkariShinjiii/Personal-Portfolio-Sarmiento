@@ -4,14 +4,14 @@
 
 /* Design tokens: light theme is the fallback, dark is the default. */
 :root {
-  --bg: #f6f5f1;
+  --bg: #e7e9f4;
   --surface: #ffffff;
-  --border: #e2e0d8;
-  --text: #15171c;
-  --muted: #5c6170;
-  --accent: #0f7a57;
+  --border: #c3c8dc;
+  --text: #0e1018;
+  --muted: #434a60;
+  --accent: #066e4c;
   --accent-contrast: #ffffff;
-  --accent2: #5b4bd6;
+  --accent2: #4533c7;
   --radius: 14px;
 }
 
