@@ -8,7 +8,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const SITE = "https://personal-portfolio-sarmiento.vercel.app";
+const SITE = "https://sarmiento-portfolio-multimedia.vercel.app";
 const { course, works } = JSON.parse(readFileSync(join(root, "src/data/multimedia.json"), "utf8"));
 const template = readFileSync(join(root, "dist/index.html"), "utf8");
 

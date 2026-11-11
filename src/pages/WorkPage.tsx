@@ -8,7 +8,7 @@ import { NotFound } from "@/pages/NotFound";
 import { course, findWork, hasMedia, works, type Media, type Work } from "@/multimedia";
 import { person } from "@/content";
 
-const SITE = "https://personal-portfolio-sarmiento.vercel.app";
+const SITE = "https://sarmiento-portfolio-multimedia.vercel.app";
 
 function useDocumentMeta(w: Work | undefined) {
   useEffect(() => {
