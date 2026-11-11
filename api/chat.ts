@@ -10,46 +10,40 @@ const MODELS = [...new Set([process.env.GEMINI_MODEL, "gemini-flash-latest", "ge
 const EMAIL = "kervinsarmiento2.0@gmail.com";
 
 // ---------------------------------------------------------------------------------------------
-// Rate limiting. The shared limiter lives in Supabase (function chat_rate_limit) so counts hold
-// across serverless instances and cold starts. The URL and publishable key are public by design;
-// the function only increments counters. If it cannot be reached, an in-memory limiter takes over.
+// Rate limiting. No database: counters live in memory, per serverless instance. That is a basic guard,
+// not an exact one: a cold start or a second instance starts counting from zero. The hard ceiling on cost
+// is the quota on the Gemini key itself (set it in Google AI Studio), and Vercel's firewall can add a
+// platform-level rate limit on /api/chat if abuse ever shows up.
 // ---------------------------------------------------------------------------------------------
-const SUPABASE_URL = process.env.VITE_SUPABASE_URL || "https://vqmbfxcfppyssnaninzn.supabase.co";
-const SUPABASE_KEY = process.env.VITE_SUPABASE_PUBLISHABLE_KEY || "sb_publishable_Ve1j7_ZCuEGH-njKV4yRiQ_jqH_LVvd";
 const LIMITS = [
-  { name: "minute", bucket: (ip: string) => `ip:${ip}:m`, limit: 6, seconds: 60 },
-  { name: "hour", bucket: (ip: string) => `ip:${ip}:h`, limit: 30, seconds: 3600 },
-  { name: "global-day", bucket: () => "global:d", limit: 800, seconds: 86400 },
+  { limit: 6, seconds: 60 },
+  { limit: 30, seconds: 3600 },
 ] as const;
+const DAILY_CAP = 400; // messages per instance per day, across all visitors
+const MAX_TRACKED = 5000;
 
-const memory = new Map<string, number[]>();
-function memoryLimited(ip: string): boolean {
+const hits = new Map<string, number[]>();
+let day = { start: Date.now(), count: 0 };
+
+/** Returns the time to wait in seconds if the visitor is over a limit, otherwise 0. */
+function rateLimit(ip: string): number {
   const now = Date.now();
-  const recent = (memory.get(ip) ?? []).filter((t) => now - t < 60_000);
-  recent.push(now);
-  memory.set(ip, recent);
-  if (memory.size > 5000) memory.clear();
-  return recent.length > 6;
-}
+  if (now - day.start > 86_400_000) day = { start: now, count: 0 };
+  if (day.count >= DAILY_CAP) return 3600;
 
-/** Returns the window to wait in seconds if the visitor is over a limit, otherwise 0. */
-async function rateLimit(ip: string): Promise<number> {
-  try {
-    for (const l of LIMITS) {
-      const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/chat_rate_limit`, {
-        method: "POST",
-        headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" },
-        body: JSON.stringify({ p_bucket: l.bucket(ip), p_limit: l.limit, p_window_seconds: l.seconds }),
-        signal: AbortSignal.timeout(2500),
-      });
-      if (!r.ok) throw new Error(`limiter ${r.status}`);
-      if ((await r.json()) !== true) return l.seconds;
+  const longest = Math.max(...LIMITS.map((l) => l.seconds)) * 1000;
+  const recent = (hits.get(ip) ?? []).filter((t) => now - t < longest);
+  for (const l of LIMITS) {
+    if (recent.filter((t) => now - t < l.seconds * 1000).length >= l.limit) {
+      hits.set(ip, recent);
+      return l.seconds;
     }
-    return 0;
-  } catch (err) {
-    console.error("rate limiter unavailable, using memory", err instanceof Error ? err.message : err);
-    return memoryLimited(ip) ? 60 : 0;
   }
+  recent.push(now);
+  hits.set(ip, recent);
+  day.count++;
+  if (hits.size > MAX_TRACKED) hits.clear();
+  return 0;
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -133,7 +127,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const forwarded = req.headers["x-forwarded-for"];
   const rawIp = (Array.isArray(forwarded) ? forwarded[0] : forwarded)?.split(",")[0].trim() || "unknown";
   const ip = createHash("sha256").update(`portfolio:${rawIp}`).digest("hex").slice(0, 24); // never store raw addresses
-  const wait = await rateLimit(ip);
+  const wait = rateLimit(ip);
   if (wait) {
     res.setHeader("Retry-After", String(wait));
     return res.status(429).json({ error: wait > 60 ? "You have reached the message limit for now. Please come back later." : "Too many messages. Please wait a minute and try again." });

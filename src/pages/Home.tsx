@@ -5,7 +5,6 @@ import { Reveal } from "@/components/Reveal";
 import { About } from "@/sections/About";
 import { Education } from "@/sections/Education";
 import { Deferred } from "@/components/Deferred";
-import { LazyGuestbook } from "@/components/LazyGuestbook";
 import { Hero } from "@/sections/Hero";
 import { Services } from "@/sections/Services";
 import { Button } from "@/components/ui/button";
@@ -111,8 +110,6 @@ export default function Home() {
           ))}
         </ul>
       </Section>
-
-      <LazyGuestbook />
 
       <Section id="contact" label="Contact" title="Let's work together">
         <div className="text-center">
