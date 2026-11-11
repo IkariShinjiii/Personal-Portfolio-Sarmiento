@@ -34,6 +34,12 @@ export function LazyGuestbook() {
     return () => io.disconnect();
   }, [load]);
 
+  useEffect(() => {
+    const on = () => setLoad(true);
+    window.addEventListener("sections:load", on);
+    return () => window.removeEventListener("sections:load", on);
+  }, []);
+
   // The real section replaces a placeholder of a different height: re-measure the triggers after it mounts.
   useEffect(() => {
     if (!load) return;

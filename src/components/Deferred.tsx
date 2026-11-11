@@ -19,6 +19,13 @@ export function Deferred({ id, minHeight, children, rootMargin = "1200px" }: Pro
     return () => io.disconnect();
   }, [load, rootMargin]);
 
+  // An in-page link asks every section to mount first, so the page height is final before it scrolls (see App.tsx).
+  useEffect(() => {
+    const on = () => setLoad(true);
+    window.addEventListener("sections:load", on);
+    return () => window.removeEventListener("sections:load", on);
+  }, []);
+
   useEffect(() => {
     if (!load) return;
     const t = window.setTimeout(() => ScrollTrigger.refresh(), 600);

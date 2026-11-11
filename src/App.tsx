@@ -1,30 +1,17 @@
-import { lazy, useEffect, useState } from "react";
-import { Check, Copy, Mail } from "lucide-react";
+import { useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router";
+import { Mail } from "lucide-react";
 import { Backdrop } from "@/components/Backdrop";
 import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { ScrollProgress } from "@/components/ScrollProgress";
-import { Nav } from "@/components/Nav";
-import { Section } from "@/components/Section";
-import { Reveal } from "@/components/Reveal";
-import { About } from "@/sections/About";
-import { Education } from "@/sections/Education";
-import { Deferred } from "@/components/Deferred";
-import { LazyGuestbook } from "@/components/LazyGuestbook";
-import { Hero } from "@/sections/Hero";
-import { Services } from "@/sections/Services";
-import { Button } from "@/components/ui/button";
+import { MobileBar, RightRail, Sidebar, gmailCompose } from "@/components/Sidebar";
+import Home from "@/pages/Home";
+import { NotFound } from "@/pages/NotFound";
 import { useTheme } from "@/lib/use-theme";
 import { watchOffscreen } from "@/lib/pause-offscreen";
 import { gsap, NO_REDUCED_MOTION, ScrollTrigger } from "@/lib/gsap";
-import { cn } from "@/lib/utils";
 import { BRAND_ICONS } from "@/lib/brand-icons";
-import { contact, explore, gear, person } from "@/content";
-
-// Below-the-fold sections load on demand (see Deferred), keeping startup work small.
-const Skills = lazy(() => import("@/sections/Skills").then((m) => ({ default: m.Skills })));
-const Projects = lazy(() => import("@/sections/Projects").then((m) => ({ default: m.Projects })));
-const GitHubActivity = lazy(() => import("@/sections/GitHubActivity").then((m) => ({ default: m.GitHubActivity })));
-const Gear = lazy(() => import("@/sections/Gear").then((m) => ({ default: m.Gear })));
+import { contact, person } from "@/content";
 
 function GithubIcon({ size = 20 }: { size?: number }) {
   return (
@@ -42,26 +29,13 @@ function InstagramIcon({ size = 20 }: { size?: number }) {
   );
 }
 
-// A mailto: link does nothing on a desktop without a mail app, so open Gmail compose instead.
-const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(contact.email)}`;
-
-function CopyEmail() {
-  const [copied, setCopied] = useState(false);
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(contact.email);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* clipboard unavailable; the address is visible on the page */
-    }
-  };
-  return (
-    <Button variant="outline" onClick={copy} aria-live="polite">
-      {copied ? <Check size={16} /> : <Copy size={16} />}
-      {copied ? "Copied" : "Copy email"}
-    </Button>
-  );
+/** A new page starts at the top; links with a #section hash are scrolled to by the home page itself. */
+function ScrollToTop() {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (!hash) window.scrollTo(0, 0);
+  }, [pathname, hash]);
+  return null;
 }
 
 export default function App() {
@@ -69,43 +43,68 @@ export default function App() {
 
   // Smooth, eased scrolling for in-page links (native jump when reduced motion is requested).
   useEffect(() => {
+    let cancelPrevious: (() => void) | undefined;
     const onClick = (e: MouseEvent) => {
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
       const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"]');
       const id = a?.getAttribute("href")?.slice(1);
       if (!a || !id || !window.matchMedia(NO_REDUCED_MOTION).matches) return;
-      const target = id === "top" ? 0 : document.getElementById(id);
-      if (target === null) return;
+      if (id !== "top" && !document.getElementById(id)) return;
       e.preventDefault();
-      gsap.to(window, {
-        duration: 0.9,
-        ease: "power3.inOut",
-        scrollTo: { y: target, offsetY: id === "top" ? 0 : 72, autoKill: true },
-        onComplete: () => history.replaceState(null, "", `#${id}`),
-      });
+      const offsetY = id === "top" ? 0 : 72;
+      // Sections below the fold mount as they come near, which changes the page height mid-scroll, and a section
+      // replaces its placeholder element when it mounts. So look the target up again on every try: when a scroll
+      // ends, wait for the layout to settle, and if the target moved, scroll to it again (a few tries at most).
+      // GSAP's own autoKill would also cancel the scroll when the browser adjusts the position because the layout
+      // shifted, so it is off: the scroll stops only when the visitor takes over (wheel, touch or keys) or clicks
+      // another link.
+      cancelPrevious?.();
+      let live = true;
+      let tween: gsap.core.Tween | undefined;
+      let timer: number | undefined;
+      const events = ["wheel", "touchstart", "keydown"];
+      const stop = () => {
+        live = false;
+        tween?.kill();
+        window.clearTimeout(timer);
+        for (const ev of events) window.removeEventListener(ev, stop);
+      };
+      cancelPrevious = stop;
+      for (const ev of events) window.addEventListener(ev, stop, { passive: true });
+
+      const go = (tries: number, duration: number) => {
+        const target = id === "top" ? 0 : document.getElementById(id);
+        if (!live || target === null) return;
+        tween = gsap.to(window, {
+          duration,
+          ease: "power3.inOut",
+          scrollTo: { y: target, offsetY, autoKill: false },
+          onComplete: () => {
+            timer = window.setTimeout(() => {
+              if (!live) return;
+              const now = id === "top" ? null : document.getElementById(id);
+              const off = now ? now.getBoundingClientRect().top - offsetY : window.scrollY;
+              if (tries > 0 && Math.abs(off) > 6) go(tries - 1, 0.5);
+              else {
+                history.replaceState(null, "", `#${id}`);
+                stop();
+              }
+            }, 750);
+          },
+        });
+      };
+      // Mount the lazy sections now and give them a moment, so the first scroll already aims at the final position.
+      window.dispatchEvent(new Event("sections:load"));
+      timer = window.setTimeout(() => go(5, 0.9), 450);
     };
     document.addEventListener("click", onClick);
-    return () => document.removeEventListener("click", onClick);
+    return () => {
+      document.removeEventListener("click", onClick);
+      cancelPrevious?.();
+    };
   }, []);
 
   useEffect(() => watchOffscreen(), []);
-
-  // The page renders on the client, so the browser's own jump to /#section finds nothing. Do it once the
-  // sections have mounted, and stop the moment the visitor scrolls on their own.
-  useEffect(() => {
-    const id = window.location.hash.slice(1);
-    if (!id || id === "top") return;
-    let live = true;
-    const stop = () => (live = false);
-    const go = () => live && document.getElementById(id)?.scrollIntoView();
-    const timers = [200, 900, 1800].map((ms) => window.setTimeout(go, ms));
-    for (const ev of ["wheel", "touchstart", "keydown"]) window.addEventListener(ev, stop, { once: true, passive: true });
-    return () => {
-      stop();
-      timers.forEach(clearTimeout);
-      for (const ev of ["wheel", "touchstart", "keydown"]) window.removeEventListener(ev, stop);
-    };
-  }, []);
 
   // Late layout changes (fonts, lazy sections, images) move trigger positions; re-measure.
   useEffect(() => {
@@ -118,7 +117,7 @@ export default function App() {
   return (
     <>
       <a
-        href="#about"
+        href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-contrast"
       >
         Skip to content
@@ -126,103 +125,37 @@ export default function App() {
       <ScrollProgress />
       <Backdrop />
       <AuroraBackdrop />
-      <Nav theme={theme} onToggleTheme={toggle} />
-      <main>
-        <Hero />
-        <About />
-        <Education />
-        <Deferred id="skills" minHeight={900}>
-          <Skills />
-        </Deferred>
+      <ScrollToTop />
+      <Sidebar theme={theme} onToggleTheme={toggle} />
+      <MobileBar theme={theme} onToggleTheme={toggle} />
+      <RightRail />
 
-        <Deferred id="projects" minHeight={900}>
-          <Projects />
-        </Deferred>
+      <div className="md:pl-[272px] 2xl:pr-[232px]">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
 
-        <Deferred id="activity" minHeight={520}>
-          <GitHubActivity />
-        </Deferred>
-
-        {gear.length > 0 && (
-          <Deferred id="gear" minHeight={640}>
-            <Gear />
-          </Deferred>
-        )}
-
-        <Services hireHref={`${gmailCompose}&su=${encodeURIComponent("Project inquiry")}`} />
-
-        <Section id="explore" label="More" title="More to explore">
-          <ul className="mx-auto grid max-w-[1280px] gap-4 md:grid-cols-3">
-            {explore.map((e) => (
-              <li key={e.title}>
-                <Reveal>
-                  <a
-                    href={e.href || undefined}
-                    target={e.newTab ? "_blank" : undefined}
-                    rel={e.newTab ? "noreferrer" : undefined}
-                    aria-disabled={!e.href}
-                    className="block rounded-card border border-border bg-surface/70 p-6 transition-colors duration-200 hover:border-accent2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-                  >
-                    <p className="text-xl font-semibold">{e.title}</p>
-                    <p className="mt-1 text-muted">{e.text}</p>
-                    <p className={cn("mt-6 text-sm font-semibold", e.tone)}>Explore &rarr;</p>
-                  </a>
-                </Reveal>
-              </li>
-            ))}
-          </ul>
-        </Section>
-
-        <LazyGuestbook />
-
-        <Section id="contact" label="Contact" title="Let's work together">
-          <div className="text-center">
-            <p className="mx-auto max-w-xl text-muted">
-              Need a website or app, or have a project in mind? I take on freelance work. The best way to reach me is email, <span className="text-text">{contact.email}</span>, or send me a message on Instagram.
-            </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Button asChild>
-                <a href={gmailCompose} target="_blank" rel="noreferrer">
-                  Email me
-                </a>
-              </Button>
-              <CopyEmail />
-              <Button asChild variant="outline">
-                <a href={contact.instagram} target="_blank" rel="noreferrer">
-                  <InstagramIcon size={16} />
-                  Instagram
-                </a>
-              </Button>
-              <Button asChild variant="outline">
-                <a href={contact.github} target="_blank" rel="noreferrer">
-                  GitHub
-                </a>
-              </Button>
-            </div>
+        <footer className="flex items-center justify-between px-5 py-8 text-sm text-muted md:px-10">
+          <p>
+            <span className="font-bold text-text">{person.initials}</span> &nbsp;&bull;&nbsp; &copy; {new Date().getFullYear()} {person.name}
+          </p>
+          <div className="flex items-center gap-4">
+            <a href="https://cdgsolutions.dev/team" target="_blank" rel="noreferrer" className="hover:text-text">
+              Developer at CDG<span className="sr-only"> (opens in a new tab)</span>
+            </a>
+            <a href={contact.github} aria-label="GitHub" className="hover:text-text">
+              <GithubIcon />
+            </a>
+            <a href={contact.instagram} target="_blank" rel="noreferrer" aria-label="Instagram (opens in a new tab)" className="hover:text-text">
+              <InstagramIcon />
+            </a>
+            <a href={gmailCompose} target="_blank" rel="noreferrer" aria-label="Email (opens in a new tab)" className="hover:text-text">
+              <Mail size={20} />
+            </a>
           </div>
-        </Section>
-      </main>
-
-      <footer className="mx-auto flex max-w-[1760px] items-center justify-between px-5 min-[1280px]:px-[clamp(1.25rem,3vw,3.5rem)] py-8 text-sm text-muted">
-        <p>
-          <span className="font-bold text-text">{person.initials}</span> &nbsp;&bull;&nbsp; &copy; {new Date().getFullYear()}{" "}
-          {person.name}
-        </p>
-        <div className="flex items-center gap-4">
-          <a href="https://cdgsolutions.dev/team" target="_blank" rel="noreferrer" className="hover:text-text">
-            Developer at CDG<span className="sr-only"> (opens in a new tab)</span>
-          </a>
-          <a href={contact.github} aria-label="GitHub" className="hover:text-text">
-            <GithubIcon />
-          </a>
-          <a href={contact.instagram} target="_blank" rel="noreferrer" aria-label="Instagram (opens in a new tab)" className="hover:text-text">
-            <InstagramIcon />
-          </a>
-          <a href={gmailCompose} target="_blank" rel="noreferrer" aria-label="Email (opens in a new tab)" className="hover:text-text">
-            <Mail size={20} />
-          </a>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </>
   );
 }

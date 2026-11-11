@@ -191,3 +191,17 @@ html::-webkit-scrollbar { display: none; }
   box-shadow: 0 0 12px color-mix(in srgb, var(--accent2) 60%, transparent);
   will-change: transform;
 }
+
+/* Scrollable panels (sidebar index, mobile menu): a slim track-less bar in the theme colours instead of the system one.
+   The page itself keeps its progress bar and no native scrollbar (see above). */
+.panel-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--accent2) 45%, transparent) transparent;
+}
+.panel-scroll::-webkit-scrollbar { width: 6px; }
+.panel-scroll::-webkit-scrollbar-track { background: transparent; }
+.panel-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--accent2) 40%, transparent);
+  border-radius: 999px;
+}
+.panel-scroll::-webkit-scrollbar-thumb:hover { background: var(--accent2); }

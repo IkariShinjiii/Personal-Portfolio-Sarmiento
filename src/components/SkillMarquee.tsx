@@ -116,7 +116,7 @@ export function SkillMarquee({ items, direction = -1, speed = 45, label }: Props
       ref={root}
       role="group"
       aria-label={label}
-      className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden py-4 [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]"
+      className="relative -mx-5 overflow-hidden py-4 min-[1280px]:-mx-[clamp(1.25rem,3vw,3.5rem)] [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]"
     >
       <div ref={track} className="flex w-max motion-reduce:w-full motion-reduce:flex-wrap motion-reduce:justify-center motion-reduce:px-6">
         <Group items={items} />
