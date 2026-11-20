@@ -2,11 +2,9 @@ import { Fragment, useEffect, useLayoutEffect, useRef } from "react";
 import { ArrowDown } from "lucide-react";
 import { AvatarVideo } from "@/components/AvatarVideo";
 import { Button } from "@/components/ui/button";
-import { ChatCard } from "@/components/ChatCard";
 import { EASE, gsap, NO_REDUCED_MOTION, pauseOffscreen, useGSAP } from "@/lib/gsap";
 import { person } from "@/content";
 
-const FIRST = "Kervin";
 const NAME = "Kervin Sarmiento";
 
 // index.html ships a static copy of the top of the hero; it is gone once React mounts, so read this once.
@@ -75,7 +73,7 @@ export function Hero() {
             .from(".hero-sub", { y: 14, duration: 0.5 }, 0.2)
             .from(".hero-cta", { opacity: 0, y: 12, duration: 0.4 }, 0.3);
         }
-        tl.from(".hero-chat", { opacity: 0, y: 24, scale: 0.98, duration: 0.5 }, 0.3).from(".hero-cue", { opacity: 0, duration: 0.4 }, 0.8);
+        tl.from(".hero-cue", { opacity: 0, duration: 0.4 }, 0.8);
         const bob = gsap.to(".hero-cue-arrow", { y: 6, duration: 0.9, repeat: -1, yoyo: true, ease: "sine.inOut" });
 
         // Avatar: it floats, its glow breathes, it turns to follow the pointer, and it wobbles when clicked.
@@ -168,10 +166,6 @@ export function Hero() {
         <Button asChild variant="outline">
           <a href="#projects">See my work</a>
         </Button>
-      </div>
-
-      <div className="hero-chat w-full">
-        <ChatCard name={FIRST} />
       </div>
 
       <a href="#about" className="hero-cue mt-8 flex flex-col items-center gap-1 text-sm text-muted hover:text-text">
