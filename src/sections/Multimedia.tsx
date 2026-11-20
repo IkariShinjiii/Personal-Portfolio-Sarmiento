@@ -39,7 +39,7 @@ function WorkCard({ w }: { w: Work }) {
     >
       <div className="relative grid aspect-[16/10] place-items-center overflow-hidden border-b border-border bg-gradient-to-br from-accent/10 via-surface to-accent2/15">
         {cover ? (
-          <img src={cover.src} alt={cover.alt} loading="lazy" width={640} height={400} className={`size-full object-cover ${cover.top ? "object-top" : "object-[center_70%]"} transition-transform duration-500 group-hover:scale-[1.03]`} />
+          <img src={cover.src} alt={cover.alt} loading="lazy" width={640} height={400} style={{ objectPosition: cover.top ? "top" : "center 70%" }} className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
         ) : (
           <Icon aria-hidden size={36} strokeWidth={1.5} className="text-accent2/70" />
         )}
