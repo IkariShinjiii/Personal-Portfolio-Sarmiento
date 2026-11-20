@@ -127,7 +127,13 @@
       "tools": [
         "Stop motion"
       ],
-      "media": []
+      "media": [
+        {
+          "kind": "image",
+          "src": "/works/stop-animation.jpg",
+          "alt": "A frame from the stop-motion animation: a red toy race car on a patterned rug."
+        }
+      ]
     }
   ]
 }
