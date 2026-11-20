@@ -46,7 +46,13 @@
         "Canva",
         "Poster design"
       ],
-      "media": []
+      "media": [
+        {
+          "kind": "pdf",
+          "src": "/works/research-infographic.pdf",
+          "label": "Open the infographic (PDF)"
+        }
+      ]
     },
     {
       "slug": "silent-movie-storyboard",
@@ -63,7 +69,13 @@
       "tools": [
         "Storyboarding"
       ],
-      "media": []
+      "media": [
+        {
+          "kind": "pdf",
+          "src": "/works/silent-movie-storyboard.pdf",
+          "label": "Open the storyboard (PDF)"
+        }
+      ]
     },
     {
       "slug": "silent-movie-video",
