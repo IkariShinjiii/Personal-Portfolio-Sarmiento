@@ -104,7 +104,11 @@
         {
           "kind": "pdf",
           "src": "https://drive.google.com/drive/folders/17ACaJm0qhqMqscJWFUy_76h05uzJHBV6",
-          "label": "Watch the video on Google Drive"
+          "label": "Watch the video on Google Drive",
+          "preview": {
+            "src": "/works/silent-movie-video.jpg",
+            "alt": "A frame from the silent-movie video: two friends in blue shirts walking through tall grass."
+          }
         }
       ]
     },
