@@ -20,6 +20,7 @@ export function workCover(w: Work): { src: string; alt: string } | null {
     if (m.kind === "video" && m.poster) return { src: m.poster, alt: "" };
     if (m.kind === "frames" && m.frames[0]) return m.frames[0];
     if (m.kind === "image") return m;
+    if (m.kind === "pdf" && m.preview) return m.preview;
   }
   return null;
 }
@@ -38,7 +39,7 @@ function WorkCard({ w }: { w: Work }) {
     >
       <div className="relative grid aspect-[16/10] place-items-center overflow-hidden border-b border-border bg-gradient-to-br from-accent/10 via-surface to-accent2/15">
         {cover ? (
-          <img src={cover.src} alt={cover.alt} loading="lazy" width={640} height={400} className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+          <img src={cover.src} alt={cover.alt} loading="lazy" width={640} height={400} className="size-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
         ) : (
           <Icon aria-hidden size={36} strokeWidth={1.5} className="text-accent2/70" />
         )}

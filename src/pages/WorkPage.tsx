@@ -81,11 +81,18 @@ function MediaBlock({ m, title }: { m: Media; title: string }) {
     );
   }
   return (
-    <a href={m.src} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-accent underline underline-offset-4">
-      <ExternalLink size={14} aria-hidden />
-      {m.label ?? "Open PDF"}
-      <span className="sr-only"> (opens in a new tab)</span>
-    </a>
+    <div className="space-y-3">
+      {m.preview && (
+        <a href={m.src} target="_blank" rel="noreferrer" tabIndex={-1} aria-hidden>
+          <img src={m.preview.src} alt={m.preview.alt} loading="lazy" className="w-full rounded-card border border-border" />
+        </a>
+      )}
+      <a href={m.src} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-accent underline underline-offset-4">
+        <ExternalLink size={14} aria-hidden />
+        {m.label ?? "Open PDF"}
+        <span className="sr-only"> (opens in a new tab)</span>
+      </a>
+    </div>
   );
 }
 

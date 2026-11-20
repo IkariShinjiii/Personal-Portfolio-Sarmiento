@@ -5,13 +5,13 @@ import data from "@/data/multimedia.json";
  * - video: an MP4 (on Vercel Blob) with an optional poster image
  * - frames: storyboard panels, each a small image
  * - image: a single poster, e.g. an infographic
- * - pdf: a document to open in a new tab
+ * - pdf: a document to open in a new tab, with an optional preview image
  */
 export type Media =
   | { kind: "video"; src: string; poster?: string }
   | { kind: "frames"; frames: { src: string; alt: string }[] }
   | { kind: "image"; src: string; alt: string }
-  | { kind: "pdf"; src: string; label?: string };
+  | { kind: "pdf"; src: string; label?: string; preview?: { src: string; alt: string } };
 
 export type WorkType = "Infographic" | "Storyboard" | "Video" | "Animation" | "Project" | "Activity";
 

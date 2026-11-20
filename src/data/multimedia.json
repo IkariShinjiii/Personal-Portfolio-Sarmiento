@@ -36,11 +36,11 @@
       "type": "Infographic",
       "module": "Module 3 lab",
       "date": "2026-09",
-      "summary": "A research study turned into a one-page poster for a general audience: problem, solution, method, timeline, budget and impact.",
+      "summary": "Mind Bridge, a student mental-health monitoring and support system, turned into a one-page poster: problem, solution, method, timeline, budget and impact.",
       "details": [
         "The brief: translate academic research into a clear, accessible infographic using large metric callouts, a process flow, a timeline and a simple budget chart.",
         "The skill it trains is synthesis: cutting a long study down to what a reader needs, then choosing the right visual for each kind of data.",
-        "Individual work. My topic was Mind-Bridge, one of my own projects."
+        "Made with my research partner Jan Louis Simundo, from our Mind Bridge capstone proposal at the University of San Agustin."
       ],
       "tools": [
         "Canva",
@@ -50,7 +50,11 @@
         {
           "kind": "pdf",
           "src": "/works/research-infographic.pdf",
-          "label": "Open the infographic (PDF)"
+          "label": "Open the infographic (PDF)",
+          "preview": {
+            "src": "/works/research-infographic.jpg",
+            "alt": "The Mind Bridge research infographic: problem, solution, methodology, timeline, budget and impact."
+          }
         }
       ]
     },
@@ -73,7 +77,11 @@
         {
           "kind": "pdf",
           "src": "/works/silent-movie-storyboard.pdf",
-          "label": "Open the storyboard (PDF)"
+          "label": "Open the storyboard (PDF)",
+          "preview": {
+            "src": "/works/silent-movie-storyboard.jpg",
+            "alt": "A storyboard panel from The Farmer's Phone: two stick-figure farmers with a phone lying on the grass between them."
+          }
         }
       ]
     },
